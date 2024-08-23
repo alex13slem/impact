@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'head'> {
+  favicon?: string;
+}
+
+const { favicon, ...props } = Astro.props;
+---
+
+<head {...props}>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href={favicon} />
+  <meta name="generator" content={Astro.generator} />
+
+  <slot />
+</head>

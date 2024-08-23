@@ -1,0 +1,48 @@
+---
+import IMPACT from '@/assets/img/IMPACT.png';
+import { generateNews } from "@/lib/seeders/news";
+import { Image } from "astro:assets";
+import RussianMap from "../russian-map";
+
+const newsArray = generateNews(5);
+---
+
+<section class="bg-dark pt-[53px] md:pt-[65px] lg:pt-[89px] relative z-0 overflow-clip">
+	<!-- <Image src={BG} alt="abstract" class="absolute inset-0 object-cover w-full h-full -z-10" /> -->
+	<Image src={IMPACT} alt="impact" class="absolute inset-0 bottom-auto object-contain w-full -z-10" />
+	<div class="container grid grid-cols-2 min-h-[calc(100svh-53px)] md:min-h-[calc(100svh-65px)] lg:min-h-[calc(100svh-89px)] py-5 md:py-8 lg:py-10 px-0 relative z-0 ">
+
+		<RussianMap client:load className="col-start-1 col-end-3 row-start-1 row-end-3"/>
+
+		<h1 class="font-sov-mod text-3xl md:text-5xl self-end uppercase relative col-start-1 row-start-1 row-end-3 px-4">
+			<span>Мечта</span> <br>
+			<span>Возможность</span> <br>
+			<span class="text-accent">Результат</span>
+		</h1>
+
+		<aside class="relative col-start-2 row-start-1 justify-self-end pr-4 hidden md:block" >
+			<h2 class="font-sov-mod text-2xl uppercase mb-6">Новости</h2>
+			{newsArray.map((item) => (
+				<article class="max-w-[182px] flex flex-col gap-2 [&:not(:last-child)]:mb-6 relative">
+					<a href={`/blog/${item.id}`} class="absolute inset-0"></a>
+					<time class="px-3 py-1 bg-dark rounded-full self-start text-xs" datetime={item.time.getDate().toString()}>
+						{item.time.toLocaleDateString('ru-RU', {
+							day: 'numeric',
+							month: 'numeric',
+						})}
+					</time>
+					<p class="text-sm">{item.title}</p>
+				</article>
+			))}
+		</aside>
+
+		<button class="col-start-2 row-start-1 justify-self-end pr-4 self-start md:hidden flex justify-between items-baseline gap-1 text-white text-opacity-90 relative border border-white border-opacity-90 px-3 py-2 rounded-full leading-none mr-4">
+			<a href="/news" class="absolute inset-0 opacity-0">news</a>
+			Новости
+			<svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M1.70497 0.675894H8.05675M8.05675 0.675894V7.02768M8.05675 0.675894L1.17565 7.557" stroke="currentColor"/>
+			</svg>
+		</button>
+
+	</div>
+</section>

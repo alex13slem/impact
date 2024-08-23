@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'SovMod';
+    src: url('SovMod.woff2') format('woff2'),
+        url('SovMod.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
