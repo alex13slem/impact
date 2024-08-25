@@ -64,9 +64,9 @@
 >
   <defs>
     <linearGradient id="hover">
-      <stop offset="0" stop-color="var(--accent)" />
-      <stop offset="0.425" stop-color="#FAF1A9" />
-      <stop offset="1" stop-color="var(--accent)" />
+      <stop offset="0" stop-color="#c3963c" />
+      <stop offset="0.425" stop-color="#fadb9e" />
+      <stop offset="1" stop-color="#c6942f" />
     </linearGradient>
     <linearGradient id="default">
       <stop offset="0.135" stop-color="#164264" />

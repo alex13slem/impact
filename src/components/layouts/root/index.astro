@@ -1,0 +1,57 @@
+---
+import {Footer} from '@/components/footer';
+import {Header} from '@/components/header';
+import { cn } from '@/lib/utils';
+import '@/styles/app.css';
+import type { HTMLAttributes } from 'astro/types';
+import { ViewTransitions } from 'astro:transitions';
+import {Head} from '../../head';
+import { LoadingSection } from '@/components/sections/loading';
+
+export interface HtmlProps
+  extends Omit<HTMLAttributes<'html'>, 'title'> {
+  hasHeader?: boolean;
+  hasFooter?: boolean;
+}
+
+const {
+  class: className,
+  hasHeader = true,
+  hasFooter = true,
+  ...props
+}: HtmlProps = Astro.props;
+---
+
+
+<script>
+  import '@/lib/plugins/hiddenBlocks';
+import '@/lib/plugins/sectionSlide';
+</script>
+
+<html
+  lang="ru"
+  class="scroll-smooth dark"
+  transition:animate="initial"
+  {...props}
+>
+  <Head>
+    <slot name="seo" />
+    <meta name="referrer" content="origin" />
+    <ViewTransitions />
+  </Head>
+  <body
+    class={cn(
+      `z-0 loading`,
+      className
+    )}
+  >
+    <!-- <LoadingSection client:load/> -->
+    <div class="app">
+      {hasHeader && <Header client:load/>}
+      <slot />
+      {hasFooter && <Footer />}
+    </div>
+  </body>
+</html>
+
+

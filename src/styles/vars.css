@@ -1,8 +1,0 @@
-:root {
-  --gr-start: hsl(40, 53%, 50%);
-  --gr-middle: hsl(40, 90%, 80%);
-  --gr-end: #c6942e;
-  --dark: hsl(209, 100%, 12%);
-  --accent: hsl(40, 95%, 70%);
-  background: hsl(209, 100%, 75%);
-}

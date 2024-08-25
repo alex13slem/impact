@@ -1,4 +1,4 @@
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--dark);
+  scrollbar-color: theme(colors.accent) theme(colors.dark);
 }

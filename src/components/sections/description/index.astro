@@ -1,0 +1,21 @@
+---
+import bgSource from '@/assets/img/sect-2-bg.jpg'
+import { getImage } from 'astro:assets'
+
+const bg = await getImage({src: bgSource})
+
+---
+<section style={`background-image: url(${bg.src});`} class="relative z-0 bg-center bg-cover">
+  <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
+  <div class="container py-32 md:h-svh flex flex-col justify-center items-center">
+    <h2 class="text-center text-xl md:text-5xl lg:text-7xl font-sov-mod uppercase leading-snug mb-3 md:mb-4 lg:mb-10">
+      БЛАГОТВОРИТЕЛЬНЫЙ <br> ФОНД <span class="text-accent">IMPACT</span>
+    </h2>
+    <p class="hidden-block dir-bottom text-center text-xs md:text-base lg:text-lg max-w-xs md:max-w-2xl mx-auto font-thin ">
+      Мы реализуем на территории Российской Федерации программы
+      поддержки детей-сирот и детей, оставшихся без попечения родителей
+      и находящихся в трудной жизненной ситуации, а также помогаем
+      тяжелобольным детям в лечении и реабилитации.
+    </p>
+  </div>
+</section>

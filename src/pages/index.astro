@@ -1,15 +1,21 @@
 ---
-import Hero from '@/components/sections/hero.astro';
+import { SectDescription } from '@/components/sections/description';
+import { SectHero } from '@/components/sections/hero';
+import { SectOurMission } from '@/components/sections/our-mission';
+import { SectOurPartners } from '@/components/sections/our-partners';
+import { SectSocialPrograms } from '@/components/sections/social-programs';
 import '@/index.css';
-import RootLayout from '../components/layouts/root-layout.astro';
-import LoadingSection from '../components/sections/loading';
-import SeoFragment from '../components/seo-fragment.astro';
+import { RootLayout } from '../components/layouts/root';
+import { Seo } from '../components/seo';
 ---
 
 <RootLayout>
-	<SeoFragment slot={'seo'} title="Главная" description='' imageUrls={{fb: ''}} />
-	<main >
-		<LoadingSection client:load/>
-		<Hero />
+	<Seo slot={'seo'} title="Главная" description='' imageUrls={{fb: ''}} />
+	<main>
+		<SectHero />
+		<SectDescription />
+		<SectOurMission />
+		<SectSocialPrograms />
+		<SectOurPartners />
 	</main>
 </RootLayout>

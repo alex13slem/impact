@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { categories } from '@/lib/data/categiories';
-  import { filterCategory } from '@/lib/stores/categoryStore';
+  import { socialPrograms } from '@/lib/data/social-programs';
+  import { filterSocialProgram } from '@/lib/stores/socialProgramStore';
   import { cn } from '@/lib/utils';
-  import { handleFilterCategory } from '@/lib/utils/eventHandlers';
+  import { handleFilterSocialProgram } from '@/lib/utils/eventHandlers';
 </script>
 
-<nav class="flex flex-col items-start gap-2 w-fit sticky top-0 left-0 pl-4">
-  {#each categories as c}
+<nav class="flex flex-col items-start gap-2 w-fit sticky left-0 pl-4">
+  {#each socialPrograms as c}
     <button
-      on:click={handleFilterCategory}
+      on:click={handleFilterSocialProgram}
       class="flex items-center gap-2 relative group lg:hover:text-accent transition-all w-[40px] h-[40px]"
-      data-category={c.slug}
+      data-social-program={c.slug}
     >
-      {#if c.slug === 'category2'}
+      {#if c.slug === 'nezhnie-ruki'}
         <svg
           class={cn('absolute inset-0 transition-opacity text-accent', {
-            'opacity-0': c.slug !== $filterCategory,
+            'opacity-0': c.slug !== $filterSocialProgram,
           })}
           width="40"
           height="40"
@@ -47,7 +47,7 @@
         </svg>
         <svg
           class={cn('absolute inset-0 transition-opacity', {
-            'opacity-0': c.slug === $filterCategory,
+            'opacity-0': c.slug === $filterSocialProgram,
           })}
           width="40"
           height="40"
@@ -77,10 +77,10 @@
             </clipPath>
           </defs>
         </svg>
-      {:else if c.slug === 'category1'}
+      {:else if c.slug === 'socialnye-lifty'}
         <svg
           class={cn('absolute inset-0 transition-opacity text-accent', {
-            'opacity-0': c.slug !== $filterCategory,
+            'opacity-0': c.slug !== $filterSocialProgram,
           })}
           width="40"
           height="40"
@@ -112,7 +112,7 @@
         </svg>
         <svg
           class={cn('absolute inset-0 transition-opacity', {
-            'opacity-0': c.slug === $filterCategory,
+            'opacity-0': c.slug === $filterSocialProgram,
           })}
           width="40"
           height="40"
@@ -148,7 +148,7 @@
         class={cn(
           'absolute pointer-events-none left-full opacity-0 group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
           {
-            'text-accent': c.slug === $filterCategory,
+            'text-accent': c.slug === $filterSocialProgram,
           },
         )}>{c.name}</span
       >

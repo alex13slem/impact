@@ -4,9 +4,9 @@
   import { cn } from '@/lib/utils';
   import { Popover } from 'bits-ui';
   import { fade } from 'svelte/transition';
-  import NeedyPopap from './needy-popap.svelte';
   import SvgHandHeart from '../ui/svg-hand-heart.svelte';
   import SvgPrayer from '../ui/svg-prayer.svelte';
+  import NeedyPopap from './needy-popap.svelte';
   export let needy: NeedyWithCoordinates;
 </script>
 
@@ -22,11 +22,11 @@
           'text-dark': $hoveredRegion === needy.regionSlug,
         })}
       >
-        {#if needy.categorySlug === 'category2'}
+        {#if needy.socialProgramSlug === 'nezhnie-ruki'}
           <SvgPrayer />
-        {:else if needy.categorySlug === 'category1'}
+        {:else if needy.socialProgramSlug === 'pomozj-detyam'}
           <SvgHandHeart />
-        {:else if needy.categorySlug === 'category3'}
+        {:else if needy.socialProgramSlug === 'socialnye-lifty'}
           <SvgHandHeart />
         {/if}
       </button>

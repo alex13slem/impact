@@ -149,6 +149,7 @@ export function loadingScreen() {
           opacity: 0,
           duration: 0.5,
           onStart: () => {
+            document.body.classList.remove('loading');
             loading.set(false);
           },
         },

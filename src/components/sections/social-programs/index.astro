@@ -1,0 +1,23 @@
+---
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { socialPrograms } from "@/lib/data/social-programs";
+import DesktopCard from "./desktop-card.astro";
+import Slider from "./slider.svelte";
+
+
+---
+
+<section class="social-programs bg-white text-dark py-8 lg:py-20">
+  <div class="container">
+    <SectHeading className="text-center">Наши программы</SectHeading>
+    <div class="hidden grid-cols-3 gap-5 lg:grid">
+      {
+        socialPrograms.map((program, idx) => (
+          <DesktopCard {program} style={`transition-delay: ${idx * 500}ms`} class={'hidden-block dir-bottom'}/>
+        ))
+      }
+    </div>
+
+    <Slider client:load className="lg:hidden" />
+  </div>
+</section>

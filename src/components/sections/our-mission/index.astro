@@ -1,0 +1,18 @@
+---
+import bgSource from '@/assets/img/bg.webp';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { getImage } from "astro:assets";
+import { Slider } from "./slider";
+
+const bg = await getImage({src: bgSource})
+
+---
+
+<section style={`background-image: url(${bg.src});`} class="our-mission relative z-0 bg-center bg-cover overflow-clip bg-fixed" >
+  <div class="container lg:min-h-[730px] py-8 md:py-20 flex flex-col">
+    <SectHeading className='text-center'>
+      НАША <span class="text-accent">МИССИЯ</span>
+    </SectHeading>
+    <Slider client:load />
+  </div>
+</section>

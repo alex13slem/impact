@@ -1,8 +1,8 @@
 <script lang="ts">
   import { needys } from '@/lib/data/needys';
-  import { filterCategory } from '@/lib/stores/categoryStore';
   import { needysCoordinates } from '@/lib/stores/needysStore';
   import { loading } from '@/lib/stores/pageLoadingStore';
+  import { filterSocialProgram } from '@/lib/stores/socialProgramStore';
   import { cn } from '@/lib/utils';
   import Nav from './nav.svelte';
   import NeedyPoint from './needy-point.svelte';
@@ -11,7 +11,9 @@
   export let className: string = '';
 
   $: viewNeedyCoordinates = $needysCoordinates.filter(
-    needy => $filterCategory === null || needy.categorySlug === $filterCategory,
+    needy =>
+      $filterSocialProgram === null ||
+      needy.socialProgramSlug === $filterSocialProgram,
   );
 </script>
 

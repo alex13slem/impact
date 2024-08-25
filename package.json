@@ -13,14 +13,21 @@
     "@astrojs/check": "^0.9.3",
     "@astrojs/svelte": "^5.7.0",
     "@astrojs/tailwind": "^5.1.0",
+    "@sveu/browser": "^1.0.1",
     "astro": "^4.14.3",
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
     "gsap": "^3.12.5",
+    "locomotive-scroll": "^4.1.4",
     "sharp": "^0.33.5",
     "svelte": "^4.2.18",
+    "svelte-previous": "^2.1.4",
+    "swiper": "^11.1.10",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.4"
+    "typescript": "5.5.4"
+  },
+  "devDependencies": {
+    "@types/locomotive-scroll": "^4.1.3"
   }
 }

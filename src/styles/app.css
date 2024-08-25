@@ -1,4 +1,41 @@
 body {
-  background-color: hsl(209, 100%, 98%);
-  color: hsl(209, 50%, 3%);
+  background-color: theme(colors.dark);
+  color: hsl(209, 100%, 98%);
+}
+
+/* body.loading {
+  .app {
+    opacity: 0;
+  }
+}
+.app {
+  transition: opacity 0.1s;
+} */
+
+.hidden-block {
+  opacity: 0;
+  --offset: 3rem;
+  --x: 0px;
+  --y: 0px;
+  transform: translate(var(--x), var(--y));
+  transition: opacity 1s, transform 1s;
+
+  &.dir-left {
+    --x: calc(var(--offset) * -1);
+  }
+  &.dir-right {
+    --x: var(--offset);
+  }
+  &.dir-top {
+    --y: calc(var(--offset * -1));
+  }
+  &.dir-bottom {
+    --y: var(--offset);
+  }
+
+  &.hidden-block--visible {
+    opacity: 1;
+    --x: 0px;
+    --y: 0px;
+  }
 }

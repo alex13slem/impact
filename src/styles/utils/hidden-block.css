@@ -1,0 +1,33 @@
+@layer utilities {
+  /* Основной класс */
+  .hidden-block {
+    @apply opacity-0 transition-all duration-500;
+    --x: 0px;
+    --y: 0px;
+    transform: translate(var(--x), var(--y));
+  }
+
+  /* Направление сдвига */
+  .hidden-block--left {
+    --x: -20px;
+  }
+
+  .hidden-block--right {
+    --x: 20px;
+  }
+
+  .hidden-block--top {
+    --y: -20px;
+  }
+
+  .hidden-block--bottom {
+    --y: 20px;
+  }
+
+  /* Видимый элемент */
+  .hidden-block--visible {
+    @apply opacity-100;
+    --x: 0px;
+    --y: 0px;
+  }
+}

@@ -11,16 +11,16 @@ export default {
     extend: {
       colors: {
         ...defaultColors,
-        dark: 'var(--dark)',
-        accent: 'var(--accent)',
-        'gr-start': 'var(--gr-start)',
-        'gr-middle': 'var(--gr-middle)',
-        'gr-end': 'var(--gr-end)',
+        dark: '#00203d',
+        accent: '#fbcb6a',
+        'gr-start': '#c3963c',
+        'gr-middle': '#fadb9e',
+        'gr-end': '#c6942f',
       },
       fontFamily: {
-        serif: ['Onest', ...defaultTheme.fontFamily.serif],
-        'road-radio': ['RoadRadio', ...defaultTheme.fontFamily.serif],
-        'sov-mod': ['SovMod', ...defaultTheme.fontFamily.serif],
+        sans: ['Onest', ...defaultTheme.fontFamily.sans],
+        'road-radio': ['RoadRadio', ...defaultTheme.fontFamily.sans],
+        'sov-mod': ['SovMod', ...defaultTheme.fontFamily.sans],
       },
     },
     container: {
@@ -35,5 +35,6 @@ export default {
       },
     },
   },
+
   plugins: [],
 };
