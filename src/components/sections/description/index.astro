@@ -5,7 +5,7 @@ import { getImage } from 'astro:assets'
 const bg = await getImage({src: bgSource})
 
 ---
-<section style={`background-image: url(${bg.src});`} class="relative z-0 bg-center bg-cover">
+<section style={`background-image: url(${bg.src});`} class="relative z-0 bg-center bg-cover overflow-clip">
   <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
   <div class="container py-32 md:h-svh flex flex-col justify-center items-center">
     <h2 class="text-center text-xl md:text-5xl lg:text-7xl font-sov-mod uppercase leading-snug mb-3 md:mb-4 lg:mb-10">
