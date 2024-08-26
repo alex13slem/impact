@@ -16,7 +16,7 @@
     class="slides m-0 min-w-0 rounded-3xl overflow-clip h-full"
   >
     {#each ourMissionSlides as s, idx (s.id)}
-      <swiper-slide class="relative rounded-3xl overflow-clip">
+      <swiper-slide class="relative rounded-3xl overflow-clip aspect-video">
         {#if idx !== currentSlide}
           <div
             transition:fade={{ duration: 300 }}

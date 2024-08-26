@@ -15,8 +15,8 @@ const cnIcon = 'bg-white rounded-2xl text-dark flex justify-center items-center 
 ---
 
 <article {...props}>
-  <div class="mb-6 rounded-3xl overflow-clip relative">
-    <img src={program.image} alt={program.name}>
+  <div class="mb-6 rounded-3xl overflow-clip relative aspect-square">
+    <img src={program.image} alt={program.name} class="w-full h-full object-cover object-center">
     {
       program.slug === 'nezhnie-ruki' &&  (
         <div class={cnIcon}>

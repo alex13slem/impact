@@ -1,0 +1,26 @@
+---
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import Tabs from "./tabs.svelte";
+
+
+---
+
+<section class="our-stuff bg-white text-dark py-8 lg:py-20 overflow-clip">
+  <div class="container p-0 lg:px-4">
+    <div class="bg-dark bg-opacity-5 py-9 px-4 lg:p-16 lg:rounded-3xl">
+      <SectHeading className="text-center">Команда</SectHeading>
+      <div class="prose hidden-block dir-left text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto mb-8 md:mb-10 lg:mb-16">
+        <p>
+          В нашей команде объединены люди, чьи опыт, знания, возможности и искренняя вера
+          в добро позволяют не просто оказать необходимую помощь подопечным,  а создать
+          и внедрить современную и эффективную программу социальной адаптации, не имеющей аналогов в нашей стране.
+        </p>
+        <p>
+          В рамках сотрудничества с крупнейшими медицинскими учреждениями России способствовать повышению скорости и результативности оказания
+          высокотехнологичной медицинской помощи.
+        </p>
+      </div>
+      <Tabs client:load />
+    </div>
+  </div>
+</section>
