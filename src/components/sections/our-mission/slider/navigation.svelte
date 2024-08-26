@@ -12,7 +12,7 @@
   export let currentSlide: number;
 </script>
 
-<div class={cn('flex gap-2 lg:gap-5', className)}>
+<nav class={cn('flex gap-2 lg:gap-5', className)}>
   <button class={cn(cnBtn, 'swiper-button-prev ')}>
     <svg
       width="1em"
@@ -45,4 +45,4 @@
       />
     </svg>
   </button>
-</div>
+</nav>

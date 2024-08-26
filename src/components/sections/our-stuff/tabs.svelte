@@ -5,6 +5,7 @@
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import { register, type SwiperContainer } from 'swiper/element';
+  import { Navigation } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
 
   let targetPositionId = stuffPositions[0].id;
@@ -19,7 +20,10 @@
   $: viewStaffName = positionStaff.at(0)?.name;
   let currentSlide = 0;
   let swiperEl: SwiperContainer;
+  const cnBtn =
+    'lg:text-4xl w-16 h-16 lg:h-28 lg:w-28 flex justify-center items-center bg-opacity-0 text-dark rounded-full disabled:bg-dark disabled:text-white border border-dark disabled:opacity-50';
   const options = {
+    modules: [Navigation],
     spaceBetween: 20,
     centeredSlides: true,
     breakpoints: {
@@ -33,6 +37,10 @@
         viewStaffName =
           swiper.slides[swiper.activeIndex].getAttribute('data-name')!;
       },
+    },
+    navigation: {
+      nextEl: 'section.our-stuff .swiper-button-next',
+      prevEl: 'section.our-stuff .swiper-button-prev',
     },
   } as SwiperOptions;
 
@@ -106,6 +114,39 @@
     </swiper-slide>
   {/each}
 </swiper-container>
+
 <h3 class="text-2xl font-light mt-4 text-center md:hidden">
   {viewStaffName}
 </h3>
+
+<nav class={'flex gap-2 lg:gap-5 mt-5 justify-center'}>
+  <button class={cn(cnBtn, 'swiper-button-prev ')}>
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 36 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.7266 26.8164L0.910156 14M0.910156 14L13.7266 1.18355M0.910156 14L35.0838 14"
+        stroke="currentColor"
+      />
+    </svg>
+  </button>
+  <button class={cn(cnBtn, 'swiper-button-next')}>
+    <svg
+      class="rotate-180"
+      width="1em"
+      height="1em"
+      viewBox="0 0 36 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.7266 26.8164L0.910156 14M0.910156 14L13.7266 1.18355M0.910156 14L35.0838 14"
+        stroke="currentColor"
+      />
+    </svg>
+  </button>
+</nav>

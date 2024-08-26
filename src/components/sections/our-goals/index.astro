@@ -49,115 +49,102 @@ const screenData = [
 ]
 ---
 <script>
-  import gsap from "gsap";
+
+import { isTouchDevice } from "@/lib/utils";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+if (!isTouchDevice()) {
 
-const screens = document.querySelectorAll(".section-our-goals .screen");
+  gsap.registerPlugin(ScrollTrigger);
 
-const horizontalScrollTween = gsap.to(".section-our-goals .horizontal-scroll-container", {
-  xPercent: -100 * (screens.length - 1),
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".horizontal-scroll-container",
-    pin: true,
-    scrub: true,
-    anticipatePin: 1,
-    end: () => "+=" + window.innerWidth * (screens.length - 1),
+  const screens = document.querySelectorAll(".section-our-goals .screen");
 
-  },
-});
+  const horizontalScrollTween = gsap.to(".section-our-goals .horizontal-scroll-container", {
+    xPercent: -100 * (screens.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".horizontal-scroll-container",
+      pin: true,
+      scrub: true,
+      anticipatePin: 1,
+      end: () => "+=" + window.innerWidth * (screens.length - 1),
 
-screens.forEach((section) => {
-  // Создаём анимацию для каждой секции
-  gsap.fromTo(section,
-    { filter: "grayscale(100%)", opacity: 0.2 },
-    {
-      opacity: 1,
-      filter: "grayscale(0%)",
-      scrollTrigger: {
-        trigger: section,
-        containerAnimation: horizontalScrollTween,
-        start: "left right",
-        end: "right center",
-        scrub: true,
-      },
-    }
-  );
+    },
+  });
 
-  const counters = section.querySelectorAll(".counter");
-
-  counters.forEach((counter) => {
-    const el = counter as HTMLElement;
-    const endValue = parseInt(el.getAttribute('data-count') || "0", 10);
-
-    if (!isNaN(endValue)) {
-      gsap.timeline({
+  screens.forEach((section) => {
+    // Создаём анимацию для каждой секции
+    gsap.fromTo(section,
+      { filter: "grayscale(100%)", opacity: 0.2 },
+      {
+        opacity: 1,
+        filter: "grayscale(0%)",
         scrollTrigger: {
           trigger: section,
           containerAnimation: horizontalScrollTween,
-          start: "+=300 right",
-          end: "+=300 center",
+          start: "left right",
+          end: "right center",
           scrub: true,
-          once: true,
-        }
-      })
-      .fromTo(el, { innerText: '0' }, {
-          innerText: endValue,
-          duration: 0.5,
-          ease: "power1.out",
-          snap: { innerText: 1 },
-          immediateRender: false,
-      });
-    }
+        },
+      }
+    );
+
+    const counters = section.querySelectorAll(".counter");
+
+    counters.forEach((counter) => {
+      const el = counter as HTMLElement;
+      const endValue = parseInt(el.getAttribute('data-count') || "0", 10);
+
+      if (!isNaN(endValue)) {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            containerAnimation: horizontalScrollTween,
+            start: "+=300 right",
+            end: "+=300 center",
+            scrub: true,
+            once: true,
+          }
+        })
+        .fromTo(el, { innerText: '0' }, {
+            innerText: endValue,
+            duration: 0.5,
+            ease: "power1.out",
+            snap: { innerText: 1 },
+            immediateRender: false,
+        });
+      }
+    });
   });
-});
+} else {
+  const screens = document.querySelectorAll(".section-our-goals .screen");
+  screens.forEach((section) => {
+    const counters = section.querySelectorAll(".counter");
+    counters.forEach((counter) => {
+      const el = counter as HTMLElement;
+      const endValue = parseInt(el.getAttribute('data-count') || "0", 10);
+
+      if (!isNaN(endValue)) {
+        el.innerText = endValue.toString();
+      }
+    });
+  });
+}
+
 </script>
 
 <section class="section-our-goals relative z-0">
   <div class="heading-container absolute inset-0 z-20 pt-32 pb-[70vh]">
-    <SectHeading className="text-center sticky top-32">
+    <SectHeading className="text-center sticky top-32 hidden lg:block">
       НАШИ <span class="text-accent">ЦЕЛИ</span>
     </SectHeading>
   </div>
-  <div class="horizontal-scroll-container flex h-svh relative z-0">
-
+  <div class="horizontal-scroll-container flex flex-wrap lg:flex-nowrap h-svh relative z-0">
     {
       screenData.map((screen) => (
         <Screen {...screen} />
       ))
     }
-    <!-- <div class="screen flex flex-col justify-end bg-cover bg-center relative z-0 min-w-[100vw] min-h-svh" style={`background-image: url(${screenBg1.src});`}>
-      <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
-      <div class="container flex">
-        <p class="counter hidden-block dir-bottom text-[60vmin] leading-none font-sov-mod tracking-tighter pr-6" data-count="30">0</p>
-        <div class="pl-16 pb-10 w-fit self-start relative z-0">
-          <article class="max-w-xl px-16 py-5 bg-gradient-to-tl from-gr-start via-gr-middle to-gr-end text-dark text-2xl rounded-3xl ">
-            <p>
-              Привлечь в качестве партнеров
-              Фонда не менее тридцати ключевых
-              предприятий.
-            </p>
-          </article>
-          <Image src={cursorFragment} alt="cursor" class="absolute bottom-0 left-0 -z-10" />
-        </div>
-      </div>
-    </div>
-
-    <div class="screen flex flex-col justify-end bg-cover bg-center relative z-0 min-w-[100vw] min-h-svh" style={`background-image: url(${screenBg2.src});`}>
-      <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
-      <div class="container">
-        <p class="counter text-[60vmin] leading-none font-sov-mod tracking-tighter pr-6" data-count="11">0</p>
-      </div>
-    </div>
-
-    <div class="screen flex flex-col justify-end bg-cover bg-center relative z-0 min-w-[100vw] min-h-svh" style={`background-image: url(${screenBg3.src});`}>
-      <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
-      <div class="container">
-        <p class="counter text-[60vmin] leading-none font-sov-mod tracking-tighter pr-6" data-count="100">0</p>
-      </div>
-    </div> -->
-
   </div>
 </section>
