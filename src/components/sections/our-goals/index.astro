@@ -61,19 +61,19 @@ if (!isTouchDevice()) {
   const screens = document.querySelectorAll(".section-our-goals .screen");
 
   const horizontalScrollTween = gsap.to(".section-our-goals .horizontal-scroll-container", {
-    xPercent: -100 * (screens.length - 1),
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".horizontal-scroll-container",
-      pin: true,
-      scrub: true,
-      anticipatePin: 1,
-      end: () => "+=" + window.innerWidth * (screens.length - 1),
-
-    },
-  });
+  xPercent: -100 * (screens.length - 1),
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".horizontal-scroll-container",
+    pin: true,
+    scrub: 1,
+    anticipatePin: 1,
+    end: () => "+=" + window.innerWidth * (screens.length - 1),
+  },
+});
 
   screens.forEach((section) => {
+
     // Создаём анимацию для каждой секции
     gsap.fromTo(section,
       { filter: "grayscale(100%)", opacity: 0.2 },
@@ -85,7 +85,7 @@ if (!isTouchDevice()) {
           containerAnimation: horizontalScrollTween,
           start: "left right",
           end: "right center",
-          scrub: true,
+          scrub: 1,
         },
       }
     );
@@ -103,7 +103,7 @@ if (!isTouchDevice()) {
             containerAnimation: horizontalScrollTween,
             start: "+=300 right",
             end: "+=300 center",
-            scrub: true,
+            scrub: 1,
             once: true,
           }
         })
@@ -115,9 +115,18 @@ if (!isTouchDevice()) {
             immediateRender: false,
         });
       }
+
+
     });
+
   });
+
+
+
+
 } else {
+  console.log('is touch device');
+
   const screens = document.querySelectorAll(".section-our-goals .screen");
   screens.forEach((section) => {
     const counters = section.querySelectorAll(".counter");
