@@ -5,14 +5,14 @@ body {
   overflow-x: clip;
 }
 
-/* body.loading {
+body.loading {
   .app {
     opacity: 0;
   }
 }
 .app {
   transition: opacity 0.1s;
-} */
+}
 
 .hidden-block {
   opacity: 0;
