@@ -1,32 +1,26 @@
-@layer utilities {
-  /* Основной класс */
-  .hidden-block {
-    @apply opacity-0 transition-all duration-500;
-    --x: 0px;
-    --y: 0px;
-    transform: translate(var(--x), var(--y));
+.hidden-block {
+  opacity: 0;
+  --offset: 3rem;
+  --x: 0px;
+  --y: 0px;
+  transform: translate(var(--x), var(--y));
+  transition: opacity 1s, transform 1s;
+
+  &.dir-left {
+    --x: calc(var(--offset) * -1);
+  }
+  &.dir-right {
+    --x: var(--offset);
+  }
+  &.dir-top {
+    --y: calc(var(--offset * -1));
+  }
+  &.dir-bottom {
+    --y: var(--offset);
   }
 
-  /* Направление сдвига */
-  .hidden-block--left {
-    --x: -20px;
-  }
-
-  .hidden-block--right {
-    --x: 20px;
-  }
-
-  .hidden-block--top {
-    --y: -20px;
-  }
-
-  .hidden-block--bottom {
-    --y: 20px;
-  }
-
-  /* Видимый элемент */
-  .hidden-block--visible {
-    @apply opacity-100;
+  &.hidden-block--visible {
+    opacity: 1;
     --x: 0px;
     --y: 0px;
   }

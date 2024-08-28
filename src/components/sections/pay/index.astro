@@ -1,0 +1,29 @@
+---
+import bgSourse from '@/assets/img/bg.webp';
+import Button from '@/components/ui/button.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { payData } from '@/lib/data/pay';
+import { getImage } from 'astro:assets';
+
+const bg = await getImage({src: bgSourse})
+---
+
+<section class="pay bg-cover bg-center bg-fixed relative overflow-clip" style={`background-image: url(${bg.src});` }>
+  <div class="container max-w-5xl flex flex-col justify-between pt-8 md:pt-20 lg:grid grid-cols-[auto,1fr] lg:min-h-svh gap-10 lg:gap-28 text-center lg:text-left">
+    <div class="hidden-block dir-bottom">
+      <img class="m-auto w-56 md:w-full max-w-sm h-full object-contain object-bottom" src={payData.image} alt={payData.link}>
+    </div>
+    <div class="flex flex-col justify-center items-center lg:items-start -order-1 lg:-order-none">
+      <SectHeading className="">Как <span class="text-accent">помочь</span>
+      </SectHeading>
+      <p class="mb-10 text-sm md:text-lg font-thin max-w-lg">
+        Вы можете внести свой вклад с помощью пожертвования или волонтерства. Для оплаты отсканируйте QR-код
+        в мобильном приложении банка или штатной
+        камерой телефона.
+      </p>
+      <Button href={payData.link} external>
+        Оплатить онлайн
+      </Button>
+    </div>
+  </div>
+</section>

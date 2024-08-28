@@ -1,0 +1,81 @@
+---
+import svgMap from "@/assets/img/adress.svg";
+import bgSource from "@/assets/img/bg.webp";
+import svgMail from "@/assets/img/email.svg";
+import svgOpenHours from "@/assets/img/open-hours.svg";
+import svgPhone from "@/assets/img/tel.svg";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { contacts } from "@/lib/data/contacts";
+import { toAnchorPhoneNumber } from "@/lib/utils";
+import { getImage, Image } from "astro:assets";
+
+
+const bg = await getImage({src: bgSource})
+
+---
+
+
+
+<section style={`background-image: url(${bg.src});`} class="contacts relative z-0 overflow-clip bg-cover bg-center bg-fixed">
+  <div class="container py-8 md:py-20 lg:min-h-svh">
+    <SectHeading className="text-center">Контакты</SectHeading>
+    <p class="hidden-block dir-right text-sm md:text-base font-thin lg:text-lg text-center max-w-xl mx-auto mb-8 md:mb-10">
+      Если у вас остались вопросы, мы с удовольствием
+      вам ответим в рабочее время.
+    </p>
+
+    <!-- Desktop -->
+    <div class="lg:grid grid-cols-[auto,auto,1fr] grid-rows-[auto,1fr] gap-x-16 gap-y-8 hidden">
+      <div>
+        <p class="text-sm md:text-base font-thin lg:text-lg lowercase mb-1">Телефон</p>
+        <p class="text-4xl border-b-2 border-b-white"><a href={`tel:${toAnchorPhoneNumber(contacts.phone)}`}>{contacts.phone}</a></p>
+      </div>
+      <div>
+        <p class="text-sm md:text-base font-thin lg:text-lg lowercase mb-1">Часы работы</p>
+        <p class="text-4xl border-b-2 border-b-white">{contacts.openingHours}</p>
+      </div>
+      <div>
+        <p class="text-sm md:text-base font-thin lg:text-lg lowercase mb-1">Электронная почта</p>
+        <p class="text-3xl border-b-2 border-b-white"><a href={"mailto:" + contacts.email}>{contacts.email}</a></p>
+      </div>
+      <div>
+        <p class="text-sm md:text-base font-thin lg:text-lg lowercase mb-1">Адрес</p>
+        <p class="text-3xl border-b-2 border-b-white mb-1">{contacts.city}</p>
+        <p >{contacts.address}</p>
+        <p>Индекс: {contacts.postIndex}</p>
+      </div>
+      <div class="bg-white aspect-video -col-start-1 -col-end-2 row-start-1 row-end-3 rounded-3xl overflow-clip relative">
+        <a href={contacts.mapLink} class="absolute inset-0" target="_blank"></a>
+        <img class="w-full h-full object-cover object-center" src={`https://static-maps.yandex.ru/v1?lang=ru_RU&pt=${contacts.mapCoords},round&z=18&size=630,355&apikey=1a8eeb00-6b85-405c-bf6f-bada69c3bc2b&theme=dark`} alt="">
+      </div>
+    </div>
+
+    <!-- Mobile -->
+    <div class="lg:hidden">
+      <div class="mb-4 flex gap-4 items-center">
+        <Image class='w-8 md:w-16' src={svgMail} alt="icon" />
+        <p><a href={'mailto:' + contacts.email}>{contacts.email}</a></p>
+      </div>
+      <div class="mb-4 flex gap-4 items-center">
+        <Image class='w-8 md:w-16' src={svgOpenHours} alt="icon" />
+        <p>{contacts.openingHours}</p>
+      </div>
+      <div class="mb-4 flex gap-4 items-center">
+        <Image class='w-8 md:w-16' src={svgPhone} alt="icon" />
+        <p><a href={"tel:" + toAnchorPhoneNumber(contacts.phone)}>{contacts.phone}</a></p>
+      </div>
+      <div class="mb-4 flex gap-4 items-center">
+        <Image class='w-8 md:w-16' src={svgMap} alt="icon" />
+        <p>{contacts.postIndex}, {contacts.city}, <br>{contacts.address}</p>
+      </div>
+      <div class="bg-white aspect-video rounded-2xl mt-8 overflow-clip relative">
+        <a href={contacts.mapLink} class="absolute inset-0" target="_blank"></a>
+        <img class="w-full h-full object-cover object-center" src={`https://static-maps.yandex.ru/v1?lang=ru_RU&pt=${contacts.mapCoords},round&z=19&size=630,355&apikey=1a8eeb00-6b85-405c-bf6f-bada69c3bc2b&theme=dark`} alt="">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+

@@ -171,3 +171,7 @@ export function transformIconifyIdToTW(id: string): string {
 export function isTouchDevice() {
   return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 }
+
+export function toAnchorPhoneNumber(phoneNumber: string) {
+  return phoneNumber.replace(/[\s\(\)-]/g, '');
+}

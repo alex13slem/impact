@@ -24,6 +24,7 @@
           />
         {/if}
         <img
+          loading="lazy"
           src={s.image}
           alt={s.description}
           class="w-full h-full object-cover object-center"

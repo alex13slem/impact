@@ -5,12 +5,7 @@
   import line420 from '@/assets/img/line-420.svg';
   //@ts-ignore
   import line460 from '@/assets/img/line-460.svg';
-  import {
-    linesVisible,
-    loading,
-    mapVisible,
-    sloganVisible,
-  } from '@/lib/stores/pageLoadingStore';
+  import { loading, sloganVisible } from '@/lib/stores/pageLoadingStore';
   import { cn } from '@/lib/utils';
   import { loadingScreen } from '@/lib/utils/loadingScreen';
   import { onMount } from 'svelte';
@@ -32,7 +27,6 @@
 />
 
 {#if $loading}
-  <!-- content here -->
   <section
     transition:blur={{ duration: 1000 }}
     id="loading-section"
@@ -42,51 +36,24 @@
     <div
       class="container min-h-[calc(100svh-53px)] md:min-h-[calc(100svh-65px)] lg:min-h-[calc(100svh-89px)] py-5 md:py-8 lg:py-10 px-0 relative z-0 grid place-items-center"
     >
-      <SvgMap
-        className={cn(
-          {
-            'opacity-0': !$mapVisible,
-          },
-          'map pointer-events-none ',
-        )}
-      />
+      <SvgMap className={cn('map pointer-events-none ')} />
       <img
-        class={cn(
-          {
-            'opacity-0': !$linesVisible,
-          },
-          ' absolute v-line left-[calc(50%-76px)]',
-        )}
+        class={cn(' absolute v-line left left-[calc(50%-76px)]')}
         src={line420.src}
         alt=""
       />
       <img
-        class={cn(
-          {
-            'opacity-0': !$linesVisible,
-          },
-          ' absolute v-line left-[calc(50%+76px)]',
-        )}
+        class={cn(' absolute v-line right left-[calc(50%+76px)]')}
         src={line420.src}
         alt=""
       />
       <img
-        class={cn(
-          {
-            'opacity-0': !$linesVisible,
-          },
-          ' absolute h-line top top-[calc(50%-137px)]',
-        )}
+        class={cn(' absolute h-line top top-[calc(50%-137px)]')}
         src={line460.src}
         alt=""
       />
       <img
-        class={cn(
-          {
-            'opacity-0': !$linesVisible,
-          },
-          'absolute h-line bottom top-[calc(50%+134px)]',
-        )}
+        class={cn('absolute h-line bottom top-[calc(50%+134px)]')}
         src={line460.src}
         alt=""
       />
@@ -100,21 +67,21 @@
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          class="small opacity-0"
+          class="small"
           fill-rule="evenodd"
           clip-rule="evenodd"
           d="M35.2832 35.6938H116.469V69.4785H95.0888L95.0888 201.847H116.469L116.469 235.58L35.2832 235.743L35.2832 201.847H56.8833L56.8833 69.4785H35.2832V35.6938ZM43.885 44.2957V60.8766H65.4852L65.4851 210.449H43.885L43.885 227.124L107.867 226.995L107.867 210.449H86.487L86.487 60.8766H107.867V44.2957H43.885Z"
           fill="url(#paint2_linear_2289_147)"
         />
         <path
-          class="mid opacity-0"
+          class="mid"
           fill-rule="evenodd"
           clip-rule="evenodd"
           d="M17.6782 18.2207H134.107V88.0631H113.431V184.014H134.107V252.99L17.6782 253.224V184.014H39.2783V88.0631H17.6782V18.2207ZM26.2801 26.8226V79.4612H47.8802V192.616H26.2801V244.604L125.505 244.405V192.616H104.829V79.4612H125.505V26.8226H26.2801Z"
           fill="url(#paint1_linear_2289_147)"
         />
         <path
-          class="big opacity-0"
+          class="big"
           fill-rule="evenodd"
           clip-rule="evenodd"
           d="M0 0H151.757V104.522H130.542V166.292H151.757V270.49H86.7866V261.888H143.155V174.894H121.94V95.9204H143.155V8.60185H8.60183V95.9204H30.2448V174.894H8.60183V261.888H65.6504V270.49H0V166.292H21.643V104.522H0V0Z"
@@ -212,17 +179,17 @@
         >
           <span
             class={cn({
-              'opacity-0 scale-150 blur-md': !$sloganVisible,
+              'opacity-0 scale-150 translate-y-full': !$sloganVisible,
             })}>МЕЧТА</span
           >
           <span
             class={cn({
-              'opacity-0 scale-150 blur-md': !$sloganVisible,
+              'opacity-0 scale-150 translate-y-full': !$sloganVisible,
             })}>ВОЗМОЖНОСТЬ</span
           >
           <span
             class={cn({
-              'opacity-0 scale-150 blur-md': !$sloganVisible,
+              'opacity-0 scale-150 translate-y-full': !$sloganVisible,
             })}>РЕЗУЛЬТАТ</span
           >
         </p>

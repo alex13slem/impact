@@ -10,7 +10,7 @@
   }}
 >
   <svg
-    class={cn('absolute inset-0 ml-auto', {
+    class={cn('absolute inset-0 ml-auto ', {
       'opacity-0': !$mobileMenuVisible,
     })}
     width="21"
@@ -27,7 +27,7 @@
       {
         'opacity-0': $mobileMenuVisible,
       },
-      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-accent',
     )}
     width="40"
     height="11"

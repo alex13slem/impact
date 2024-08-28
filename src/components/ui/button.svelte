@@ -4,6 +4,7 @@
   export let className: string = '';
   export let href: string = '';
   export let variant: 'light' | 'dark' = 'light';
+  export let external: boolean = false;
 </script>
 
 <button
@@ -14,7 +15,11 @@
   })}
 >
   {#if href}
-    <a {href} class="absolute inset-0 opacity-0">link</a>
+    <a
+      {href}
+      target={external ? '_blank' : '_self'}
+      class="absolute inset-0 opacity-0">link</a
+    >
   {/if}
   <slot />
 </button>

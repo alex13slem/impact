@@ -1,14 +1,32 @@
 ---
+import screen1Src from '@/assets/img/goals-1.jpg';
+import screen2Src from '@/assets/img/goals-2.jpg';
+import screen3Src from '@/assets/img/goals-3.jpg';
+import { SectContacts } from '@/components/sections/contacts';
 import { SectDescription } from '@/components/sections/description';
+import { SectDocuments } from '@/components/sections/documents';
 import { SectHero } from '@/components/sections/hero';
-import { SectOurGoals } from '@/components/sections/our-goals';
 import { SectOurMission } from '@/components/sections/our-mission';
 import { SectOurPartners } from '@/components/sections/our-partners';
 import { SectOurStuff } from '@/components/sections/our-stuff';
+import { SectPay } from '@/components/sections/pay';
 import { SectSocialPrograms } from '@/components/sections/social-programs';
 import '@/index.css';
+import { goals } from '@/lib/data/goals';
+import { getImage } from 'astro:assets';
 import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
+
+import Screen from '../components/sections/our-goals/screen.svelte';
+
+const screenBg1 = await getImage({src: screen1Src})
+const screenBg2 = await getImage({src: screen2Src})
+const screenBg3 = await getImage({src: screen3Src})
+
+const screenData = goals.map((goal, idx) => ({
+  ...goal,
+  image: idx === 0 ? screenBg1.src : idx === 1 ? screenBg2.src : screenBg3.src
+  }))
 ---
 
 <RootLayout>
@@ -20,9 +38,16 @@ import { Seo } from '../components/seo';
 		<SectSocialPrograms />
 		<SectOurPartners />
 		<SectOurStuff />
-		<SectOurGoals />
-		<section class="h-svh w-svw bg-white">
-
-		</section>
+		{
+			screenData.map((screen) => (
+				<section class="section-slide overflow-clip">
+					<Screen goal={screen} client:load/>
+				</section>
+			))
+		}
+		<!-- <SectOurGoals /> -->
+		<SectPay />
+		<SectDocuments />
+		<SectContacts />
 	</main>
 </RootLayout>

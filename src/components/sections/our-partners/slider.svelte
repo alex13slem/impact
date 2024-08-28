@@ -93,7 +93,7 @@
             >
           </div>
         </div>
-        <img src={p.image} alt={p.name} class="w-full h-full object-contain" />
+        <img loading="lazy" src={p.image} alt={p.name} class="w-full h-full object-contain" />
       </button>
     </swiper-slide>
   {/each}

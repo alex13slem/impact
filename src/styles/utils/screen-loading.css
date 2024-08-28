@@ -1,0 +1,8 @@
+body.loading {
+  .app {
+    opacity: 0;
+  }
+}
+.app {
+  transition: opacity 0.1s;
+}

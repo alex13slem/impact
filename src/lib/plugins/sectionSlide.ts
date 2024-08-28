@@ -5,6 +5,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 document.querySelectorAll('.section-slide').forEach(section => {
   gsap.to(section, {
+    opacity: 0,
+    filter: 'grayscale(50%) blur(2px)',
     scrollTrigger: {
       trigger: section,
       start: 'top top',
@@ -13,6 +15,9 @@ document.querySelectorAll('.section-slide').forEach(section => {
       scrub: 1,
       pin: true,
       pinSpacing: false,
+      onLeave: () => {
+        ScrollTrigger.refresh();
+      },
     },
   });
 });

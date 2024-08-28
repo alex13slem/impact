@@ -4,4 +4,7 @@
 @import 'styles/scrollbar.css';
 
 @import 'tailwindcss/components';
+
 @import 'tailwindcss/utilities';
+@import 'styles/utils/hidden-block.css';
+@import 'styles/utils/screen-loading.css';

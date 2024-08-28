@@ -54,7 +54,7 @@
 </script>
 
 <nav
-  class="flex gap-4 max-w-5xl lg:justify-center lg:flex-wrap mx-auto mb-8 lg:mb-16 overflow-auto pb-3 px-4 lg:p-0 w-svw relative -left-4"
+  class="flex gap-4 max-w-5xl lg:justify-center lg:flex-wrap mx-auto mb-8 lg:mb-16 overflow-auto pb-3 px-4 lg:p-0 w-svw md:w-auto relative -left-4"
 >
   {#each stuffPositions as pos, idx (pos.id)}
     <button
@@ -119,7 +119,7 @@
   {viewStaffName}
 </h3>
 
-<nav class={'flex gap-2 lg:gap-5 mt-5 justify-center'}>
+<nav class={'flex gap-2 lg:gap-5 mt-5 justify-center lg:hidden'}>
   <button class={cn(cnBtn, 'swiper-button-prev ')}>
     <svg
       width="1em"
