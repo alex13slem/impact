@@ -54,7 +54,7 @@
       </div>
     </article>
 
-    {#if idx < news.length - 1}
+    {#if idx < viewedNews.length - 1}
       <hr class="my-7 border-white border-opacity-15" />
     {/if}
   {/each}

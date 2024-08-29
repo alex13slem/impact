@@ -1,0 +1,21 @@
+---
+import SectHeading from '@/components/ui/sect-heading.svelte'
+import type { PartnerWithContribution } from '@/lib/data/partners'
+import InteractiveBlock from './interactive-block/index.svelte'
+
+interface Props {
+  partner: PartnerWithContribution
+}
+
+const { partner } = Astro.props
+---
+
+<section class="py-8 xl:py-20">
+  <div class="container">
+    <SectHeading className='max-w-md mb-4 md:mb-4' level={1}>
+      {partner.name}
+    </SectHeading>
+    <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{partner.description}</p>
+    <InteractiveBlock className='mt-8' client:load contributions={partner.contributions} />
+  </div>
+</section>

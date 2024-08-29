@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { socialPrograms } from '@/lib/data/social-programs';
+  import { socialPrograms } from '@/lib/data/socialPrograms';
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import { fade } from 'svelte/transition';

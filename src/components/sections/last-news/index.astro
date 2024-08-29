@@ -24,7 +24,7 @@ const lastNews = news.sort((a, b) => b.time.getTime() - a.time.getTime()).slice(
         </time>
         <h3 class="text-sm md:text-base xl:text-xl xl:font-bold mt-3 xl:font-sov-mod xl:max-w-60 flex justify-between items-end gap-4">
           {item.title}
-          <svg class="text-lg shrink-0" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 12l-6-6m6 6l-6 6m6-6H5"/></svg>
+          <svg class="text-lg shrink-0 xl:hidden" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 12l-6-6m6 6l-6 6m6-6H5"/></svg>
         </h3>
         <div class="prose mt-1 hidden xl:block"><p>{item.description}</p></div>
         <p class="mt-5 text-lg group-hover:text-accent transition-colors hidden xl:block">

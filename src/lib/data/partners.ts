@@ -1,3 +1,6 @@
+import { contributions } from './contributions';
+import { partnersToSocialElevator } from './partnersToSocialElevarors';
+
 export interface Partner {
   id: number;
   name: string;
@@ -55,3 +58,17 @@ export const partners: Partner[] = [
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
   },
 ];
+
+export const partnersWithContribution = partners.map(partner => {
+  const partnerContributions = contributions.filter(socialElevator => {
+    return partnersToSocialElevator.some(relation => {
+      return (
+        relation.partnerId === partner.id &&
+        relation.socialElevatorId === socialElevator.id
+      );
+    });
+  });
+  return { ...partner, contributions: partnerContributions };
+});
+
+export type PartnerWithContribution = (typeof partnersWithContribution)[number];

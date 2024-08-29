@@ -9,10 +9,14 @@
 
 <button
   on:click
-  class={cn('rounded-2xl py-5 px-7 leading-none relative', className, {
-    'bg-white text-dark': variant === 'light',
-    'bg-dark text-white': variant === 'dark',
-  })}
+  class={cn(
+    'text-sm md:text-base rounded-xl md:rounded-2xl py-3 md:py-4 px-5 md:px-7 leading-none relative',
+    className,
+    {
+      'bg-white text-dark': variant === 'light',
+      'bg-dark text-white': variant === 'dark',
+    },
+  )}
 >
   {#if href}
     <a

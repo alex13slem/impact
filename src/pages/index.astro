@@ -11,13 +11,12 @@ import { SectOurPartners } from '@/components/sections/our-partners';
 import { SectOurStuff } from '@/components/sections/our-stuff';
 import { SectPay } from '@/components/sections/pay';
 import { SectSocialPrograms } from '@/components/sections/social-programs';
-import '@/index.css';
 import { goals } from '@/lib/data/goals';
 import { getImage } from 'astro:assets';
 import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
 
-import { siteInfo } from '@/lib/data/site-info';
+import { siteInfo } from "@/lib/data/siteInfo";
 import Screen from '../components/sections/our-goals/screen.svelte';
 
 const screenBg1 = await getImage({src: screen1Src})

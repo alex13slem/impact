@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { socialPrograms } from '@/lib/data/social-programs';
+  import { socialPrograms } from '@/lib/data/socialPrograms';
   import { filterSocialProgram } from '@/lib/stores/socialProgramStore';
   import { cn } from '@/lib/utils';
   import { handleFilterSocialProgram } from '@/lib/utils/eventHandlers';

@@ -4,15 +4,16 @@ import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
 import { news } from '@/lib/data/news';
+import type { GetStaticPaths } from "astro";
 
-export function getStaticPaths() {
+export const getStaticPaths = (() => {
   const paths = news.map((item) => ({
     params: { slug: item.slug },
     props: { item },
   }))
 
   return paths
-}
+}) satisfies GetStaticPaths;
 
 const { item } = Astro.props
 

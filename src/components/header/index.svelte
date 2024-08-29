@@ -1,7 +1,7 @@
 <script lang="ts">
   //@ts-ignore
   import siteLogo from '@/assets/img/site-logo.png';
-  import { navLinks } from '@/lib/data/nav-links';
+  import { navLinks } from '@/lib/data/navLinks';
   import { scrollHidden } from '@/lib/hooks/scrollHidden';
   import { cn } from '@/lib/utils';
   import { onMount } from 'svelte';

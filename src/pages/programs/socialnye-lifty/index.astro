@@ -1,0 +1,56 @@
+---
+import { RootLayout } from '@/components/layouts/root';
+import { Seo } from '@/components/seo';
+import Button from '@/components/ui/button.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { partnersWithContribution } from '@/lib/data/partners';
+import { siteInfo } from "@/lib/data/siteInfo";
+
+const seo = siteInfo.find((item) => item.slug === 'socialnye-lifty');
+---
+
+<RootLayout>
+	<Seo
+		slot={'seo'}
+		title={seo?.name || 'Социальные лифты'}
+		description={seo?.description || ''}
+		imageUrls={{fb: seo?.image || ''}}
+	/>
+
+	<main>
+    <section class="py-8 xl:py-20">
+      <div class="container">
+        <div class="md:flex justify-between items-start">
+          <SectHeading className='max-w-md mb-4 md:mb-4' level={1}>
+            {seo?.name || 'Социальные лифты'}
+          </SectHeading>
+          <Button href='/partner-docs'>Стать партнёром</Button>
+        </div>
+        <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description || 'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'}</p>
+
+        {partnersWithContribution.map((partner) => {
+          if (partner.contributions.length) return (
+            <article class="grid md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20">
+              <img width="160" height="160" class="w-40 h-40 row-span-3 rounded-full md:sticky top-24 lg:top-28" src={partner.image} alt={partner.name}>
+              <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none"><a href={`/partners/${partner.id}`}>{partner.name}</a></h3>
+              <div class="col-span-2 lg:col-span-1">
+                <h3 class="text-lg">О предприятии:</h3>
+                <p class="font-thin text-sm md:text-base">{partner.description}</p>
+              </div>
+              <div class="col-span-2 lg:col-span-1">
+                <h3 class="text-lg">Совместное участие:</h3>
+                <ul class="list-disc list-inside">
+                  {partner.contributions.map((contribution) => (
+                    <li class="font-thin text-sm md:text-base mt-1 first-of-type:mt-0">
+                      <strong>{contribution.name}</strong><br>
+                      {contribution.description}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+        )})}
+      </div>
+    </section>
+	</main>
+</RootLayout>

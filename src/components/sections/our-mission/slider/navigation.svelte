@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ourMissionSlides } from '@/lib/data/our-mission-slides';
+  import { ourMissionSlides } from '@/lib/data/ourMissionSlides';
   import { cn } from '@/lib/utils';
   import { breakpoints } from '@sveu/browser';
 
