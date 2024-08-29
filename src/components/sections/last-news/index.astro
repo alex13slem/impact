@@ -1,0 +1,52 @@
+---
+import { news } from '@/lib/data/news'
+import { cn } from '@/lib/utils'
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'section'> {}
+
+const {  class: className, ...props } = Astro.props
+
+const lastNews = news.sort((a, b) => b.time.getTime() - a.time.getTime()).slice(0, 4)
+---
+
+<section class={cn('py-8 md:py-20', className)} {...props}>
+  <div class="container xl:grid grid-cols-4 gap-5">
+    {lastNews.map((item) => (
+      <article class="relative group ">
+        <a href={"/news/" + item.slug} class="absolute inset-0 opacity-0">/news/{item.slug}</a>
+        <img src={item.image} alt={item.title} class="w-full rounded-3xl aspect-video bg-white bg-opacity-60 mb-5 hidden xl:block">
+        <time datetime={item.time.toString()} class="text-sm px-3 py-1 xl:border border-white rounded-full leading-none bg-white xl:bg-transparent text-dark xl:text-inherit">
+          {item.time.toLocaleDateString('ru-RU', {
+            month: 'numeric',
+            day: 'numeric',
+          })}
+        </time>
+        <h3 class="text-sm md:text-base xl:text-xl xl:font-bold mt-3 xl:font-sov-mod xl:max-w-60 flex justify-between items-end gap-4">
+          {item.title}
+          <svg class="text-lg shrink-0" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 12l-6-6m6 6l-6 6m6-6H5"/></svg>
+        </h3>
+        <div class="prose mt-1 hidden xl:block"><p>{item.description}</p></div>
+        <p class="mt-5 text-lg group-hover:text-accent transition-colors hidden xl:block">
+          <a href={"/news/" + item.slug} class="flex items-center gap-4">Читать подробнее
+            <svg width="1em" height="0.5em" viewBox="0 0 35 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M26.1364 1L33.5 8.5M33.5 8.5L26.1364 16M33.5 8.5L-3.27835e-07 8.5" stroke="currentColor"/>
+            </svg>
+          </a>
+        </p>
+
+      </article>
+
+      <hr class="border-white border-opacity-90 my-4 xl:hidden">
+    ))}
+
+    <div class="flex justify-end xl:hidden mt-6">
+      <p class="flex gap-2 items-center border-b border-white">
+        <a href="/news">Все новости</a>
+        <svg class="text-sm" width="1em" height="1em" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.70497 0.675894H8.05675M8.05675 0.675894V7.02768M8.05675 0.675894L1.17565 7.557" stroke="currentColor"/>
+        </svg>
+      </p>
+    </div>
+  </div>
+</section>

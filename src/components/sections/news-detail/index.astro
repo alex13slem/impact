@@ -1,0 +1,52 @@
+---
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import type { NewsArticle } from '@/lib/data/news';
+
+interface Props {
+  item: NewsArticle
+}
+
+const { item } = Astro.props
+---
+
+<section class="py-8 md:py-20">
+  <div class="container relative z-0">
+    <SectHeading className='' level={1} >
+      {item.title}
+    </SectHeading>
+    <div class={'xl:flex gap-8 xl:gap-10 justify-center'}>
+
+      <div class={'flex flex-col flex-1 self-start  mb-8'}>
+        <div class="aspect-video rounded-3xl overflow-clip mb-5">
+            <img
+              class="w-full h-full object-cover object-center bg-white bg-opacity-60"
+              src={item.image}
+              alt={item.title}
+            />
+        </div>
+
+        <div class="flex gap-4">
+          <button
+            class="relative border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
+          >
+            <a href="/news" class="absolute inset-0 opacity-0">/index</a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              ><path
+                fill="currentColor"
+                fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+              /></svg
+            >
+            Все новости
+          </button>
+        </div>
+      </div>
+
+      <div class={ 'xl:max-w-3xl w-full prose'} set:html={item.body} />
+    </div>
+  </div>
+</section>

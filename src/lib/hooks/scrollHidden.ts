@@ -1,10 +1,10 @@
-export function scrollHeader(
+export function scrollHidden(
   node: HTMLElement,
   { triggerHeight }: { triggerHeight: string | number } = { triggerHeight: 0 },
 ) {
   let currentPos = 0;
   let prevPos = 0;
-  let top = 0;
+  let top = parseFloat(getComputedStyle(node).top) || 0;
   let headerHeight: number;
   const triggerPoint =
     typeof triggerHeight === 'string'

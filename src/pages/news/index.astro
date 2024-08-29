@@ -1,0 +1,27 @@
+---
+import { RootLayout } from '@/components/layouts/root';
+import { SectNews } from '@/components/sections/news-page';
+
+import { Seo } from '@/components/seo';
+
+import '@/index.css';
+
+import { siteInfo } from '@/lib/data/site-info';
+
+
+const seo = siteInfo.find((item) => item.slug === 'news');
+
+---
+
+<RootLayout>
+	<Seo
+		slot={'seo'}
+		title={seo?.name || 'Новости'}
+		description={seo?.description || ''}
+		imageUrls={{fb: seo?.image || ''}}
+	/>
+
+	<main>
+		<SectNews />
+	</main>
+</RootLayout>

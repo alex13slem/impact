@@ -2,7 +2,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
 document.querySelectorAll('.section-slide').forEach(section => {
   gsap.to(section, {
     opacity: 0,

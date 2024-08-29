@@ -2,16 +2,23 @@
   //@ts-ignore
   import siteLogo from '@/assets/img/site-logo.png';
   import { navLinks } from '@/lib/data/nav-links';
-  import { scrollHeader } from '@/lib/hooks/scrollHeader';
+  import { scrollHidden } from '@/lib/hooks/scrollHidden';
   import { cn } from '@/lib/utils';
+  import { onMount } from 'svelte';
   import { MobileMenu, MobileMenuTrigger } from '../mobile-menu';
+
+  let isHomePage: boolean = false;
+
+  onMount(() => {
+    isHomePage = window.location.pathname === '/';
+  });
 </script>
 
 <header
-  use:scrollHeader={{ triggerHeight: '100svh' }}
+  use:scrollHidden={{ triggerHeight: isHomePage ? '100svh' : 0 }}
   data-target="site-header"
   class={cn(
-    ' py-4 border-b border-white border-opacity-80 backdrop-blur fixed inset-0 bottom-auto z-40 transition-opacity bg-dark bg-opacity-30',
+    ' py-4 border-b border-white border-opacity-80 backdrop-blur sticky top-0 z-40 transition-opacity bg-dark bg-opacity-30',
   )}
 >
   <div class="container flex justify-between items-center">

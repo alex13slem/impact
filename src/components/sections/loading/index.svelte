@@ -5,29 +5,191 @@
   import line420 from '@/assets/img/line-420.svg';
   //@ts-ignore
   import line460 from '@/assets/img/line-460.svg';
-  import { loading, sloganVisible } from '@/lib/stores/pageLoadingStore';
+  import {
+    loading,
+    mapVisible,
+    sloganVisible,
+  } from '@/lib/stores/pageLoadingStore';
   import { cn } from '@/lib/utils';
-  import { loadingScreen } from '@/lib/utils/loadingScreen';
+  import { gsap } from 'gsap';
   import { onMount } from 'svelte';
   import { blur } from 'svelte/transition';
   import SvgMap from '../../russian-map/svg-map.svelte';
 
+  let root: HTMLElement;
+
+  const animateMap = async () => {
+    gsap
+      .timeline({
+        onStart: () => {
+          loading.set(true);
+          mapVisible.set(false);
+          sloganVisible.set(false);
+        },
+      })
+      .add([
+        gsap.set('#loading-section .map', {
+          opacity: 0,
+        }),
+        gsap.set('#loading-section .impact .letter', {
+          opacity: 0,
+        }),
+        gsap.set('#loading-section .slogan', {
+          opacity: 0,
+        }),
+      ])
+      .add([
+        gsap.to('#loading-section path.small', {
+          scale: 0,
+
+          opacity: 0,
+          duration: 1.5,
+          ease: 'back.out',
+          transformOrigin: 'center center',
+          filter: 'blur(10px)',
+        }),
+        gsap.to('#loading-section path.big', {
+          scale: 0,
+
+          opacity: 0,
+          duration: 1.5,
+          ease: 'back.out',
+          transformOrigin: 'center center',
+          filter: 'blur(10px)',
+        }),
+        gsap.to('#loading-section path.mid', {
+          scale: 0,
+          opacity: 0,
+          duration: 1.5,
+          ease: 'back.out',
+          transformOrigin: 'center center',
+          filter: 'blur(10px)',
+        }),
+        gsap.to('#loading-section img.h-line.top', {
+          translateX: '-100%',
+          duration: 1,
+          ease: 'back.out',
+          opacity: 0,
+        }),
+        gsap.to('#loading-section img.h-line.bottom', {
+          translateX: '100%',
+          duration: 1,
+          ease: 'back.out',
+          opacity: 0,
+          delay: 0.1,
+        }),
+        gsap.to('#loading-section img.v-line.left', {
+          translateY: '100%',
+          duration: 1,
+          ease: 'back.out',
+          opacity: 0,
+          delay: 0.2,
+        }),
+        gsap.to('#loading-section img.v-line.right', {
+          translateY: '-100%',
+          duration: 1,
+          ease: 'back.out',
+          opacity: 0,
+          delay: 0.3,
+        }),
+        gsap.to('#loading-section .impact .letter', {
+          opacity: 1,
+          stagger: 0.1,
+          delay: 0.5,
+        }),
+        gsap.to('#loading-section .slogan', {
+          opacity: 1,
+        }),
+        gsap.fromTo(
+          '#loading-section .slogan span',
+          {
+            opacity: 0,
+            scale: 1.5,
+            translateY: '100%',
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            translateY: 0,
+            delay: 1.2,
+            duration: 1,
+            ease: 'power3',
+            stagger: 1 / 3,
+            onStart: () => {
+              sloganVisible.set(true);
+            },
+            onComplete: () => {
+              gsap.fromTo(
+                '#loading-section .map',
+                {
+                  opacity: 0,
+                },
+                {
+                  opacity: 1,
+                  ease: 'power3.out',
+                  duration: 1.5,
+                  onStart: () => {
+                    mapVisible.set(true);
+                  },
+                },
+              );
+            },
+          },
+        ),
+      ])
+      .add([
+        gsap.to(
+          '#loading-section .impact, #loading-section .slogan, #loading-section .logo',
+          {
+            delay: 5,
+            filter: 'blur(10px)',
+            scale: 2,
+            ease: 'power2.inOut',
+            opacity: 0,
+            duration: 0.5,
+            onStart: () => {
+              document.body.classList.remove('loading');
+              loading.set(false);
+            },
+          },
+        ),
+        gsap.to('#loading-section .map', {
+          delay: 5,
+          transformOrigin: 'left center',
+          ease: 'power2.inOut',
+          duration: 0.5,
+          scale: 0.9,
+        }),
+      ]);
+  };
+
+  // let isLoading = $loading;
+
   onMount(() => {
-    loadingScreen();
+    animateMap();
   });
+
+  // afterUpdate(() => {
+  //   if (!isLoading && $loading) {
+  //     isLoading = true;
+  //     animateMap();
+  //   }
+  // });
 </script>
 
-<svelte:body
-  class={cn(
-    {
-      'overflow-hidden': $loading,
-    },
-    $$props.class,
-  )}
-/>
+<svelte:head>
+  {#if $loading}
+    <style>
+      body {
+        overflow: hidden;
+      }
+    </style>
+  {/if}
+</svelte:head>
 
 {#if $loading}
   <section
+    bind:this={root}
     transition:blur={{ duration: 1000 }}
     id="loading-section"
     class="h-svh bg-cover fixed inset-0 z-50 pt-[53px] md:pt-[65px] lg:pt-[89px] overflow-clip"
@@ -36,7 +198,9 @@
     <div
       class="container min-h-[calc(100svh-53px)] md:min-h-[calc(100svh-65px)] lg:min-h-[calc(100svh-89px)] py-5 md:py-8 lg:py-10 px-0 relative z-0 grid place-items-center"
     >
-      <SvgMap className={cn('map pointer-events-none ')} />
+      <div class="contents">
+        <SvgMap className={cn('map pointer-events-none ')} />
+      </div>
       <img
         class={cn(' absolute v-line left left-[calc(50%-76px)]')}
         src={line420.src}
@@ -175,23 +339,16 @@
           </svg>
         </h1>
         <p
-          class="slogan flex justify-between font-road-radio text-sm md:text-2xl leading-none"
+          class={cn(
+            {
+              'opacity-0': !$sloganVisible,
+            },
+            'slogan flex justify-between font-road-radio text-sm md:text-2xl leading-none',
+          )}
         >
-          <span
-            class={cn({
-              'opacity-0 scale-150 translate-y-full': !$sloganVisible,
-            })}>МЕЧТА</span
-          >
-          <span
-            class={cn({
-              'opacity-0 scale-150 translate-y-full': !$sloganVisible,
-            })}>ВОЗМОЖНОСТЬ</span
-          >
-          <span
-            class={cn({
-              'opacity-0 scale-150 translate-y-full': !$sloganVisible,
-            })}>РЕЗУЛЬТАТ</span
-          >
+          <span>МЕЧТА</span>
+          <span>ВОЗМОЖНОСТЬ</span>
+          <span>РЕЗУЛЬТАТ</span>
         </p>
       </div>
     </div>

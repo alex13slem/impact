@@ -6,6 +6,4 @@ const observer = new IntersectionObserver(entries => {
     }
   });
 });
-document.addEventListener('astro:page-load', () => {
-  hiddenBlocks.forEach(el => observer.observe(el));
-});
+hiddenBlocks.forEach(el => observer.observe(el));

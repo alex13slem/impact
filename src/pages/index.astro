@@ -17,6 +17,7 @@ import { getImage } from 'astro:assets';
 import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
 
+import { siteInfo } from '@/lib/data/site-info';
 import Screen from '../components/sections/our-goals/screen.svelte';
 
 const screenBg1 = await getImage({src: screen1Src})
@@ -27,11 +28,19 @@ const screenData = goals.map((goal, idx) => ({
   ...goal,
   image: idx === 0 ? screenBg1.src : idx === 1 ? screenBg2.src : screenBg3.src
   }))
+
+const seo = siteInfo.find((item) => item.slug === 'home');
 ---
 
 <RootLayout>
-	<Seo slot={'seo'} title="Главная" description='' imageUrls={{fb: ''}} />
-	<main>
+	<Seo
+		slot={'seo'}
+		title={seo?.name || 'Главная'}
+		description={seo?.description || ''}
+		imageUrls={{fb: seo?.image || ''}}
+	/>
+
+	<main >
 		<SectHero />
 		<SectDescription />
 		<SectOurMission />
