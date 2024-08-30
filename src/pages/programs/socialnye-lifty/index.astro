@@ -1,7 +1,7 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
+import { PartnerFormTrigger } from '@/components/partner-form-trigger';
 import { Seo } from '@/components/seo';
-import Button from '@/components/ui/button.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { partnersWithContribution } from '@/lib/data/partners';
 import { siteInfo } from "@/lib/data/siteInfo";
@@ -24,7 +24,7 @@ const seo = siteInfo.find((item) => item.slug === 'socialnye-lifty');
           <SectHeading className='max-w-md mb-4 md:mb-4' level={1}>
             {seo?.name || 'Социальные лифты'}
           </SectHeading>
-          <Button href='/partner-docs'>Стать партнёром</Button>
+          <PartnerFormTrigger client:load>Стать партнёром</PartnerFormTrigger>
         </div>
         <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description || 'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'}</p>
 

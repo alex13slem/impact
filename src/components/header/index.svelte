@@ -3,6 +3,7 @@
   import siteLogo from '@/assets/img/site-logo.png';
   import { navLinks } from '@/lib/data/navLinks';
   import { scrollHidden } from '@/lib/hooks/scrollHidden';
+  import { mobileMenuVisible } from '@/lib/stores/mobileMenuStore';
   import { cn } from '@/lib/utils';
   import { onMount } from 'svelte';
   import { MobileMenu, MobileMenuTrigger } from '../mobile-menu';
@@ -60,6 +61,7 @@
       {#each navLinks as item}
         <a
           href={item.link}
+          on:click={() => ($mobileMenuVisible = false)}
           class="py-2 border-b border-white border-opacity-30 justify-between flex items-baseline gap-2 uppercase text-lg"
         >
           {item.name}

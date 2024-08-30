@@ -7,6 +7,7 @@ import '@/index.css';
 import type { HTMLAttributes } from 'astro/types';
 import { ViewTransitions } from 'astro:transitions';
 import { Head } from '../../head';
+import {Toaster} from 'svelte-sonner'
 
 export interface HtmlProps
   extends Omit<HTMLAttributes<'html'>, 'title'> {
@@ -61,6 +62,8 @@ import '@/lib/plugins/sectionSlide';
       <slot />
       {hasFooter && <Footer />}
     </div>
+
+    <Toaster client:load/>
   </body>
 </html>
 

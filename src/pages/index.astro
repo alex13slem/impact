@@ -48,7 +48,7 @@ const seo = siteInfo.find((item) => item.slug === 'home');
 		<SectOurStuff />
 		{
 			screenData.map((screen) => (
-				<section class="section-slide overflow-clip">
+				<section id="our-goals" class="section-slide overflow-clip">
 					<Screen goal={screen} client:load/>
 				</section>
 			))

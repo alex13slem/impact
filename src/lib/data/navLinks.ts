@@ -6,30 +6,30 @@ export interface NavLink {
 export const navLinks: NavLink[] = [
   {
     name: 'О фонде',
-    link: '/#about',
+    link: '/#description',
   },
   {
     name: 'Миссия',
-    link: '/#mission',
+    link: '/#our-mission',
   },
   {
     name: 'Программы',
-    link: '/#programs',
+    link: '/#social-programs',
   },
   {
     name: 'Партнёры',
-    link: '/#partners',
+    link: '/#our-partners',
   },
   {
     name: 'Цели',
-    link: '/#goals',
+    link: '/#our-goals',
   },
   {
     name: 'Как помочь',
-    link: '/#how-to-help',
+    link: '/#pay',
   },
   {
     name: 'Документы',
-    link: '/documents',
+    link: '/#documents',
   },
 ];
