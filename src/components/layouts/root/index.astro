@@ -5,7 +5,6 @@ import { LoadingSection } from '@/components/sections/loading';
 import { cn } from '@/lib/utils';
 import '@/index.css';
 import type { HTMLAttributes } from 'astro/types';
-import { ViewTransitions } from 'astro:transitions';
 import { Head } from '../../head';
 import {Toaster} from 'svelte-sonner'
 
@@ -43,7 +42,7 @@ import '@/lib/plugins/sectionSlide';
   <Head >
     <slot name="seo" />
     <meta name="referrer" content="origin" />
-    <!-- <ViewTransitions  /> -->
+
   </Head>
   <body
     class={cn(

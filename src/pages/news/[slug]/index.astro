@@ -5,6 +5,7 @@ import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
 import { news } from '@/lib/data/news';
 import type { GetStaticPaths } from "astro";
+import { ViewTransitions } from 'astro:transitions';
 
 export const getStaticPaths = (() => {
   const paths = news.map((item) => ({
@@ -16,10 +17,8 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths;
 
 const { item } = Astro.props
-
-
 ---
-
+<ViewTransitions  />
 <RootLayout>
 	<Seo
 		slot={'seo'}

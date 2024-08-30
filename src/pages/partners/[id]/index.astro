@@ -4,6 +4,7 @@ import { SectPartner } from "@/components/sections/partner-page";
 import { Seo } from "@/components/seo";
 import { partnersWithContribution } from "@/lib/data/partners";
 import type { GetStaticPaths } from "astro";
+import { ViewTransitions } from 'astro:transitions';
 
 export const getStaticPaths = (() => {
   const paths = partnersWithContribution.map( (partner) => {
@@ -21,7 +22,7 @@ export const getStaticPaths = (() => {
 
 const { partner } = Astro.props
 ---
-
+<ViewTransitions  />
 <RootLayout>
 	<Seo
 		slot={'seo'}

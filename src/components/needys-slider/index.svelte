@@ -1,0 +1,74 @@
+<script lang="ts">
+  import type { Needy } from '@/lib/data/needys';
+  import { cn } from '@/lib/utils';
+  import { onMount, tick } from 'svelte';
+  import type { SwiperContainer } from 'swiper/element';
+  import { register } from 'swiper/element';
+  import { Navigation } from 'swiper/modules';
+  import type { SwiperOptions } from 'swiper/types';
+
+  export let className: string = '';
+  export let needys: Needy[] = [];
+
+  let swiperEl: SwiperContainer;
+  const options = {
+    modules: [Navigation],
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    navigation: {
+      nextEl: '.next-btn',
+      prevEl: '.prev-btn',
+    },
+  } as SwiperOptions;
+
+  onMount(async () => {
+    Object.assign(swiperEl, options);
+
+    await tick();
+    register();
+    swiperEl.initialize();
+  });
+</script>
+
+<swiper-container
+  init="false"
+  bind:this={swiperEl}
+  class={cn('-mx-4 xl:-mx-40 relative z-0', className)}
+>
+  <div
+    class=" w-4 xl:w-40 absolute h-full left-0 top-0 bg-gradient-to-r from-dark to-transparent z-10"
+    slot="container-start"
+  ></div>
+  <div
+    class=" w-4 xl:w-40 absolute h-full right-0 top-0 bg-gradient-to-r from-dark to-transparent z-10 rotate-180"
+    slot="container-end"
+  ></div>
+
+  {#each needys as needy}
+    <swiper-slide
+      class="text-sm md:text-base lg:text-lg max-w-80 w-full translate-x-4 xl:translate-x-40 relative"
+    >
+      <a
+        href={`/programs/${needy.socialProgramSlug}/needy/${needy.id}`}
+        class="absolute inset-0 opacity-0">{needy.id}</a
+      >
+      <img
+        class="aspect-square rounded-3xl object-cover object-center"
+        src={needy.image}
+        alt={needy.name}
+      />
+      <h2 class="mt-4 font-sov-mod text-2xl md:text-3xl">
+        {needy.name}
+      </h2>
+      {#each [{ text: 'Возраст:', value: needy.age }, { text: 'Город:', value: needy.city }, { text: 'Диагноз:', value: needy.diagnosis }] as { text, value }}
+        {#if value}
+          <div class="mt-2">
+            <h3>{text}</h3>
+            <p class="mt-1 font-thin">{value}</p>
+          </div>
+        {/if}
+      {/each}
+    </swiper-slide>
+  {/each}
+  <swiper-slide class="w-4 xl:w-80"></swiper-slide>
+</swiper-container>

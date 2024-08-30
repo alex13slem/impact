@@ -4,7 +4,7 @@
   import axios from 'axios';
   import { Dialog } from 'bits-ui';
   import { createForm } from 'felte';
-  import { Toaster, toast } from 'svelte-sonner';
+  import { toast } from 'svelte-sonner';
   import type { PartnerForm } from '.';
 
   export let onSubmit: () => void;
@@ -26,7 +26,7 @@
 <form use:form method="post" class="flex flex-col gap-4" novalidate>
   <label class="min-h-14">
     <input
-      class="w-full bg-transparent border border-white/90 outline-none text-lg py-1 px-2 rounded"
+      class="w-full bg-transparent border-b border-white/90 outline-none text-lg py-1 px-2 focus-visible:border-accent transition-colors"
       type="text"
       name="name"
       placeholder="ФИО"
@@ -39,7 +39,7 @@
   </label>
   <label class="min-h-14">
     <input
-      class="w-full bg-transparent border border-white/90 outline-none text-lg py-1 px-2 rounded"
+      class="w-full bg-transparent border-b border-white/90 outline-none text-lg py-1 px-2 focus-visible:border-accent transition-colors"
       type="email"
       name="email"
       placeholder="Эл. почта"
@@ -52,7 +52,7 @@
   </label>
   <label class="min-h-14">
     <input
-      class="w-full bg-transparent border border-white/90 outline-none text-lg py-1 px-2 rounded"
+      class="w-full bg-transparent border-b border-white/90 outline-none text-lg py-1 px-2 focus-visible:border-accent transition-colors"
       type="phone"
       name="phone"
       placeholder="Телефон"
@@ -65,7 +65,7 @@
   </label>
   <label class="min-h-14">
     <input
-      class="w-full bg-transparent border border-white/90 outline-none text-lg py-1 px-2 rounded"
+      class="w-full bg-transparent border-b border-white/90 outline-none text-lg py-1 px-2 focus-visible:border-accent transition-colors"
       type="text"
       name="organization"
       placeholder="Название организации"

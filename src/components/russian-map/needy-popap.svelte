@@ -45,7 +45,9 @@
   <button
     class="flex justify-center items-center gap-2 relative text-lg leading-none w-full text-dark bg-white bg-opacity-80 rounded-2xl p-3 lg:p-4 lg:hover:bg-opacity-90 transition-all"
   >
-    <a href="/needy/{needy.id}" class="absolute inset-0 opacity-0">{needy.id}</a
+    <a
+      href="/programs/{needy.socialProgramSlug}/needy/{needy.id}"
+      class="absolute inset-0 opacity-0">{needy.id}</a
     >
     Узнать подробнее
     <svg

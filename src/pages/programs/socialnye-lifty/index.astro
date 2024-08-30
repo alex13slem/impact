@@ -5,9 +5,11 @@ import { Seo } from '@/components/seo';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { partnersWithContribution } from '@/lib/data/partners';
 import { siteInfo } from "@/lib/data/siteInfo";
+import { ViewTransitions } from 'astro:transitions';
 
 const seo = siteInfo.find((item) => item.slug === 'socialnye-lifty');
 ---
+<ViewTransitions  />
 
 <RootLayout>
 	<Seo

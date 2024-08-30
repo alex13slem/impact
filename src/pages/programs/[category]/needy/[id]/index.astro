@@ -1,0 +1,139 @@
+---
+import { RootLayout } from "@/components/layouts/root";
+import { NeedysGallerySlider } from "@/components/needys-gallery-slider";
+import { Seo } from "@/components/seo";
+import { needys } from "@/lib/data/needys";
+import { cn } from "@/lib/utils";
+import type { GetStaticPaths } from "astro";
+import { ViewTransitions } from 'astro:transitions';
+
+export const getStaticPaths = (() => {
+  const paths = needys.map(item => {
+    const sameCategoryNeedys = needys.filter(needy => needy.socialProgramSlug === item.socialProgramSlug);
+    const currentIndex = sameCategoryNeedys.indexOf(item);
+    const prevItem = sameCategoryNeedys[(currentIndex - 1 + sameCategoryNeedys.length) % sameCategoryNeedys.length];
+    const nextItem = sameCategoryNeedys[(currentIndex + 1) % sameCategoryNeedys.length];
+    const prevLink = `/programs/${prevItem.socialProgramSlug}/needy/${prevItem.id}`;
+    const nextLink = `/programs/${nextItem.socialProgramSlug}/needy/${nextItem.id}`;
+    return {
+      params: { id: item.id, category: item.socialProgramSlug },
+      props: { needy:item, prevLink, nextLink },
+    }
+  })
+  return paths;
+
+}) satisfies GetStaticPaths;
+
+const { needy, nextLink, prevLink } = Astro.props;
+
+---
+
+<ViewTransitions  />
+
+<RootLayout>
+	<Seo
+		slot={'seo'}
+		title={needy.name}
+		description={needy.description}
+		imageUrls={{fb: needy.image || ''}}
+	/>
+
+	<main>
+    <section class="py-8 xl:py-20">
+      <div class="container flex flex-col xl:flex-row gap-10 xl:gap-20">
+        <div>
+          <div class="relative w-fit mx-auto">
+            <div class="absolute inset-y-5 -inset-x-7  bg-white/20 -z-10 rounded-3xl"></div>
+            <NeedysGallerySlider gallery={needy.gallery} client:load/>
+            {['prev', 'next'].map((dir) => (
+              <button
+                class={cn(
+                  {
+                    'prev-btn left-0 -translate-x-1/2 rotate-180': dir === 'prev',
+                    'next-btn right-0 translate-x-1/2 ': dir === 'next',
+                  },
+                  'bg-dark absolute top-1/2 -translate-y-1/2 z-20  rounded-full  p-3 disabled:opacity-30 hover:bg-dark/80 transition-colors',
+                )}
+                slot="container-end"
+              >
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 12.6865 9.69238"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
+                    stroke="currentColor"
+                    stroke-opacity="1"
+                    stroke-width="1"
+                  />
+                </svg>
+              </button>
+            ))}
+          </div>
+          {needy.desire && (
+            <p class="mt-5 text-center xl:text-left">{needy.desire}</p>
+          )}
+          <div class="mt-5">
+            <button
+              class="relative border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
+            >
+              <a href="/" class="absolute inset-0 opacity-0">/index</a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                ><path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+                /></svg
+              >
+              На главную
+            </button>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between gap-8">
+            <div>
+              <p class="text-sm md:text-base font-thin">Подопечный Благотворительного фонда</p>
+              <h1 class="font-sov-mod text-3xl md:text-5xl">{needy.name}</h1>
+            </div>
+            <nav class="flex gap-5">
+              {[prevLink, nextLink].map((link, index) => (
+                <button class={cn(
+                  {
+                    "rotate-180": index === 0
+                  },
+                  "relative bg-white/80 hover:bg-white transition-colors text-dark w-12 h-12 flex items-center justify-center rounded-2xl")}>
+                  <a href={link} class="absolute inset-0"></a>
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 12.6865 9.69238"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <path
+                      d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
+                      stroke="currentColor"
+                      stroke-opacity="1"
+                      stroke-width="1"
+                    />
+                  </svg>
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          <div class="prose mt-10" set:html={needy.detailDescription}/>
+        </div>
+      </div>
+    </section>
+	</main>
+</RootLayout>
