@@ -8,4 +8,4 @@
 
 @import 'tailwindcss/utilities';
 @import 'styles/utils/hidden-block.css';
-/* @import 'styles/utils/screen-loading.css'; */
+@import 'styles/utils/screen-loading.css';

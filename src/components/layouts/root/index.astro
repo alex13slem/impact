@@ -53,9 +53,9 @@ import '@/lib/plugins/sectionSlide';
       className
     )}
   >
-    <!-- {isHome && (
+    {isHome && (
       <LoadingSection client:load />
-    )} -->
+    )}
     <div class="app">
       {hasHeader && <Header client:load/>}
       <slot />
