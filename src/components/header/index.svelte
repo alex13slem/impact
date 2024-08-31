@@ -33,7 +33,7 @@
     <button
       class="lg:flex group justify-center items-center gap-7 hover:text-accent transition-colors text-white text-opacity-90 relative hidden"
     >
-      <a href="/" class="absolute inset-0 opacity-0">.</a>
+      <a href="/#pay" class="absolute inset-0 opacity-0">.</a>
       <span
         class="py-2 px-3 border border-current rounded-xl flex items-center gap-2"
       >

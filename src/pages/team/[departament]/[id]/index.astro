@@ -1,30 +1,33 @@
 ---
 import { RootLayout } from "@/components/layouts/root";
-import { NeedysGallerySlider } from "@/components/needys-gallery-slider";
 import { Seo } from "@/components/seo";
-import { needys } from "@/lib/data/needys";
+import { staffs } from "@/lib/data/staffs";
+import { stuffPositions } from "@/lib/data/stuffPositions";
 import { cn } from "@/lib/utils";
 import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
+//@ts-ignore
+import { convert } from 'html-to-text';
 
 export const getStaticPaths = (() => {
-  const paths = needys.map(item => {
-    const sameCategoryNeedys = needys.filter(needy => needy.socialProgramSlug === item.socialProgramSlug);
-    const currentIndex = sameCategoryNeedys.indexOf(item);
-    const prevItem = sameCategoryNeedys[(currentIndex - 1 + sameCategoryNeedys.length) % sameCategoryNeedys.length];
-    const nextItem = sameCategoryNeedys[(currentIndex + 1) % sameCategoryNeedys.length];
-    const prevLink = `/programs/${prevItem.socialProgramSlug}/needy/${prevItem.id}`;
-    const nextLink = `/programs/${nextItem.socialProgramSlug}/needy/${nextItem.id}`;
+  const paths = staffs.map(item => {
+    const sameDepartamentStaffs = staffs.filter(staff => staff.stuffPositions[0] === item.stuffPositions[0]);
+    const departament = stuffPositions.find(pos => pos.id === item.stuffPositions[0])!;
+    const currentIndex = sameDepartamentStaffs.indexOf(item);
+    const prevItem = sameDepartamentStaffs[(currentIndex - 1 + sameDepartamentStaffs.length) % sameDepartamentStaffs.length];
+    const nextItem = sameDepartamentStaffs[(currentIndex + 1) % sameDepartamentStaffs.length];
+    const prevLink = `/team/${prevItem.stuffPositions[0]}/${prevItem.id}`;
+    const nextLink = `/team/${nextItem.stuffPositions[0]}/${nextItem.id}`;
     return {
-      params: { id: item.id, category: item.socialProgramSlug },
-      props: { needy:item, prevLink, nextLink },
+      params: { id: item.id, departament: item.stuffPositions[0] },
+      props: { staff:item, prevLink, nextLink, departament },
     }
   })
   return paths;
 
 }) satisfies GetStaticPaths;
 
-const { needy, nextLink, prevLink } = Astro.props;
+const { staff, nextLink, prevLink, departament } = Astro.props;
 
 ---
 
@@ -33,9 +36,9 @@ const { needy, nextLink, prevLink } = Astro.props;
 <RootLayout>
 	<Seo
 		slot={'seo'}
-		title={needy.name}
-		description={needy.description}
-		imageUrls={{fb: needy.image || ''}}
+		title={staff.name}
+		description={convert(staff.description)}
+		imageUrls={{fb: staff.image || ''}}
 	/>
 
 	<main>
@@ -43,40 +46,8 @@ const { needy, nextLink, prevLink } = Astro.props;
       <div class="container flex flex-col xl:flex-row gap-10 xl:gap-20">
         <div>
           <div class="relative w-fit mx-auto">
-            <div class="absolute inset-y-5 -inset-x-7  bg-white/20 -z-10 rounded-3xl"></div>
-            <NeedysGallerySlider gallery={needy.gallery} client:load/>
-            {['prev', 'next'].map((dir) => (
-              <button
-                class={cn(
-                  {
-                    'prev-btn left-0 -translate-x-1/2 rotate-180': dir === 'prev',
-                    'next-btn right-0 translate-x-1/2 ': dir === 'next',
-                  },
-                  'bg-dark absolute top-1/2 -translate-y-1/2 z-20  rounded-full  p-3 disabled:opacity-30 hover:bg-dark/80 transition-colors',
-                )}
-                slot="container-end"
-              >
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 12.6865 9.69238"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <path
-                    d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
-                    stroke="currentColor"
-                    stroke-opacity="1"
-                    stroke-width="1"
-                  />
-                </svg>
-              </button>
-            ))}
+            <img class="max-w-lg w-full aspect-square object-cover object-center rounded-3xl" src={staff.image} alt={staff.name}>
           </div>
-          {needy.desire && (
-            <p class="mt-5 text-center xl:text-left">{needy.desire}</p>
-          )}
           <div class="mt-5">
             <button
               class="relative border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
@@ -100,8 +71,8 @@ const { needy, nextLink, prevLink } = Astro.props;
         <div class="flex-1">
           <div class="flex items-center justify-between gap-8 flex-col sm:flex-row">
             <div class="self-start sm:self-center">
-              <p class="text-sm md:text-base font-thin">Подопечный Благотворительного фонда</p>
-              <h1 class="font-sov-mod text-3xl md:text-5xl">{needy.name}</h1>
+              <p class="text-sm md:text-base font-thin">{departament.name}</p>
+              <h1 class="font-sov-mod text-3xl md:text-5xl">{staff.name}</h1>
             </div>
             <nav class="flex gap-5 -order-1 sm:order-none self-start sm:self-center">
               {[prevLink, nextLink].map((link, index) => (
@@ -131,7 +102,7 @@ const { needy, nextLink, prevLink } = Astro.props;
             </nav>
           </div>
 
-          <div class="prose mt-10" set:html={needy.detailDescription}/>
+          <div class="prose mt-10" set:html={staff.description}/>
         </div>
       </div>
     </section>

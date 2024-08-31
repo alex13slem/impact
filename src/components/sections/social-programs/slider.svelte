@@ -38,11 +38,13 @@
         <article transition:fade={{ duration: 300 }}>
           <div class="flex gap-5 items-end">
             <div class="aspect-[16/6] rounded-2xl md:rounded-3xl overflow-clip">
-              <img
-                class="object-cover w-full h-full"
-                src={p.image}
-                alt={p.name}
-              />
+              <a href={'/programs/' + p.slug}>
+                <img
+                  class="object-cover w-full h-full"
+                  src={p.image}
+                  alt={p.name}
+                />
+              </a>
             </div>
             <p
               class="-mb-1 font-thin text-[#CCD3D9] md:text-3xl md:leading-none min-w-16 md:min-w-28"

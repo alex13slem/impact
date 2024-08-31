@@ -1,6 +1,5 @@
 <script lang="ts">
   import { staffs } from '@/lib/data/staffs';
-  import { staffToPositions } from '@/lib/data/staffsToPositions';
   import { stuffPositions } from '@/lib/data/stuffPositions';
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
@@ -9,13 +8,9 @@
   import type { SwiperOptions } from 'swiper/types';
 
   let targetPositionId = stuffPositions[0].id;
-  $: positionStaff = staffs.filter(staff => {
-    return staffToPositions.find(
-      position =>
-        position.stuffId === staff.id &&
-        position.positionId === targetPositionId,
-    );
-  });
+  $: positionStaff = staffs.filter(({ stuffPositions }) =>
+    stuffPositions.find(id => id === targetPositionId),
+  );
 
   $: viewStaffName = positionStaff.at(0)?.name;
   let currentSlide = 0;
@@ -75,7 +70,13 @@
 <!-- Desktop -->
 <div class="lg:flex flex-wrap gap-x-6 gap-y-9 justify-center hidden">
   {#each positionStaff as staff (staff.id)}
-    <article class="basis-72">
+    <article class="basis-72 relative">
+      {#if staff.stuffPositions[0]}
+        <a
+          class="absolute inset-0 opacity-0"
+          href={`/team/${staff.stuffPositions[0]}/${staff.id}`}>{staff.name}</a
+        >
+      {/if}
       <img
         class="rounded-3xl aspect-square object-cover object-center"
         src={staff.image}
@@ -99,9 +100,16 @@
           {
             'opacity-60': currentSlide !== idx,
           },
-          'transition-all',
+          'transition-all relative',
         )}
       >
+        {#if staff.stuffPositions[0]}
+          <a
+            class="absolute inset-0 opacity-0"
+            href={`/team/${staff.stuffPositions[0]}/${staff.id}`}
+            >{staff.name}</a
+          >
+        {/if}
         <img
           class="rounded-3xl aspect-square object-cover object-center"
           src={staff.image}

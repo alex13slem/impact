@@ -1,0 +1,53 @@
+---
+import bgSource from '@/assets/img/bg.webp';
+import logoSource from '@/assets/img/logo.svg';
+import { getImage, Image } from 'astro:assets';
+
+const bg = await getImage({src: bgSource})
+
+import { RootLayout } from "@/components/layouts/root";
+import { Seo } from "@/components/seo";
+
+import { ViewTransitions } from 'astro:transitions';
+
+
+
+---
+
+<ViewTransitions  />
+
+
+
+<RootLayout hasHeader={false}>
+	<Seo
+		slot={'seo'}
+		title={'Страница не создана'}
+		description={'Страница не создана'}
+		imageUrls={{fb: ''}}
+    noindex
+	/>
+	<main style={{backgroundImage: `url(${bg.src})`}} class="bg-cover bg-center bg-no-repeat">
+    <section class="min-h-svh flex flex-col justify-center items-center p-4 relative">
+      <Image src={logoSource} width={100} height={100} alt="logo" />
+      <h1 class="text-3xl font-sov-mod uppercase text-accent mt-10 text-center">Страница не создана</h1>
+
+      <button
+        onclick="history.back()"
+        class="absolute top-4 left-4 border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          ><path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+          /></svg
+        >
+        Назад
+      </button>
+    </section>
+	</main>
+</RootLayout>

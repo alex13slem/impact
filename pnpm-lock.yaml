@@ -47,6 +47,9 @@ dependencies:
   gsap:
     specifier: ^3.12.5
     version: 3.12.5
+  html-to-text:
+    specifier: ^9.0.5
+    version: 9.0.5
   nodemailer:
     specifier: ^6.9.14
     version: 6.9.14
@@ -82,6 +85,9 @@ dependencies:
     version: 3.23.8
 
 devDependencies:
+  '@types/html-to-text':
+    specifier: ^9.0.4
+    version: 9.0.4
   '@types/nodemailer':
     specifier: ^6.4.15
     version: 6.4.15
@@ -1560,6 +1566,10 @@ packages:
     dependencies:
       '@types/unist': 3.0.3
     dev: false
+
+  /@types/html-to-text@9.0.4:
+    resolution: {integrity: sha512-pUY3cKH/Nm2yYrEmDlPR1mR7yszjGx4DrwPjQ702C4/D5CwHuZTgZdIdwPkRbcuhs7BAh2L5rg3CL5cbRiGTCQ==}
+    dev: true
 
   /@types/mdast@4.0.4:
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
