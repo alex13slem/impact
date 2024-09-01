@@ -7,14 +7,8 @@ import { getImage, Image } from 'astro:assets';
 import Screen from './screen.svelte';
 import { goals } from '@/lib/data/goals';
 
-const screenBg1 = await getImage({src: screen1Src})
-const screenBg2 = await getImage({src: screen2Src})
-const screenBg3 = await getImage({src: screen3Src})
 
-const screenData = goals.map((goal, idx) => ({
-  ...goal,
-  image: idx === 0 ? screenBg1.src : idx === 1 ? screenBg2.src : screenBg3.src
-  }))
+
 ---
 <script>
 
@@ -117,7 +111,7 @@ const screenData = goals.map((goal, idx) => ({
   </div>
   <!-- <div class="horizontal-scroll-container flex flex-wrap lg:flex-nowrap h-svh relative z-0"> -->
   {
-    screenData.map((screen) => (
+    goals.map((screen) => (
       <Screen goal={screen} client:load/>
     ))
   }

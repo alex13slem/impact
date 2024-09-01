@@ -12,6 +12,17 @@ import { getImage, Image } from "astro:assets";
 
 const bg = await getImage({src: bgSource})
 
+const coords = contacts.mapCoords.trim().split(',').reverse().join(',').trim();
+const mapUrl = new URL('https://static-maps.yandex.ru/v1');
+const params = new URLSearchParams({
+  lang: 'ru_RU',
+  pt: `${coords},round`,
+  z: 18..toString(),
+  size: '630,355',
+  apikey: import.meta.env.YANDEX_MAPS_API_KEY,
+  theme: 'dark'
+});
+mapUrl.search = params.toString();
 ---
 
 
@@ -46,7 +57,7 @@ const bg = await getImage({src: bgSource})
       </div>
       <div class="bg-white aspect-video -col-start-1 -col-end-2 row-start-1 row-end-3 rounded-3xl overflow-clip relative">
         <a href={contacts.mapLink} class="absolute inset-0" target="_blank"></a>
-        <img class="w-full h-full object-cover object-center" src={`https://static-maps.yandex.ru/v1?lang=ru_RU&pt=${contacts.mapCoords},round&z=18&size=630,355&apikey=1a8eeb00-6b85-405c-bf6f-bada69c3bc2b&theme=dark`} alt="">
+        <img class="w-full h-full object-cover object-center" src={mapUrl.toString()} alt="">
       </div>
     </div>
 
@@ -70,7 +81,7 @@ const bg = await getImage({src: bgSource})
       </div>
       <div class="bg-white aspect-video rounded-2xl mt-8 overflow-clip relative">
         <a href={contacts.mapLink} class="absolute inset-0" target="_blank"></a>
-        <img class="w-full h-full object-cover object-center" src={`https://static-maps.yandex.ru/v1?lang=ru_RU&pt=${contacts.mapCoords},round&z=19&size=630,355&apikey=1a8eeb00-6b85-405c-bf6f-bada69c3bc2b&theme=dark`} alt="">
+        <img class="w-full h-full object-cover object-center" src={mapUrl.toString()} alt="">
       </div>
     </div>
   </div>

@@ -5,7 +5,6 @@ export interface Partner {
   name: string;
   description: string;
   image: string;
-  projects: number[];
   contributions: number[];
 }
 
@@ -15,7 +14,6 @@ export const partners: Partner[] = [
     name: 'Партнер 1',
     description: 'Это первый партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [1, 2, 3],
     contributions: [1, 2, 3],
   },
   {
@@ -23,7 +21,6 @@ export const partners: Partner[] = [
     name: 'Партнер 2',
     description: 'Это второй партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [2, 3],
     contributions: [1, 2, 3],
   },
   {
@@ -31,7 +28,6 @@ export const partners: Partner[] = [
     name: 'Партнер 3',
     description: 'Это третий партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [3, 1],
     contributions: [1, 2, 3],
   },
   {
@@ -39,7 +35,6 @@ export const partners: Partner[] = [
     name: 'Партнер 4',
     description: 'Это четвертый партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [4],
     contributions: [],
   },
   {
@@ -47,7 +42,6 @@ export const partners: Partner[] = [
     name: 'Партнер 5',
     description: 'Это пятый партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [1],
     contributions: [],
   },
   {
@@ -55,7 +49,6 @@ export const partners: Partner[] = [
     name: 'Партнер 6',
     description: 'Это пятый партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [2],
     contributions: [],
   },
   {
@@ -63,7 +56,6 @@ export const partners: Partner[] = [
     name: 'Партнер 7',
     description: 'Это пятый партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [3],
     contributions: [],
   },
   {
@@ -71,7 +63,6 @@ export const partners: Partner[] = [
     name: 'Партнер 8',
     description: 'Это пятый партнер',
     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-    projects: [1, 3],
     contributions: [],
   },
 ];

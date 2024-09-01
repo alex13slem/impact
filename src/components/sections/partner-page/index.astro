@@ -15,7 +15,7 @@ const { partner } = Astro.props
     <SectHeading className='max-w-md mb-4 md:mb-4' level={1}>
       {partner.name}
     </SectHeading>
-    <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{partner.description}</p>
+    <div class="mt-4 max-w-3xl prose" set:html={partner.description}></div>
     <InteractiveBlock className='mt-8' client:load contributions={partner.contributions} />
   </div>
 </section>

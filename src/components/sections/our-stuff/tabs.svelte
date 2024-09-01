@@ -1,15 +1,18 @@
 <script lang="ts">
-  import { staffs } from '@/lib/data/staffs';
-  import { stuffPositions } from '@/lib/data/stuffPositions';
+  import type { StaffsPosition } from '@/lib/schemas/data/staffsPositions';
+  import type { Staff } from '@/lib/schemas/data/staffsSchema';
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import { register, type SwiperContainer } from 'swiper/element';
   import { Navigation } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
 
-  let targetPositionId = stuffPositions[0].id;
-  $: positionStaff = staffs.filter(({ stuffPositions }) =>
-    stuffPositions.find(id => id === targetPositionId),
+  export let staffs: Staff[] = [];
+  export let staffsPositions: StaffsPosition[] = [];
+
+  let targetPositionId = staffsPositions.at(0)?.id;
+  $: positionStaff = staffs.filter(({ staffPositions }) =>
+    staffPositions.find(id => id === targetPositionId),
   );
 
   $: viewStaffName = positionStaff.at(0)?.name;
@@ -51,7 +54,7 @@
 <nav
   class="flex gap-4 max-w-5xl lg:justify-center lg:flex-wrap mx-auto mb-8 lg:mb-16 overflow-auto pb-3 px-4 lg:p-0 w-svw md:w-auto relative -left-4"
 >
-  {#each stuffPositions as pos, idx (pos.id)}
+  {#each staffsPositions as pos, idx (pos.id)}
     <button
       on:click={() => (targetPositionId = pos.id)}
       class={cn(
@@ -71,10 +74,10 @@
 <div class="lg:flex flex-wrap gap-x-6 gap-y-9 justify-center hidden">
   {#each positionStaff as staff (staff.id)}
     <article class="basis-72 relative">
-      {#if staff.stuffPositions[0]}
+      {#if staff.staffPositions[0]}
         <a
           class="absolute inset-0 opacity-0"
-          href={`/team/${staff.stuffPositions[0]}/${staff.id}`}>{staff.name}</a
+          href={`/team/${staff.staffPositions[0]}/${staff.id}`}>{staff.name}</a
         >
       {/if}
       <img
@@ -103,10 +106,10 @@
           'transition-all relative',
         )}
       >
-        {#if staff.stuffPositions[0]}
+        {#if staff.staffPositions[0]}
           <a
             class="absolute inset-0 opacity-0"
-            href={`/team/${staff.stuffPositions[0]}/${staff.id}`}
+            href={`/team/${staff.staffPositions[0]}/${staff.id}`}
             >{staff.name}</a
           >
         {/if}

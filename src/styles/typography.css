@@ -1,5 +1,7 @@
 .prose {
+  @apply font-thin text-sm md:text-base lg:text-lg;
+  & div,
   & p {
-    @apply font-thin text-sm md:text-base lg:text-lg last-of-type:mb-0 mb-2;
+    @apply last-of-type:mb-0 mb-2;
   }
 }

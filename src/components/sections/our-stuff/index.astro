@@ -1,7 +1,8 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
+import { staffs } from '@/lib/data/staffs';
+import { staffsPositions } from '@/lib/data/staffsPositions';
 import Tabs from "./tabs.svelte";
-
 
 ---
 
@@ -20,7 +21,7 @@ import Tabs from "./tabs.svelte";
           высокотехнологичной медицинской помощи.
         </p>
       </div>
-      <Tabs client:load />
+      <Tabs client:load {staffs} {staffsPositions}/>
     </div>
   </div>
 </section>

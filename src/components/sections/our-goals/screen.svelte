@@ -2,8 +2,8 @@
   //@ts-ignore
   import cursorFragment from '@/assets/img/cursor-fragment.svg';
   import SectHeading from '@/components/ui/sect-heading.svelte';
-  import type { Goal } from '@/lib/data/goals';
   import { counter as goalsCounter } from '@/lib/hooks/counter';
+  import type { Goal } from '@/lib/schemas/data/goalsSchema';
   import { cn } from '@/lib/utils';
 
   export let goal: Goal;

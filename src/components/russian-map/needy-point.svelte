@@ -4,8 +4,9 @@
   import { cn } from '@/lib/utils';
   import { Popover } from 'bits-ui';
   import { fade } from 'svelte/transition';
-  import SvgHandHeart from '../ui/svg-hand-heart.svelte';
-  import SvgPrayer from '../ui/svg-prayer.svelte';
+  import IconHeartHands from '../ui/icons/icon-heart-hands.svelte';
+  import IconPrayerHands from '../ui/icons/icon-prayer-hands.svelte';
+  import IconSocialUp from '../ui/icons/icon-social-up.svelte';
   import NeedyPopap from './needy-popap.svelte';
   export let needy: NeedyWithCoordinates;
 </script>
@@ -18,16 +19,16 @@
   <Popover.Root>
     <Popover.Trigger>
       <button
-        class={cn('hover:text-accent', {
+        class={cn('hover:text-accent text-2xl', {
           'text-dark': $hoveredRegion === needy.regionSlug,
         })}
       >
         {#if needy.socialProgramSlug === 'nezhnie-ruki'}
-          <SvgPrayer />
+          <IconHeartHands variant="ghost" />
         {:else if needy.socialProgramSlug === 'pomozj-detyam'}
-          <SvgHandHeart />
+          <IconPrayerHands variant="ghost" />
         {:else if needy.socialProgramSlug === 'socialnye-lifty'}
-          <SvgHandHeart />
+          <IconSocialUp variant="ghost" />
         {/if}
       </button>
     </Popover.Trigger>

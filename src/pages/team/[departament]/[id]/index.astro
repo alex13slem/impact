@@ -2,7 +2,7 @@
 import { RootLayout } from "@/components/layouts/root";
 import { Seo } from "@/components/seo";
 import { staffs } from "@/lib/data/staffs";
-import { stuffPositions } from "@/lib/data/stuffPositions";
+import { staffsPositions } from "@/lib/data/staffsPositions";
 import { cn } from "@/lib/utils";
 import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
@@ -11,15 +11,15 @@ import { convert } from 'html-to-text';
 
 export const getStaticPaths = (() => {
   const paths = staffs.map(item => {
-    const sameDepartamentStaffs = staffs.filter(staff => staff.stuffPositions[0] === item.stuffPositions[0]);
-    const departament = stuffPositions.find(pos => pos.id === item.stuffPositions[0])!;
+    const sameDepartamentStaffs = staffs.filter(staff => staff.staffPositions[0] === item.staffPositions[0]);
+    const departament = staffsPositions.find(pos => pos.id === item.staffPositions[0])!;
     const currentIndex = sameDepartamentStaffs.indexOf(item);
     const prevItem = sameDepartamentStaffs[(currentIndex - 1 + sameDepartamentStaffs.length) % sameDepartamentStaffs.length];
     const nextItem = sameDepartamentStaffs[(currentIndex + 1) % sameDepartamentStaffs.length];
-    const prevLink = `/team/${prevItem.stuffPositions[0]}/${prevItem.id}`;
-    const nextLink = `/team/${nextItem.stuffPositions[0]}/${nextItem.id}`;
+    const prevLink = `/team/${prevItem.staffPositions[0]}/${prevItem.id}`;
+    const nextLink = `/team/${nextItem.staffPositions[0]}/${nextItem.id}`;
     return {
-      params: { id: item.id, departament: item.stuffPositions[0] },
+      params: { id: item.id, departament: item.staffPositions[0] },
       props: { staff:item, prevLink, nextLink, departament },
     }
   })
