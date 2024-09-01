@@ -1,10 +1,10 @@
-import { boolean, coerce, number, object, string, z } from 'zod';
+import { coerce, number, object, string, z } from 'zod';
 
 export const goalsSchema = object({
   id: number(),
   counter: coerce.number().min(1),
   description: string().min(1),
-  image: string().url().or(boolean()),
+  image: string().url(),
   order: coerce.number().min(0),
 });
 

@@ -1,4 +1,5 @@
-import { boolean, object, string, z } from 'zod';
+import { object, string, z } from 'zod';
+import { wpImageOptional } from '../wpImageSchema';
 
 const ShowInEnum = z.enum(['landing', 'pomozj-detyam']);
 
@@ -6,7 +7,7 @@ export const docsSchema = object({
   id: z.number(),
   name: string().min(1),
   link: string().url(),
-  image: string().url().or(boolean()),
+  image: wpImageOptional,
   showIn: ShowInEnum,
 });
 

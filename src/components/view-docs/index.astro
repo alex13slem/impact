@@ -21,7 +21,7 @@ const { docs, class: className, ...props } = Astro.props
           <circle cx="19.2259" cy="19.2745" r="18.3581" stroke="currentColor" stroke-width="1.42903"/>
           <path d="M20.0926 10.6052L27.895 18.4076M27.895 18.4076L20.0926 26.2101M27.895 18.4076L8.82244 18.4076" stroke="currentColor" stroke-width="1.42903"/>
         </svg>
-        <img width="76" class="aspect-[3/4] object-cover object-center w-9 md:w-16" loading="lazy" src={doc.image || docImg.src} alt={doc.name}>
+        <img width="76" class="aspect-[3/4] object-cover object-center w-9 md:w-16" loading="lazy" src={typeof doc.image === 'string' ? doc.image : docImg.src} alt={doc.name}>
         <h3 class="text-lg md:text-xl lg:min-h-20">{doc.name}</h3>
       </article>
     ))

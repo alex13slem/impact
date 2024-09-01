@@ -6,7 +6,8 @@
   import { register, type SwiperContainer } from 'swiper/element';
   import { Navigation } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
-
+  //@ts-ignore
+  import phPhoto from '@/assets/img/ph-photo.webp';
   export let staffs: Staff[] = [];
   export let staffsPositions: StaffsPosition[] = [];
 
@@ -82,7 +83,7 @@
       {/if}
       <img
         class="rounded-3xl aspect-square object-cover object-center"
-        src={staff.image}
+        src={staff.image ? staff.image : phPhoto.src}
         alt={staff.name}
       />
       <h3 class="text-2xl font-light mt-4 text-center">{staff.name}</h3>
@@ -115,7 +116,7 @@
         {/if}
         <img
           class="rounded-3xl aspect-square object-cover object-center"
-          src={staff.image}
+          src={staff.image ? staff.image : phPhoto.src}
           alt={staff.name}
         />
         <h3 class="text-2xl font-light mt-4 text-center hidden md:block">

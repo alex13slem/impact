@@ -1,10 +1,11 @@
 import { number, object, string, z } from 'zod';
+import { wpImageOptional } from '../wpImageSchema';
 
 export const staffsSchema = object({
   id: number(),
   name: string().min(1),
   description: string().min(1),
-  image: string().url(),
+  image: wpImageOptional,
   staffPositions: number().array(),
 });
 

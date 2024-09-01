@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
 import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
 //@ts-ignore
+import phPhoto from '@/assets/img/ph-photo.webp';
 import { convert } from 'html-to-text';
+
 
 export const getStaticPaths = (() => {
   const paths = staffs.map(item => {
@@ -29,6 +31,7 @@ export const getStaticPaths = (() => {
 
 const { staff, nextLink, prevLink, departament } = Astro.props;
 
+const photo = typeof staff.image === 'string' ? staff.image : phPhoto.src;
 ---
 
 <ViewTransitions  />
@@ -38,7 +41,7 @@ const { staff, nextLink, prevLink, departament } = Astro.props;
 		slot={'seo'}
 		title={staff.name}
 		description={convert(staff.description)}
-		imageUrls={{fb: staff.image || ''}}
+		imageUrls={{fb: photo }}
 	/>
 
 	<main>
@@ -46,7 +49,7 @@ const { staff, nextLink, prevLink, departament } = Astro.props;
       <div class="container flex flex-col xl:flex-row gap-10 xl:gap-20">
         <div>
           <div class="relative w-fit mx-auto">
-            <img class="max-w-lg w-full aspect-square object-cover object-center rounded-3xl" src={staff.image} alt={staff.name}>
+            <img class="max-w-lg w-full aspect-square object-cover object-center rounded-3xl" src={photo} alt={staff.name}>
           </div>
           <div class="mt-5">
             <button
