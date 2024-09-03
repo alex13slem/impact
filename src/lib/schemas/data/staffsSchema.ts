@@ -1,5 +1,5 @@
 import { number, object, string, z } from 'zod';
-import { wpImageOptional } from '../wpImageSchema';
+import { wpImageOptional } from '../wpImageOptional';
 
 export const staffsSchema = object({
   id: number(),

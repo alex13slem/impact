@@ -1,9 +1,9 @@
-import { filterSocialProgram } from '../stores/socialProgramStore';
+import { filterCharityProgram } from '../stores/charityProgramsStore';
 
-export function handleFilterSocialProgram(e: MouseEvent) {
+export function handleFilterCharityProgram(e: MouseEvent) {
   const el = (e.target as HTMLElement).closest('button') as HTMLButtonElement;
-  filterSocialProgram.update(currentSocialProgram => {
-    const newSocialProgram = el.getAttribute('data-social-program');
-    return currentSocialProgram === newSocialProgram ? null : newSocialProgram;
+  filterCharityProgram.update(currentProgram => {
+    const newProgram = el.getAttribute('data-charity-program');
+    return currentProgram === newProgram ? null : newProgram;
   });
 }

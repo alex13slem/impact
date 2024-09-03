@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { socialPrograms } from '@/lib/data/socialPrograms';
+  import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
+
   import { targetCategoryId } from '@/lib/stores/newsInteractiveStore';
   import { cn } from '@/lib/utils';
   import { Select, type Selected } from 'bits-ui';
 
   export let className: string = '';
+  export let charityPrograms: CharityProgram[] = [];
 
-  const options: Selected<number>[] = socialPrograms.map(item => ({
+  const options: Selected<number>[] = charityPrograms.map(item => ({
     value: item.id,
     label: item.name,
   }));

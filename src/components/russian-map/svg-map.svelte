@@ -1,15 +1,15 @@
 <script lang="ts">
-  import type { Needy } from '@/lib/data/needys';
   import { regionsPaths } from '@/lib/data/regionsPaths';
+  import type { WardWithRelatedData } from '@/lib/data/wards';
   import { hoveredRegion } from '@/lib/stores/hoveredRegionStore';
-  import { needysCoordinates } from '@/lib/stores/needysStore';
   import { loading, mapVisible } from '@/lib/stores/pageLoadingStore';
+  import { wardsCoordinates } from '@/lib/stores/wardsStore';
   import { cn } from '@/lib/utils';
-  import { calculateNeedysCoordinates } from '@/lib/utils/coordinateUtils';
+  import { calculateWardsCoordinates } from '@/lib/utils/coordinateUtils';
   import { onMount, tick } from 'svelte';
 
   export let className: string = '';
-  export let needys: Needy[] = [];
+  export let wards: WardWithRelatedData[] = [];
 
   let svg: SVGSVGElement;
 
@@ -25,10 +25,8 @@
     $hoveredRegion = null;
   }
   function updateCoordinates() {
-    if (svg && needys.length > 0) {
-      needysCoordinates.set(
-        calculateNeedysCoordinates(svg, needys, regionsPaths),
-      );
+    if (svg && wards.length > 0) {
+      wardsCoordinates.set(calculateWardsCoordinates(svg, wards, regionsPaths));
     }
   }
 

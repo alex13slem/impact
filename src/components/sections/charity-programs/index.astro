@@ -1,9 +1,8 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
-import { socialPrograms } from "@/lib/data/socialPrograms";
+import { charityPrograms } from "@/lib/data/charityPrograms";
 import DesktopCard from "./desktop-card.astro";
 import Slider from "./slider.svelte";
-
 
 ---
 
@@ -12,12 +11,12 @@ import Slider from "./slider.svelte";
     <SectHeading className="text-center">Наши программы</SectHeading>
     <div class="hidden grid-cols-3 gap-5 lg:grid">
       {
-        socialPrograms.map((program, idx) => (
+        charityPrograms.map((program, idx) => (
           <DesktopCard {program} style={`transition-delay: ${idx * 500}ms`} class={'hidden-block dir-bottom'}/>
         ))
       }
     </div>
 
-    <Slider client:load className="lg:hidden" />
+    <Slider {charityPrograms} client:load className="lg:hidden" />
   </div>
 </section>

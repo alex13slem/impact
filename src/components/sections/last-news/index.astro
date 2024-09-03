@@ -1,5 +1,5 @@
 ---
-import { news } from '@/lib/data/news'
+import { getLastNews } from '@/lib/data/news'
 import { cn } from '@/lib/utils'
 import type { HTMLAttributes } from 'astro/types'
 
@@ -7,7 +7,7 @@ interface Props extends HTMLAttributes<'section'> {}
 
 const {  class: className, ...props } = Astro.props
 
-const lastNews = news.sort((a, b) => b.time.getTime() - a.time.getTime()).slice(0, 4)
+const lastNews = getLastNews(4)
 ---
 
 <section class={cn('py-8 md:py-20', className)} {...props}>
@@ -15,14 +15,14 @@ const lastNews = news.sort((a, b) => b.time.getTime() - a.time.getTime()).slice(
     {lastNews.map((item) => (
       <article class="relative group ">
         <a href={"/news/" + item.slug} class="absolute inset-0 opacity-0">/news/{item.slug}</a>
-        <img src={item.image} alt={item.title} class="w-full rounded-3xl aspect-video bg-white bg-opacity-60 mb-5 hidden xl:block">
-        <time datetime={item.time.toString()} class="text-sm px-3 py-1 xl:border border-white rounded-full leading-none bg-white xl:bg-transparent text-dark xl:text-inherit">
-          {item.time.toLocaleDateString('ru-RU', {
+        <img src={item.image} alt={item.title} class="w-full rounded-3xl aspect-video bg-white bg-opacity-60 mb-5 hidden xl:block object-cover object-center">
+        <time datetime={new Date(item.date).toString()} class="text-sm px-3 py-1 xl:border border-white rounded-full leading-none bg-white xl:bg-transparent text-dark xl:text-inherit">
+          {new Date(item.date).toLocaleDateString('ru-RU', {
             month: 'numeric',
             day: 'numeric',
           })}
         </time>
-        <h3 class="text-sm md:text-base xl:text-xl xl:font-bold mt-3 xl:font-sov-mod xl:max-w-60 flex justify-between items-end gap-4">
+        <h3 class="text-sm md:text-base xl:text-xl xl:font-bold mt-3 xl:font-sov-mod flex justify-between items-end gap-4">
           {item.title}
           <svg class="text-lg shrink-0 xl:hidden" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 12l-6-6m6 6l-6 6m6-6H5"/></svg>
         </h3>

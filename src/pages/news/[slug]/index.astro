@@ -3,12 +3,12 @@ import { RootLayout } from '@/components/layouts/root';
 import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
-import { news } from '@/lib/data/news';
+import { newsWithRelated } from '@/lib/data/news';
 import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
 
 export const getStaticPaths = (() => {
-  const paths = news.map((item) => ({
+  const paths = newsWithRelated.map((item) => ({
     params: { slug: item.slug },
     props: { item },
   }))
@@ -27,7 +27,7 @@ const { item } = Astro.props
 		imageUrls={{fb: item.image || ''}}
 	/>
 	<main>
-    <SectNewsDetail item={item} />
+    <SectNewsDetail {item} />
     <SectLastNews />
 	</main>
 </RootLayout>

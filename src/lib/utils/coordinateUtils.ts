@@ -1,15 +1,16 @@
-import type { Needy } from '../data/needys';
+import type { WardWithRelatedData } from '../data/wards';
 
-export function calculateNeedysCoordinates(
+export function calculateWardsCoordinates(
   svg: SVGSVGElement,
-  needys: Needy[],
+  wards: WardWithRelatedData[],
   regionsPaths: { name: string }[],
 ) {
-  const needysCoordinates: (Needy & { x: number; y: number })[] = [];
+  const wardsCoordinates: (WardWithRelatedData & { x: number; y: number })[] =
+    [];
   const svgRect = svg.getBoundingClientRect();
   const iconSize = parseFloat(
     getComputedStyle(document.documentElement).fontSize,
-  ); // 1rem в пикселях
+  );
 
   regionsPaths.forEach(path => {
     const pathElement = svg.querySelector(
@@ -27,12 +28,12 @@ export function calculateNeedysCoordinates(
     center.y = bbox.y + bbox.height / 2;
 
     const transformedCenter = center.matrixTransform(matrix);
-    const numNeedys = needys.filter(n => n.regionSlug === path.name).length;
-    let angleStep = (2 * Math.PI) / numNeedys;
+    const numWards = wards.filter(w => w.region.slug === path.name).length;
+    let angleStep = (2 * Math.PI) / numWards;
 
-    needys
-      .filter(n => n.regionSlug === path.name)
-      .forEach((n, index) => {
+    wards
+      .filter(w => w.region.slug === path.name)
+      .forEach((ward, index) => {
         const radius = 0.7 * iconSize * Math.sqrt(index + 1);
         const angle = 0.8 * angleStep * index;
 
@@ -42,13 +43,9 @@ export function calculateNeedysCoordinates(
         const x = transformedCenter.x + offsetX - svgRect.left;
         const y = transformedCenter.y + offsetY - svgRect.top;
 
-        needysCoordinates.push({
-          ...n,
-          x,
-          y,
-        });
+        wardsCoordinates.push({ ...ward, x, y });
       });
   });
 
-  return needysCoordinates;
+  return wardsCoordinates;
 }

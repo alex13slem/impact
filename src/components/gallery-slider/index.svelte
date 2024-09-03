@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Gallery } from '@/lib/data/gallery';
+  import type { WpGallery } from '@/lib/schemas/wpGallery';
   import { cn } from '@/lib/utils';
   import { onMount } from 'svelte';
   import { type SwiperContainer, register } from 'swiper/element';
@@ -7,7 +7,7 @@
   import type { SwiperOptions } from 'swiper/types';
 
   export let className: string = '';
-  export let gallery: Gallery[] = [];
+  export let gallery: WpGallery[] = [];
 
   let swiperEl: SwiperContainer;
   const options = {
@@ -31,12 +31,13 @@
   init="false"
   class={cn('relative max-w-64 sm:max-w-lg m-0', className)}
 >
-  {#each gallery as item}
-    <swiper-slide class="rounded-3xl overflow-clip aspect-[4/3]">
+  {#each gallery as { src, alt }}
+    <swiper-slide class="rounded-3xl overflow-clip">
       <img
-        class="w-full h-full object-cover object-center"
-        src={item.url}
-        alt={item.alt}
+        width="512"
+        class="aspect-[4/3] object-cover object-center"
+        {src}
+        {alt}
       />
     </swiper-slide>
   {/each}

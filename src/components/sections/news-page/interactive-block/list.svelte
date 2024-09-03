@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { news } from '@/lib/data/news';
+  import type { NewsWithRelated } from '@/lib/data/news';
   import {
     targetCategoryId,
     targetNewsId,
@@ -7,9 +7,10 @@
   import { cn } from '@/lib/utils';
 
   export let className: string = '';
+  export let news: NewsWithRelated[] = [];
 
   $: viewedNews = $targetCategoryId
-    ? news.filter(item => item.categoryId === $targetCategoryId)
+    ? news.filter(item => item.charityProgramId === $targetCategoryId)
     : news;
 </script>
 
@@ -24,10 +25,10 @@
       >
       <header class="mb-4 flex items-start gap-5">
         <time
-          datetime={item.time.toString()}
+          datetime={new Date(item.date).toString()}
           class="text-sm px-3 py-1 border border-white rounded-full mt-1"
         >
-          {item.time.toLocaleDateString('ru-RU', {
+          {new Date(item.date).toLocaleDateString('ru-RU', {
             month: 'numeric',
             day: 'numeric',
           })}

@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { Needy } from '@/lib/data/needys';
+  import phPhoto from '@/assets/img/ph-photo.webp';
+  import type { WardWithRelatedData } from '@/lib/data/wards';
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import type { SwiperContainer } from 'swiper/element';
@@ -8,7 +9,7 @@
   import type { SwiperOptions } from 'swiper/types';
 
   export let className: string = '';
-  export let needys: Needy[] = [];
+  export let wards: WardWithRelatedData[] = [];
 
   let swiperEl: SwiperContainer;
   const options = {
@@ -44,23 +45,24 @@
     slot="container-end"
   ></div>
 
-  {#each needys as needy}
+  {#each wards as ward}
     <swiper-slide
       class="text-sm md:text-base lg:text-lg max-w-80 w-full translate-x-4 xl:translate-x-40 relative"
     >
       <a
-        href={`/programs/${needy.socialProgramSlug}/needy/${needy.id}`}
-        class="absolute inset-0 opacity-0">{needy.id}</a
+        href={`/programs/${ward.charityProgram.slug}/ward/${ward.id}`}
+        class="absolute inset-0 opacity-0">{ward.id}</a
       >
       <img
         class="aspect-square rounded-3xl object-cover object-center"
-        src={needy.image}
-        alt={needy.name}
+        src={typeof ward.image === 'string' ? ward.image : phPhoto.src}
+        width="320"
+        alt={ward.name}
       />
       <h2 class="mt-4 font-sov-mod text-2xl md:text-3xl">
-        {needy.name}
+        {ward.name}
       </h2>
-      {#each [{ text: 'Возраст:', value: needy.age }, { text: 'Город:', value: needy.city }, { text: 'Диагноз:', value: needy.diagnosis }] as { text, value }}
+      {#each [ward.dateOfBirth ? { text: 'Возраст:', value: new Date().getFullYear() - new Date(ward.dateOfBirth).getFullYear() } : {}, { text: 'Регион:', value: ward.region.name }, { text: 'Диагноз:', value: ward.diagnosis }] as { text, value }}
         {#if value}
           <div class="mt-2">
             <h3>{text}</h3>

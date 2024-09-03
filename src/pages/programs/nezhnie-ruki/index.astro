@@ -1,0 +1,78 @@
+---
+import { RootLayout } from '@/components/layouts/root';
+import { Seo } from '@/components/seo';
+import Button from '@/components/ui/button.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { WardsSlider } from '@/components/wards-slider';
+import { docs } from '@/lib/data/docs';
+import { siteSeo } from "@/lib/data/siteSeo";
+import { getWardsWithRelatedDataByCharity } from '@/lib/data/wards';
+import { cn } from '@/lib/utils';
+import { ViewTransitions } from 'astro:transitions';
+
+const wards = getWardsWithRelatedDataByCharity('nezhnie-ruki');
+const viewDocs = docs.filter(doc => doc.showIn === 'nezhnie-ruki');
+
+const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
+---
+<ViewTransitions  />
+<RootLayout>
+	<Seo
+		slot={'seo'}
+		title={seo?.name || 'Нежные руки'}
+		description={seo?.description || ''}
+		imageUrls={{fb: seo?.image || ''}}
+	/>
+
+	<main>
+    <section class="py-8 xl:py-20 overflow-clip">
+      <div class="container">
+        <div class="lg:flex justify-between items-start">
+          <SectHeading className='max-w-3xl mb-4 md:mb-4' level={1}>
+            {seo?.name || 'Нежные руки'}
+          </SectHeading>
+          {
+            !!viewDocs.length && (
+              <Button href='/programs/nezhnie-ruki/docs' className='flex items-center gap-4 shrink-0'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024"><path fill="currentColor" d="M768 0H416c-35.344 0-64 28.656-64 64h352v256h256v512H736v64h224c35.344 0 64-28.656 64-64V256.016zm0 256V90.496L933.472 256zM64 128c-35.344 0-64 28.656-64 64v768c0 35.344 28.656 64 64 64h544c35.344 0 64-28.656 64-64V384.016L416 128zm544 832H64V192h288v256h256zM416 384V218.496L581.472 384z"/></svg>
+                Документы для подачи заявки
+              </Button>
+            )
+          }
+        </div>
+        <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description}</p>
+
+        <div class="mt-16 relative">
+          <WardsSlider {wards} client:load />
+          {['prev', 'next'].map((dir) => (
+              <button
+                class={cn(
+                  {
+                    'prev-btn left-0  rotate-180': dir === 'prev',
+                    'next-btn right-0  ': dir === 'next',
+                  },
+                  'bg-white/90 text-dark absolute top-1/2 -translate-y-1/2 z-20  rounded-full  p-3 disabled:opacity-0 hover:bg-white transition-colors hidden xl:inline-block',
+                )}
+              >
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 12.6865 9.69238"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
+                    stroke="currentColor"
+                    stroke-opacity="1"
+                    stroke-width="1"
+                  />
+                </svg>
+              </button>
+            ))}
+        </div>
+      </div>
+    </section>
+	</main>
+</RootLayout>

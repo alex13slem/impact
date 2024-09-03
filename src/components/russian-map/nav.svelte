@@ -1,39 +1,42 @@
 <script lang="ts">
-  import { socialPrograms } from '@/lib/data/socialPrograms';
-  import { filterSocialProgram } from '@/lib/stores/socialProgramStore';
+  import { filterCharityProgram } from '@/lib/stores/charityProgramsStore';
   import { cn } from '@/lib/utils';
-  import { handleFilterSocialProgram } from '@/lib/utils/eventHandlers';
+  import { handleFilterCharityProgram } from '@/lib/utils/eventHandlers';
   import IconHeartHands from '../ui/icons/icon-heart-hands.svelte';
   import IconPrayerHands from '../ui/icons/icon-prayer-hands.svelte';
   import IconSocialUp from '../ui/icons/icon-social-up.svelte';
+
+  import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
+
+  export let charityPrograms: CharityProgram[] = [];
 </script>
 
 <nav class="flex flex-col items-start gap-2 w-fit sticky left-0 pl-4">
-  {#each socialPrograms as c}
+  {#each charityPrograms as c}
     <button
-      on:click={handleFilterSocialProgram}
+      on:click={handleFilterCharityProgram}
       class={cn(
         {
-          'text-accent': c.slug === $filterSocialProgram,
+          'text-accent': c.slug === $filterCharityProgram,
         },
         'relative group lg:hover:text-accent transition-colors',
       )}
-      data-social-program={c.slug}
+      data-charity-program={c.slug}
     >
       {#if c.slug === 'nezhnie-ruki'}
         <IconHeartHands
           className="text-4xl"
-          variant={c.slug === $filterSocialProgram ? 'fill' : 'outline'}
+          variant={c.slug === $filterCharityProgram ? 'fill' : 'outline'}
         />
       {:else if c.slug === 'pomozj-detyam'}
         <IconPrayerHands
           className="text-4xl"
-          variant={c.slug === $filterSocialProgram ? 'fill' : 'outline'}
+          variant={c.slug === $filterCharityProgram ? 'fill' : 'outline'}
         />
       {:else if c.slug === 'socialnye-lifty'}
         <IconSocialUp
           className="text-4xl"
-          variant={c.slug === $filterSocialProgram ? 'fill' : 'outline'}
+          variant={c.slug === $filterCharityProgram ? 'fill' : 'outline'}
         />
       {/if}
 

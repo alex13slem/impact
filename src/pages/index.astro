@@ -1,4 +1,5 @@
 ---
+import { SectCharityPrograms } from '@/components/sections/charity-programs';
 import { SectContacts } from '@/components/sections/contacts';
 import { SectDescription } from '@/components/sections/description';
 import { SectDocuments } from '@/components/sections/documents';
@@ -7,16 +8,15 @@ import { SectOurMission } from '@/components/sections/our-mission';
 import { SectOurPartners } from '@/components/sections/our-partners';
 import { SectOurStuff } from '@/components/sections/our-stuff';
 import { SectPay } from '@/components/sections/pay';
-import { SectSocialPrograms } from '@/components/sections/social-programs';
 import { goals } from '@/lib/data/goals';
 import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
 
-import { siteInfo } from "@/lib/data/siteInfo";
-import Screen from '../components/sections/our-goals/screen.svelte';
+import { SectOurGoals } from '@/components/sections/our-goals';
+import { siteSeo } from "@/lib/data/siteSeo";
 
 
-const seo = siteInfo.find((item) => item.slug === 'home');
+const seo = siteSeo.find((item) => item.slug === 'home');
 ---
 
 <RootLayout>
@@ -31,16 +31,10 @@ const seo = siteInfo.find((item) => item.slug === 'home');
 		<SectHero />
 		<SectDescription />
 		<SectOurMission />
-		<SectSocialPrograms />
+		<SectCharityPrograms />
 		<SectOurPartners />
 		<SectOurStuff />
-		{
-			goals.map((screen) => (
-				<section id="our-goals" class="section-slide overflow-clip">
-					<Screen goal={screen} client:load/>
-				</section>
-			))
-		}
+		{ goals.map((goal) => <SectOurGoals {goal} />) }
 		<SectPay />
 		<SectDocuments />
 		<SectContacts />

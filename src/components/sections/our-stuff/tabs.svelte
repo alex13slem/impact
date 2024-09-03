@@ -83,7 +83,7 @@
       {/if}
       <img
         class="rounded-3xl aspect-square object-cover object-center"
-        src={staff.image ? staff.image : phPhoto.src}
+        src={typeof staff.image === 'string' ? staff.image : phPhoto.src}
         alt={staff.name}
       />
       <h3 class="text-2xl font-light mt-4 text-center">{staff.name}</h3>
@@ -116,7 +116,7 @@
         {/if}
         <img
           class="rounded-3xl aspect-square object-cover object-center"
-          src={staff.image ? staff.image : phPhoto.src}
+          src={typeof staff.image === 'string' ? staff.image : phPhoto.src}
           alt={staff.name}
         />
         <h3 class="text-2xl font-light mt-4 text-center hidden md:block">

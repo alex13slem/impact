@@ -2,10 +2,10 @@
 import { RootLayout } from '@/components/layouts/root';
 import { SectNews } from '@/components/sections/news-page';
 import { Seo } from '@/components/seo';
-import { siteInfo } from "@/lib/data/siteInfo";
+import { siteSeo } from "@/lib/data/siteSeo";
 import { ViewTransitions } from 'astro:transitions';
 
-const seo = siteInfo.find((item) => item.slug === 'news');
+const seo = siteSeo.find((item) => item.slug === 'news');
 
 ---
 <ViewTransitions  />

@@ -1,11 +1,14 @@
 <script lang="ts">
-  import { socialPrograms } from '@/lib/data/socialPrograms';
+  import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import { fade } from 'svelte/transition';
   import { register, type SwiperContainer } from 'swiper/element';
   import { EffectFade } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
+
+  export let className: string = '';
+  export let charityPrograms: CharityProgram[] = [];
 
   const options = {
     modules: [EffectFade],
@@ -20,7 +23,6 @@
 
   let currentSlide = 0;
   let swiperEl: SwiperContainer;
-  export let className: string = '';
 
   onMount(async () => {
     Object.assign(swiperEl, options);
@@ -32,7 +34,7 @@
 </script>
 
 <swiper-container bind:this={swiperEl} init="false" class={cn('', className)}>
-  {#each socialPrograms as p, idx (p.id)}
+  {#each charityPrograms as p, idx (p.id)}
     <swiper-slide>
       {#if idx === currentSlide}
         <article transition:fade={{ duration: 300 }}>
@@ -50,7 +52,7 @@
               class="-mb-1 font-thin text-[#CCD3D9] md:text-3xl md:leading-none min-w-16 md:min-w-28"
             >
               <span class="text-dark text-3xl md:text-5xl">0{idx + 1}</span
-              >/0{socialPrograms.length}
+              >/0{charityPrograms.length}
             </p>
           </div>
           <hr class="my-3 md:my-5" />

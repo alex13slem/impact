@@ -1,14 +1,16 @@
 <script lang="ts">
-  import { news } from '@/lib/data/news';
   import { targetNewsId } from '@/lib/stores/newsInteractiveStore';
   import { cn } from '@/lib/utils';
 
-  import { fade } from 'svelte/transition';
   //@ts-ignore
   import bg from '@/assets/img/bg.webp';
+  import type { NewsWithRelated } from '@/lib/data/news';
+  import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
   import CategorySelect from './category-select.svelte';
 
   export let className: string = '';
+  export let news: NewsWithRelated[] = [];
+  export let charityPrograms: CharityProgram[] = [];
 
   $: newsItem = news.find(item => item.id === $targetNewsId);
 </script>
@@ -20,21 +22,11 @@
   )}
 >
   <div class="aspect-video rounded-3xl overflow-clip mb-5">
-    {#if newsItem}
-      <img
-        transition:fade={{ duration: 300 }}
-        class="w-full h-full object-cover object-center bg-white bg-opacity-60"
-        src={newsItem.image}
-        alt={newsItem.title}
-      />
-    {:else}
-      <img
-        transition:fade={{ duration: 300 }}
-        src={bg.src}
-        class="w-full h-full object-cover object-center"
-        alt=""
-      />
-    {/if}
+    <img
+      class="w-full object-cover object-center aspect-[4/3]"
+      src={!newsItem?.image ? bg.src : newsItem.image}
+      alt={newsItem?.title || ''}
+    />
   </div>
 
   <div class="flex gap-4">
@@ -56,6 +48,6 @@
       На главную
     </button>
 
-    <CategorySelect />
+    <CategorySelect {charityPrograms} />
   </div>
 </div>

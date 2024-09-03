@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { ourMissionSlides } from '@/lib/data/ourMissionSlides';
+  import type { OurMissionSlide } from '@/lib/schemas/data/ourMissionSlidesSchema';
   import { cn } from '@/lib/utils';
   import { fade } from 'svelte/transition';
   import { type SwiperContainer } from 'swiper/element';
 
+  export let ourMissionSlides: OurMissionSlide[] = [];
   export let swiperEl: SwiperContainer;
   export let className: string = '';
   export let currentSlide: number;

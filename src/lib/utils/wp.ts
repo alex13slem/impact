@@ -8,6 +8,9 @@ export async function getWpData(url: string) {
     headers: {
       Accept: 'application/json',
     },
+    params: {
+      per_page: 100,
+    },
   });
   if (response.status !== 200) {
     throw new Error('Failed to fetch data');

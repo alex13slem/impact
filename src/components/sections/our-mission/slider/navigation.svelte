@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ourMissionSlides } from '@/lib/data/ourMissionSlides';
+  import type { OurMissionSlide } from '@/lib/schemas/data/ourMissionSlidesSchema';
   import { cn } from '@/lib/utils';
   import { breakpoints } from '@sveu/browser';
 
@@ -8,6 +8,7 @@
   const cnBtn =
     'lg:text-4xl w-16 h-16 lg:h-28 lg:w-28 flex justify-center items-center bg-white text-dark rounded-full bg-opacity-90 disabled:opacity-50';
 
+  export let ourMissionSlides: OurMissionSlide[] = [];
   export let className: string = '';
   export let currentSlide: number;
 </script>

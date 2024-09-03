@@ -4,10 +4,10 @@ import { PartnerFormTrigger } from '@/components/partner-form-trigger';
 import { Seo } from '@/components/seo';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { partnersWithContribution } from '@/lib/data/partners';
-import { siteInfo } from "@/lib/data/siteInfo";
+import { siteSeo } from "@/lib/data/siteSeo";
 import { ViewTransitions } from 'astro:transitions';
 
-const seo = siteInfo.find((item) => item.slug === 'socialnye-lifty');
+const seo = siteSeo.find((item) => item.slug === 'socialnye-lifty');
 ---
 <ViewTransitions  />
 
@@ -33,7 +33,7 @@ const seo = siteInfo.find((item) => item.slug === 'socialnye-lifty');
         {partnersWithContribution.map((partner) => {
           if (partner.contributions.length) return (
             <article class="grid md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20">
-              <img width="160" height="160" class="w-40 h-40 row-span-3 rounded-full md:sticky top-24 lg:top-28" src={partner.image} alt={partner.name}>
+              <img width="160" height="160" class="w-40 h-40 row-span-3 rounded-full md:sticky top-24 lg:top-28 object-cover object-center" src={partner.image} alt={partner.name}>
               <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none"><a href={`/partners/${partner.id}`}>{partner.name}</a></h3>
               <div class="col-span-2 lg:col-span-1">
                 <h3 class="text-lg">О предприятии:</h3>

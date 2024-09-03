@@ -1,8 +1,8 @@
 import { object, string, z } from 'zod';
-import { phoneNumberSchema } from '../phoneNumberSchema';
+import { phoneNumber } from '../phoneNumber';
 
 export const contactsSchema = object({
-  phone: phoneNumberSchema,
+  phone: phoneNumber,
   city: string().min(1),
   address: string().min(1),
   postIndex: string().min(1),

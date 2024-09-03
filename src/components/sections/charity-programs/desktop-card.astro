@@ -3,11 +3,11 @@ import Button from '@/components/ui/button.svelte'
 import IconHeartHands from '@/components/ui/icons/icon-heart-hands.svelte'
 import IconPrayerHands from '@/components/ui/icons/icon-prayer-hands.svelte'
 import IconSocialUp from '@/components/ui/icons/icon-social-up.svelte'
-import type { SocialProgram } from "@/lib/data/socialPrograms"
+import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema'
 import type { HTMLAttributes } from 'astro/types'
 
 interface Props extends HTMLAttributes<'article'> {
-  program: SocialProgram
+  program: CharityProgram
 }
 
 const { program, ...props } = Astro.props

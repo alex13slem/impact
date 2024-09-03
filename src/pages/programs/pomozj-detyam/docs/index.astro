@@ -4,10 +4,10 @@ import { Seo } from '@/components/seo';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { ViewDocs } from '@/components/view-docs';
 import { docs } from '@/lib/data/docs';
-import { siteInfo } from "@/lib/data/siteInfo";
+import { siteSeo } from "@/lib/data/siteSeo";
 import { ViewTransitions } from 'astro:transitions';
 
-const seo = siteInfo.find((item) => item.slug === 'pomozj-detyam');
+const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
 
 const viewDocs = docs.filter(doc => doc.showIn === 'pomozj-detyam');
 ---
@@ -28,7 +28,7 @@ const viewDocs = docs.filter(doc => doc.showIn === 'pomozj-detyam');
           Документы
         </SectHeading>
         <p class="font-thin font-sov-mod uppercase text-sm md:text-lg lg:text-2xl text-center  mb-10">
-          для подачи заявки по программе <br>«Помощь тяжелобольным детям»
+          для подачи заявки по программе <br/>«{seo?.name || 'Помощь тяжелобольным детям'}»
         </p>
         <ViewDocs docs={viewDocs} />
       </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ourMissionSlides } from '@/lib/data/ourMissionSlides';
+  import type { OurMissionSlide } from '@/lib/schemas/data/ourMissionSlidesSchema';
   import { onMount, tick } from 'svelte';
   import { register, type SwiperContainer } from 'swiper/element';
   import {
@@ -12,6 +12,8 @@
   import Description from './description.svelte';
   import Navigation from './navigation.svelte';
   import Slides from './slides.svelte';
+
+  export let ourMissionSlides: OurMissionSlide[] = [];
 
   let slides: SwiperContainer;
   let description: SwiperContainer;
@@ -65,8 +67,8 @@
   } as SwiperOptions;
 
   onMount(async () => {
-    Object.assign(slides, slidesParams);
     Object.assign(description, descriptionParams);
+    Object.assign(slides, slidesParams);
 
     await tick();
     register();
@@ -80,14 +82,17 @@
     className="row-start-1 row-end-3 col-start-2 col-end-3 w-svw lg:w-[80vw] mb-12 lg:mb-0"
     bind:swiperEl={slides}
     {currentSlide}
+    {ourMissionSlides}
   />
   <Description
     className="max-w-96 mb-9 lg:mb-0"
     bind:swiperEl={description}
     {currentSlide}
+    {ourMissionSlides}
   />
   <Navigation
     className="col-start-1 col-end-2 row-start-2 row-end-3 self-end"
     {currentSlide}
+    {ourMissionSlides}
   />
 </div>

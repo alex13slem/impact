@@ -1,11 +1,13 @@
 ---
 import IMPACT from '@/assets/img/IMPACT.png';
-import { landingNews } from "@/lib/data/news";
+import { charityPrograms } from '@/lib/data/charityPrograms';
+import { getLastNews } from "@/lib/data/news";
+import { wardsWithRelatedData as wards } from '@/lib/data/wards';
 import { Image } from "astro:assets";
 import RussianMap from "../../russian-map";
 import Heading from './heading.svelte';
 
-
+const landingNews = getLastNews(5)
 ---
 
 <section class="section-slide bg-dark  relative z-0 overflow-x-clip">
@@ -13,7 +15,7 @@ import Heading from './heading.svelte';
 	<Image src={IMPACT} alt="impact" class="absolute inset-0 -top-[53px] md:-top-[65px] lg:-top-[89px] bottom-auto object-contain w-full -z-10" />
 	<div class="container grid grid-cols-2 min-h-[calc(100svh-53px)] md:min-h-[calc(100svh-65px)] lg:min-h-[calc(100svh-89px)] py-5 md:py-8 lg:py-10 px-0 relative z-0 ">
 
-		<RussianMap client:load className="col-start-1 col-end-3 row-start-1 row-end-3"/>
+		<RussianMap {wards} {charityPrograms} client:load className="col-start-1 col-end-3 row-start-1 row-end-3"/>
 
 		<Heading client:load className="self-end col-start-1 row-start-1 row-end-3 "/>
 
@@ -24,8 +26,8 @@ import Heading from './heading.svelte';
 			{landingNews.map((item) => (
 				<article class="flex flex-col gap-2 [&:not(:last-child)]:mb-6 relative">
 					<a href={`/news/${item.slug}`} class="absolute inset-0"></a>
-					<time class="px-3 py-1 bg-dark rounded-full self-start text-xs" datetime={item.time.getDate().toString()}>
-						{item.time.toLocaleDateString('ru-RU', {
+					<time class="px-3 py-1 bg-dark rounded-full self-start text-xs" datetime={new Date(item.date).getDate().toString()}>
+						{new Date(item.date).toLocaleDateString('ru-RU', {
 							day: 'numeric',
 							month: 'numeric',
 						})}

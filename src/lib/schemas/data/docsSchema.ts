@@ -1,7 +1,7 @@
 import { object, string, z } from 'zod';
-import { wpImageOptional } from '../wpImageSchema';
+import { wpImageOptional } from '../wpImageOptional';
 
-const ShowInEnum = z.enum(['landing', 'pomozj-detyam']);
+const ShowInEnum = z.enum(['landing', 'pomozj-detyam', 'nezhnie-ruki']);
 
 export const docsSchema = object({
   id: z.number(),
