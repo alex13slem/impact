@@ -1,32 +1,49 @@
 <script lang="ts">
+  import type { NewsPoint } from '@/lib/data/mapNews';
   import { regionsPaths } from '@/lib/data/regionsPaths';
-  import type { WardWithRelatedData } from '@/lib/data/wards';
   import { hoveredRegion } from '@/lib/stores/hoveredRegionStore';
   import { loading, mapVisible } from '@/lib/stores/pageLoadingStore';
-  import { wardsCoordinates } from '@/lib/stores/wardsStore';
+  import { pointsCoordinates } from '@/lib/stores/wardsStore';
   import { cn } from '@/lib/utils';
-  import { calculateWardsCoordinates } from '@/lib/utils/coordinateUtils';
+  import { calculatePointsCoordinates } from '@/lib/utils/coordinateUtils';
   import { onMount, tick } from 'svelte';
 
   export let className: string = '';
-  export let wards: WardWithRelatedData[] = [];
+  export let mapNews: NewsPoint[] = [];
 
   let svg: SVGSVGElement;
 
   function handleMouseOver(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
-    // el.setAttribute('fill', 'url(#hover-gradient)');
     $hoveredRegion = el.getAttribute('data-region');
+    const gradientId = el
+      .getAttribute('fill')!
+      .match(/url\(#(svg-gradient-\d+)\)/)![1]; // Получаем ID градиента
+    const gradient = svg.getElementById(gradientId) as SVGGElement;
+
+    const stop1 = gradient.childNodes[0] as SVGStopElement;
+    const stop2 = gradient.childNodes[1] as SVGStopElement;
+    stop1.setAttribute('stop-color', '#c3963c');
+    stop2.setAttribute('stop-color', '#fadb9e');
   }
 
   function handleMouseOut(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
-    // el.setAttribute('fill', 'url(#default-gradient)');
     $hoveredRegion = null;
+    const gradientId = el
+      .getAttribute('fill')!
+      .match(/url\(#(svg-gradient-\d+)\)/)![1];
+    const gradient = svg.getElementById(gradientId) as SVGGElement;
+    const stop1 = gradient.childNodes[0] as SVGStopElement;
+    const stop2 = gradient.childNodes[1] as SVGStopElement;
+    stop1.setAttribute('stop-color', '#164264');
+    stop2.setAttribute('stop-color', '#033455');
   }
   function updateCoordinates() {
-    if (svg && wards.length > 0) {
-      wardsCoordinates.set(calculateWardsCoordinates(svg, wards, regionsPaths));
+    if (svg && mapNews.length > 0) {
+      pointsCoordinates.set(
+        calculatePointsCoordinates(svg, mapNews, regionsPaths),
+      );
     }
   }
 
@@ -55,15 +72,12 @@
   xml:space="preserve"
 >
   <defs>
-    <linearGradient id="hover-gradient">
-      <stop offset="0" stop-color="#c3963c" />
-      <stop offset="0.425" stop-color="#fadb9e" />
-      <stop offset="1" stop-color="#c6942f" />
-    </linearGradient>
-    <linearGradient id="default-gradient">
-      <stop offset="0.135" stop-color="#164264" />
-      <stop offset="1" stop-color="#033455" />
-    </linearGradient>
+    {#each regionsPaths as path, i (path.d)}
+      <linearGradient id="svg-gradient-{i}">
+        <stop class="transition-all" offset="0" stop-color="#164264" />
+        <stop class="transition-all" offset="1" stop-color="#033455" />
+      </linearGradient>
+    {/each}
   </defs>
 
   <g class="relative">
@@ -75,9 +89,10 @@
           {
             'highlight-anim': $loading && $mapVisible,
           },
-          'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out fill-[rgba(0,30,61,0.5)] hover:fill-accent hover:stroke-[1.5px] hover:drop-shadow-2xl',
+          'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl',
         )}
         d={path.d}
+        fill="url(#svg-gradient-{i})"
         on:mouseover={handleMouseOver}
         on:mouseout={handleMouseOut}
         on:focus={handleMouseOver}
@@ -85,8 +100,6 @@
         role="button"
         tabindex="0"
       />
-      <!-- fill="url(#default-gradient)" -->
-      <!-- hover:stroke-[1.5px] hover:drop-shadow-2xl -->
     {/each}
   </g>
 </svg>

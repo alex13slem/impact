@@ -1,12 +1,6 @@
-import type { WardWithRelatedData } from '@/lib/data/wards';
 import { boolean, number, object, string, z } from 'zod';
 import { wpGallery } from '../wpGallery';
 import { wpImageOptional } from '../wpImageOptional';
-
-export interface Coordinates {
-  x: number;
-  y: number;
-}
 
 export const wardStatusEnum = z.enum(['active', 'inactive']);
 
@@ -28,5 +22,3 @@ export const wardsSchema = object({
 export const wardsArraySchema = wardsSchema.array();
 
 export type Ward = z.infer<typeof wardsSchema>;
-
-export interface WardWithCoordinates extends WardWithRelatedData, Coordinates {}

@@ -1,5 +1,6 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
+import { partnersWithRelatedData } from "@/lib/data/partners";
 import Slider from "./slider.svelte";
 
 
@@ -13,5 +14,5 @@ import Slider from "./slider.svelte";
       и детскими учреждениями, а также российскими компаниями, которые разделяют наши цели и оказывают поддержку в их достижении.
     </p>
   </div>
-  <Slider client:load />
+  <Slider partners={partnersWithRelatedData} client:load />
 </section>

@@ -50,6 +50,8 @@ export function withDataFetching(
     return async (): Promise<T> => {
       try {
         const rawData = await getDataFunc(endpoint);
+        // console.log(rawData);
+
         const parsedData = schema.parse(rawData);
         return parsedData;
       } catch (error) {

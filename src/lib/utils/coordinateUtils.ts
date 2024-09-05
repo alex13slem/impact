@@ -1,12 +1,11 @@
-import type { WardWithRelatedData } from '../data/wards';
+import type { NewsPoint, PointWithCoordinates } from '../data/mapNews';
 
-export function calculateWardsCoordinates(
+export function calculatePointsCoordinates(
   svg: SVGSVGElement,
-  wards: WardWithRelatedData[],
+  mapNews: NewsPoint[],
   regionsPaths: { name: string }[],
 ) {
-  const wardsCoordinates: (WardWithRelatedData & { x: number; y: number })[] =
-    [];
+  const pointsCoordinates: PointWithCoordinates[] = [];
   const svgRect = svg.getBoundingClientRect();
   const iconSize = parseFloat(
     getComputedStyle(document.documentElement).fontSize,
@@ -28,10 +27,10 @@ export function calculateWardsCoordinates(
     center.y = bbox.y + bbox.height / 2;
 
     const transformedCenter = center.matrixTransform(matrix);
-    const numWards = wards.filter(w => w.region.slug === path.name).length;
+    const numWards = mapNews.filter(w => w.region.slug === path.name).length;
     let angleStep = (2 * Math.PI) / numWards;
 
-    wards
+    mapNews
       .filter(w => w.region.slug === path.name)
       .forEach((ward, index) => {
         const radius = 0.7 * iconSize * Math.sqrt(index + 1);
@@ -43,9 +42,10 @@ export function calculateWardsCoordinates(
         const x = transformedCenter.x + offsetX - svgRect.left;
         const y = transformedCenter.y + offsetY - svgRect.top;
 
-        wardsCoordinates.push({ ...ward, x, y });
+        pointsCoordinates.push({ ...ward, x, y });
       });
   });
 
-  return wardsCoordinates;
+  // console.log(pointsCoordinates);
+  return pointsCoordinates;
 }

@@ -1,22 +1,23 @@
 <script lang="ts">
-  import type { Contribution } from '@/lib/data/contributions';
-  import { targetContributionId } from '@/lib/stores/partnerInteractiveStore';
+  import type { PartnerWithRelatedData } from '@/lib/data/partners';
+  import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
   import { cn } from '@/lib/utils';
 
   export let className: string = '';
 
-  export let contributions: Contribution[] = [];
+  export let partner: PartnerWithRelatedData = [];
 </script>
 
 <div class={cn(className, 'xl:max-w-3xl w-full')}>
-  {#each contributions as item, idx}
+  {#each partner.events as event, idx}
     <article
-      on:mouseenter={() => targetContributionId.set(item.id)}
+      on:mouseenter={() => targetEventSlug.set(event.slug)}
+      on:mouseleave={() => targetEventSlug.set(null)}
       class="relative group"
     >
       <header class="mb-4 flex items-start gap-5">
         <h3 class="text-base lg:text-2xl font-sov-mod uppercase">
-          {item.name}
+          {event.title}
         </h3>
         <!-- <svg
           class="self-baseline text-3xl mt-1 ml-auto group-hover:text-accent transition-colors hidden xl:block"
@@ -33,11 +34,11 @@
         </svg> -->
       </header>
       <div class="xl:max-w-xl text-sm md:text-base lg:text-lg font-thin">
-        <p>{item.description}</p>
+        <p>{event.description}</p>
       </div>
     </article>
 
-    {#if idx < contributions.length - 1}
+    {#if idx < partner.events.length - 1}
       <hr class="my-7 border-white border-opacity-15" />
     {/if}
   {/each}

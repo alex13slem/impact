@@ -1,17 +1,14 @@
 <script lang="ts">
-  import type { Contribution } from '@/lib/data/contributions';
   import { cn } from '@/lib/utils';
   import { fade } from 'svelte/transition';
   //@ts-ignore
-  import bg from '@/assets/img/bg.webp';
-  import { targetContributionId } from '@/lib/stores/partnerInteractiveStore';
+  import type { PartnerWithRelatedData } from '@/lib/data/partners';
+  import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
 
   export let className: string = '';
-  export let contributions: Contribution[] = [];
+  export let partner: PartnerWithRelatedData = [];
 
-  $: contribution = contributions.find(
-    item => item.id === $targetContributionId,
-  );
+  $: event = partner.events.find(item => item.slug === $targetEventSlug);
 </script>
 
 <div
@@ -20,18 +17,18 @@
     className,
   )}
 >
-  {#if contribution}
+  {#if event}
     <img
-      transition:fade={{ duration: 300 }}
-      class="w-full h-full object-cover object-center bg-white bg-opacity-60"
-      src={contribution.image}
-      alt={contribution.name}
+      transition:fade={{ duration: 100 }}
+      class="w-full h-full object-cover object-center"
+      src={event.image}
+      alt={event.title}
     />
   {:else}
     <img
-      transition:fade={{ duration: 300 }}
-      src={bg.src}
-      class="w-full h-full object-cover object-center"
+      transition:fade={{ duration: 100 }}
+      src={partner.image}
+      class="w-full h-full object-contain object-center bg-white bg-opacity-60"
       alt=""
     />
   {/if}

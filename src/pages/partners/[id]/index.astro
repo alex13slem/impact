@@ -2,12 +2,12 @@
 import { RootLayout } from "@/components/layouts/root";
 import { SectPartner } from "@/components/sections/partner-page";
 import { Seo } from "@/components/seo";
-import { partnersWithContribution } from "@/lib/data/partners";
+import { partnersWithRelatedData } from "@/lib/data/partners";
 import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
 
 export const getStaticPaths = (() => {
-  const paths = partnersWithContribution.map( (partner) => {
+  const paths = partnersWithRelatedData.map( (partner) => {
     return {
       params: {
         id: partner.id

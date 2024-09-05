@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { WardWithCoordinates } from '@/lib/schemas/data/wardsSchema';
   import { hoveredRegion } from '@/lib/stores/hoveredRegionStore';
   import { cn } from '@/lib/utils';
   import { Popover } from 'bits-ui';
@@ -7,34 +6,35 @@
   import IconHeartHands from '../ui/icons/icon-heart-hands.svelte';
   import IconPrayerHands from '../ui/icons/icon-prayer-hands.svelte';
   import IconSocialUp from '../ui/icons/icon-social-up.svelte';
-  import WardPopap from './ward-popap.svelte';
+  import Popap from './popap.svelte';
+  import type { PointWithCoordinates } from '@/lib/data/mapNews';
 
-  export let ward: WardWithCoordinates;
+  export let point: PointWithCoordinates;
 </script>
 
 <div
   transition:fade={{ duration: 100 }}
   class="absolute"
-  style="top: {ward.y}px; left: {ward.x}px; transform: translate(-50%, -50%);"
+  style="top: {point.y}px; left: {point.x}px; transform: translate(-50%, -50%);"
 >
   <Popover.Root>
     <Popover.Trigger>
       <button
         class={cn('hover:text-accent text-2xl', {
-          'text-dark': $hoveredRegion === ward.region.slug,
+          'text-dark': $hoveredRegion === point.region.slug,
         })}
       >
-        {#if ward.charityProgram.slug === 'nezhnie-ruki'}
+        {#if point.slug === 'nezhnie-ruki'}
           <IconHeartHands variant="ghost" />
-        {:else if ward.charityProgram.slug === 'pomozj-detyam'}
+        {:else if point.slug === 'pomozj-detyam'}
           <IconPrayerHands variant="ghost" />
-        {:else if ward.charityProgram.slug === 'socialnye-lifty'}
+        {:else if point.slug === 'socialnye-lifty'}
           <IconSocialUp variant="ghost" />
         {/if}
       </button>
     </Popover.Trigger>
     <Popover.Content>
-      <WardPopap {ward} />
+      <Popap {point} />
     </Popover.Content>
   </Popover.Root>
 </div>

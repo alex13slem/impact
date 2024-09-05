@@ -1,15 +1,14 @@
 import { derived } from 'svelte/store';
-import type { WardWithCoordinates } from '../schemas/data/wardsSchema';
+import type { PointWithCoordinates } from '../data/mapNews';
 import { filterCharityProgram } from './charityProgramsStore';
-import { wardsCoordinates } from './wardsStore';
+import { pointsCoordinates } from './wardsStore';
 
 export const filteredWardsCoordinates = derived(
-  [wardsCoordinates, filterCharityProgram],
-  ([$wardsCoordinates, $filterCharityProgram]) => {
-    return $wardsCoordinates.filter(
-      (ward: WardWithCoordinates) =>
-        !$filterCharityProgram ||
-        ward.charityProgram.slug === $filterCharityProgram,
+  [pointsCoordinates, filterCharityProgram],
+  ([$pointsCoordinates, $filterCharityProgram]) => {
+    return $pointsCoordinates.filter(
+      (point: PointWithCoordinates) =>
+        !$filterCharityProgram || point.slug === $filterCharityProgram,
     );
   },
 );

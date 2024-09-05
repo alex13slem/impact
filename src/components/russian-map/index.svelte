@@ -1,25 +1,24 @@
 <script lang="ts">
-  import type { WardWithRelatedData } from '@/lib/data/wards';
+  import type { NewsPoint, PointWithCoordinates } from '@/lib/data/mapNews';
   import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
-  import type { WardWithCoordinates } from '@/lib/schemas/data/wardsSchema';
   import { filteredWardsCoordinates } from '@/lib/stores/filteredWardsStore';
   import { loading } from '@/lib/stores/pageLoadingStore';
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import Nav from './nav.svelte';
   import SvgMap from './svg-map.svelte';
-  import WardPoint from './ward-point.svelte';
+  import MapPoint from './point.svelte';
 
   export let charityPrograms: CharityProgram[] = [];
   export let className: string = '';
-  export let wards: WardWithRelatedData[] = [];
-  let viewWardCoordinates: WardWithCoordinates[] = [];
+  export let mapNews: NewsPoint[] = [];
+  let viewNewsPoints: PointWithCoordinates[] = [];
 
-  $: viewWardCoordinates = $filteredWardsCoordinates;
+  $: viewNewsPoints = $filteredWardsCoordinates;
 
   onMount(async () => {
     await tick();
-    viewWardCoordinates = $filteredWardsCoordinates;
+    viewNewsPoints = $filteredWardsCoordinates;
   });
 </script>
 
@@ -29,13 +28,13 @@
 >
   <Nav {charityPrograms} />
   <SvgMap
-    {wards}
+    {mapNews}
     className={cn({
       'drop-shadow-[0_0_2rem_hsl(209,50%,30%)] lg:drop-shadow-[0_0_18rem_hsl(209,100%,70%)] lg:pr-52':
         !$loading,
     })}
   />
-  {#each viewWardCoordinates as ward (ward.id)}
-    <WardPoint {ward} />
+  {#each viewNewsPoints as point}
+    <MapPoint {point} />
   {/each}
 </div>

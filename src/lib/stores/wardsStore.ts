@@ -1,4 +1,4 @@
 import { writable } from 'svelte/store';
-import type { WardWithCoordinates } from '../schemas/data/wardsSchema';
+import type { PointWithCoordinates } from '../data/mapNews';
 
-export const wardsCoordinates = writable<WardWithCoordinates[]>([]);
+export const pointsCoordinates = writable<PointWithCoordinates[]>([]);

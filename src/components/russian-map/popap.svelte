@@ -1,21 +1,21 @@
 <script lang="ts">
   import phPhoto from '@/assets/img/ph-photo.webp';
-  import type { WardWithRelatedData } from '@/lib/data/wards';
+  import type { PointWithCoordinates } from '@/lib/data/mapNews';
   import { cn } from '@/lib/utils';
   import { Popover } from 'bits-ui';
   import { fade } from 'svelte/transition';
 
   export let className: string = '';
-  export let ward: WardWithRelatedData;
+  export let point: PointWithCoordinates;
 
-  const photo = typeof ward.image === 'string' ? ward.image : phPhoto.src;
+  const photo = typeof point.image === 'string' ? point.image : phPhoto.src;
 </script>
 
 <article
   transition:fade={{ duration: 100 }}
   class={cn(
     className,
-    'p-4 lg:p-6 backdrop-blur rounded-3xl max-w-[320px] border border-white border-opacity-80',
+    'p-4 lg:p-6 backdrop-blur rounded-3xl max-w-[320px] md:max-w-[400px] border border-white border-opacity-80',
   )}
 >
   <Popover.Close
@@ -32,26 +32,23 @@
       /></svg
     >
   </Popover.Close>
-  <div class="flex gap-2 lg:gap-4 mb-4 lg:mb-7 items-start">
+  <div class="flex gap-2 lg:gap-4 mb-4 lg:mb-7 items-start pr-5 lg:pr-7">
     <img
       width="68"
       height="68"
       class="rounded-full text-3xl aspect-square object-cover object-center"
       src={photo}
-      alt={ward.name}
+      alt={point.title}
     />
-    <h3 class="lg:text-xl text-xl font-bold">{ward.name}</h3>
+    <h3 class="lg:text-xl text-lg font-bold">{point.title}</h3>
   </div>
-  <p class="mb-4 hidden lg:block">{ward.description}</p>
+  <p class="mb-4 hidden lg:block">{@html point.description}</p>
   <hr class="my-5 border-white border-opacity-90 hidden lg:block" />
-  <p class="mb-4 leading-none">{ward.region.name}</p>
+  <p class="mb-4 leading-none">{point.region.name}</p>
   <button
     class="flex justify-center items-center gap-2 relative text-lg leading-none w-full text-dark bg-white bg-opacity-80 rounded-2xl p-3 lg:p-4 lg:hover:bg-opacity-90 transition-all"
   >
-    <a
-      href="/programs/{ward.charityProgram.slug}/ward/{ward.id}"
-      class="absolute inset-0 opacity-0">{ward.id}</a
-    >
+    <a href={point.link} class="absolute inset-0 opacity-0">.</a>
     Узнать подробнее
     <svg
       width="12.686523"
