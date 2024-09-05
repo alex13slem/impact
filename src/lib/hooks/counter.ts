@@ -1,4 +1,6 @@
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 export function counter(node: HTMLElement, { counter }: { counter: number }) {
   const timeline = gsap.timeline({

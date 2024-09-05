@@ -1,13 +1,14 @@
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-document.querySelectorAll('.section-slide').forEach(section => {
-  gsap.to(section, {
+export function sectionSlide(node: HTMLElement) {
+  if (!node) return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to(node, {
     opacity: 0,
     filter: 'grayscale(50%) blur(2px)',
     scrollTrigger: {
-      trigger: section,
+      trigger: node,
       start: 'top top',
       end: 'bottom top',
       snap: 1,
@@ -19,4 +20,4 @@ document.querySelectorAll('.section-slide').forEach(section => {
       },
     },
   });
-});
+}

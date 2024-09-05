@@ -3,6 +3,7 @@
   import cursorFragment from '@/assets/img/cursor-fragment.svg';
   import SectHeading from '@/components/ui/sect-heading.svelte';
   import { counter as goalsCounter } from '@/lib/hooks/counter';
+  import { sectionSlide } from '@/lib/hooks/sectionSlide';
   import type { Goal } from '@/lib/schemas/data/goalsSchema';
   import { cn } from '@/lib/utils';
 
@@ -13,6 +14,7 @@
 </script>
 
 <div
+  use:sectionSlide
   class={cn(
     className,
     'bg-cover bg-center relative z-0 py-8 min-h-svh flex flex-col justify-center px-4',

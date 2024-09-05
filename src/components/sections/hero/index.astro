@@ -11,7 +11,13 @@ const landingNews = getLastNews(5)
 
 ---
 
-<section class="section-slide bg-dark  relative z-0 overflow-x-clip">
+<script>
+import { sectionSlide } from "@/lib/hooks/sectionSlide"
+	const root = document.querySelector('#hero') as HTMLElement
+	sectionSlide(root)
+</script>
+
+<section id="hero" class="section-slide bg-dark  relative z-0 overflow-x-clip">
 	<!-- <Image src={BG} alt="abstract" class="absolute inset-0 object-cover w-full h-full -z-10" /> -->
 	<Image src={IMPACT} alt="impact" class="absolute inset-0 -top-[53px] md:-top-[65px] lg:-top-[89px] bottom-auto object-contain w-full -z-10" />
 	<div class="container grid grid-cols-2 min-h-[calc(100svh-53px)] md:min-h-[calc(100svh-65px)] lg:min-h-[calc(100svh-89px)] py-5 md:py-8 lg:py-10 px-0 relative z-0 ">
