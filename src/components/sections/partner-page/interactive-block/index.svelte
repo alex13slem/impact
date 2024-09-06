@@ -4,7 +4,7 @@
   import List from './list.svelte';
   import Preview from './preview.svelte';
 
-  export let partner: PartnerWithRelatedData = [];
+  export let partner: PartnerWithRelatedData;
   export let className: string = '';
 </script>
 
