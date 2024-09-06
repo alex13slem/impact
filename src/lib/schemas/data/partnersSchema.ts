@@ -5,7 +5,7 @@ export const partnersSchema = object({
   name: string().min(1),
   description: string().min(1),
   image: string().url(),
-  eventsIds: array(number()),
+  eventsIds: array(number()).or(string()),
 });
 
 export const partnersArraySchema = partnersSchema.array();

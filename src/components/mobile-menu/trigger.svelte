@@ -4,7 +4,8 @@
 </script>
 
 <button
-  class="lg:hidden w-[40px] h-[20px] relative flex justify-end"
+  data-target="mobile-menu-trigger"
+  class=" w-[40px] h-[20px] relative flex justify-end"
   on:click={() => {
     $mobileMenuVisible = !$mobileMenuVisible;
   }}

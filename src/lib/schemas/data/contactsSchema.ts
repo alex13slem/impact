@@ -10,6 +10,8 @@ export const contactsSchema = object({
   openingHours: string().min(1),
   mapCoords: string().min(1),
   mapLink: string().url(),
+  vk: string().url(),
+  telegram: string().url(),
 });
 
 export type Contacts = z.infer<typeof contactsSchema>;

@@ -7,7 +7,9 @@ import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
 
 export const getStaticPaths = (() => {
-  const paths = partnersWithRelatedData.map( (partner) => {
+  const paths = partnersWithRelatedData
+    .filter(p => !!p.events.length)
+    .map( (partner) => {
     return {
       params: {
         id: partner.id

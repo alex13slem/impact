@@ -32,4 +32,8 @@ export const navLinks: NavLink[] = [
     name: 'Документы',
     link: '/#documents',
   },
+  {
+    name: 'Контакты',
+    link: '/#contacts',
+  },
 ];

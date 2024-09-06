@@ -103,7 +103,9 @@ export const fetchPartnersWithRelatedData = async () => {
   return Promise.all(
     partners.map(async partner => ({
       ...partner,
-      events: await fetchNewsByIds(partner.eventsIds),
+      events: Array.isArray(partner.eventsIds)
+        ? await fetchNewsByIds(partner.eventsIds)
+        : [],
     })),
   );
 };
@@ -113,7 +115,9 @@ export const fetchPartnerWithRelatedById = async (id: number) => {
   const partner = await fetchPartnerById(id)();
   return {
     ...partner,
-    events: await fetchNewsByIds(partner.eventsIds),
+    events: Array.isArray(partner.eventsIds)
+      ? await fetchNewsByIds(partner.eventsIds)
+      : [],
   };
 };
 

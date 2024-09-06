@@ -9,6 +9,7 @@
   import { MobileMenu, MobileMenuTrigger } from '../mobile-menu';
 
   let isHomePage: boolean = false;
+  let root: HTMLElement;
 
   onMount(() => {
     isHomePage = window.location.pathname === '/';
@@ -16,6 +17,7 @@
 </script>
 
 <header
+  bind:this={root}
   use:scrollHidden={{ triggerHeight: isHomePage ? '100svh' : 0 }}
   data-target="site-header"
   class={cn(
@@ -30,33 +32,36 @@
         alt="Impact"
       /></a
     >
-    <button
-      class="lg:flex group justify-center items-center gap-7 hover:text-accent transition-colors text-white text-opacity-90 relative hidden"
-    >
-      <a href="/#pay" class="absolute inset-0 opacity-0">.</a>
-      <span
-        class="py-2 px-3 border border-current rounded-xl flex items-center gap-2"
+    <div class="flex gap-8 items-center">
+      <button
+        class="lg:flex group justify-center items-center gap-7 hover:text-accent transition-colors text-white text-opacity-90 relative hidden"
       >
-        Как помочь
-        <svg
-          width="12.686523"
-          height="9.692383"
-          viewBox="0 0 12.6865 9.69238"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+        <a href="/#pay" class="absolute inset-0 opacity-0">.</a>
+        <span
+          class="py-2 px-3 border border-current rounded-xl flex items-center gap-2"
         >
-          <path
-            d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
-            stroke="currentColor"
-            stroke-opacity="1"
-            stroke-width="1"
-          />
-        </svg>
-      </span>
-    </button>
+          Как помочь
+          <svg
+            width="12.686523"
+            height="9.692383"
+            viewBox="0 0 12.6865 9.69238"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <path
+              d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
+              stroke="currentColor"
+              stroke-opacity="1"
+              stroke-width="1"
+            />
+          </svg>
+        </span>
+      </button>
 
-    <MobileMenuTrigger />
+      <MobileMenuTrigger />
+    </div>
+
     <MobileMenu title="Меню">
       {#each navLinks as item}
         <a
