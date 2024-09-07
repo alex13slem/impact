@@ -7,7 +7,6 @@
   import { Navigation } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
   //@ts-ignore
-  import phPhoto from '@/assets/img/ph-photo.webp';
   export let staffs: Staff[] = [];
   export let staffsPositions: StaffsPosition[] = [];
 
@@ -53,7 +52,7 @@
 </script>
 
 <nav
-  class="flex gap-4 max-w-5xl lg:justify-center lg:flex-wrap mx-auto mb-8 lg:mb-16 overflow-auto pb-3 px-4 lg:p-0 w-svw md:w-auto relative -left-4"
+  class="flex gap-4 max-w-5xl lg:justify-center lg:flex-wrap mx-auto mb-8 lg:mb-11 overflow-auto pb-3 px-4 lg:p-0 w-svw md:w-auto relative -left-4"
 >
   {#each staffsPositions as pos, idx (pos.id)}
     <button
@@ -71,8 +70,20 @@
   {/each}
 </nav>
 
+<h3 class="text-lg font-medium text-center mb-5">
+  Сотрудник{#if positionStaff.length > 1}и{/if}
+</h3>
+<div class="flex justify-center gap-4 items-center max-w-5xl mx-auto flex-wrap">
+  {#each positionStaff as staff, idx (staff.id)}
+    <p class="text-lg font-bold">{staff.name}</p>
+    {#if idx !== positionStaff.length - 1}
+      <span> • </span>
+    {/if}
+  {/each}
+</div>
+
 <!-- Desktop -->
-<div class="lg:flex flex-wrap gap-x-6 gap-y-9 justify-center hidden">
+<!-- <div class="lg:flex flex-wrap gap-x-6 gap-y-9 justify-center hidden">
   {#each positionStaff as staff (staff.id)}
     <article class="basis-72 relative">
       {#if staff.staffPositions[0]}
@@ -89,10 +100,10 @@
       <h3 class="text-2xl font-light mt-4 text-center">{staff.name}</h3>
     </article>
   {/each}
-</div>
+</div> -->
 
 <!-- Mobile -->
-<swiper-container
+<!-- <swiper-container
   bind:this={swiperEl}
   init="false"
   class="lg:hidden rounded-3xl overflow-clip"
@@ -125,13 +136,13 @@
       </article>
     </swiper-slide>
   {/each}
-</swiper-container>
+</swiper-container> -->
 
-<h3 class="text-2xl font-light mt-4 text-center md:hidden">
+<!-- <h3 class="text-2xl font-light mt-4 text-center md:hidden">
   {viewStaffName}
-</h3>
+</h3> -->
 
-<nav class={'flex gap-2 lg:gap-5 mt-5 justify-center lg:hidden'}>
+<!-- <nav class={'flex gap-2 lg:gap-5 mt-5 justify-center lg:hidden'}>
   <button class={cn(cnBtn, 'swiper-button-prev ')}>
     <svg
       width="1em"
@@ -161,4 +172,4 @@
       />
     </svg>
   </button>
-</nav>
+</nav> -->

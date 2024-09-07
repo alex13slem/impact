@@ -6,10 +6,9 @@
   import { pointsCoordinates } from '@/lib/stores/wardsStore';
   import { cn } from '@/lib/utils';
   import { calculatePointsCoordinates } from '@/lib/utils/coordinateUtils';
-  import { useragent } from '@sveu/browser';
   import { onMount, tick } from 'svelte';
 
-  const { platform, brands } = useragent();
+  // const { platform, brands } = useragent();
 
   export let className: string = '';
   export let mapNews: NewsPoint[] = [];
@@ -36,15 +35,13 @@
   function handleMouseOver(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
     $hoveredRegion = el.getAttribute('data-region');
-    !isWebKit &&
-      updateGradientColors(el, svg, { from: '#c3963c', to: '#fadb9e' });
+    // updateGradientColors(el, svg, { from: '#c3963c', to: '#fadb9e' });
   }
 
   function handleMouseOut(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
     $hoveredRegion = null;
-    !isWebKit &&
-      updateGradientColors(el, svg, { from: '#164264', to: '#033455' });
+    // updateGradientColors(el, svg, { from: '#164264', to: '#033455' });
   }
 
   function updateCoordinates() {
@@ -55,7 +52,7 @@
     }
   }
 
-  $: isWebKit = $platform === 'macOS';
+  // $: isWebKit = $platform === 'macOS';
   onMount(async () => {
     await tick(); // Ждем, пока DOM полностью отрендерится
     updateCoordinates();
@@ -80,7 +77,7 @@
   style="enable-background:new 0 0 1140 624;"
   xml:space="preserve"
 >
-  {#if !isWebKit}
+  <!-- {#if !isWebKit}
     <defs>
       {#each regionsPaths as path, i (path.d)}
         <linearGradient id="svg-gradient-{i}">
@@ -89,7 +86,7 @@
         </linearGradient>
       {/each}
     </defs>
-  {/if}
+  {/if} -->
 
   <g class="relative">
     {#each regionsPaths as path, i (path.d)}
@@ -98,11 +95,11 @@
         data-region={path.name || 'region' + i + 1}
         class={cn(
           { 'highlight-anim': $loading && $mapVisible },
-          { 'hover:fill-accent': isWebKit },
-          'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl',
+          // { 'hover:fill-accent': isWebKit },
+          'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl hover:fill-accent',
         )}
         d={path.d}
-        fill={!isWebKit ? `url(#svg-gradient-${i})` : '#164264'}
+        fill={'#164264'}
         on:mouseover={handleMouseOver}
         on:mouseout={handleMouseOut}
         on:focus={handleMouseOver}
