@@ -158,23 +158,14 @@
           transformOrigin: 'left center',
           ease: 'power2.inOut',
           duration: 0.5,
-          scale: 0.9,
+          scale: 0.88,
         }),
       ]);
   };
 
-  // let isLoading = $loading;
-
   onMount(() => {
     animateMap();
   });
-
-  // afterUpdate(() => {
-  //   if (!isLoading && $loading) {
-  //     isLoading = true;
-  //     animateMap();
-  //   }
-  // });
 </script>
 
 <svelte:head>

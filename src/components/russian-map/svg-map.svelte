@@ -6,39 +6,47 @@
   import { pointsCoordinates } from '@/lib/stores/wardsStore';
   import { cn } from '@/lib/utils';
   import { calculatePointsCoordinates } from '@/lib/utils/coordinateUtils';
+  import { useragent } from '@sveu/browser';
   import { onMount, tick } from 'svelte';
+
+  const { platform, brands } = useragent();
 
   export let className: string = '';
   export let mapNews: NewsPoint[] = [];
 
   let svg: SVGSVGElement;
 
+  function updateGradientColors(
+    el: SVGElement,
+    svg: SVGSVGElement,
+    colors: { from: string; to: string },
+  ) {
+    const gradientId = el
+      .getAttribute('fill')!
+      .match(/url\(#(svg-gradient-\d+)\)/)![1];
+    if (gradientId) {
+      const gradient = svg.getElementById(gradientId) as SVGGElement;
+      const stop1 = gradient.childNodes[0] as SVGStopElement;
+      const stop2 = gradient.childNodes[1] as SVGStopElement;
+      stop1.setAttribute('stop-color', colors.from);
+      stop2.setAttribute('stop-color', colors.to);
+    }
+  }
+
   function handleMouseOver(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
     $hoveredRegion = el.getAttribute('data-region');
-    const gradientId = el
-      .getAttribute('fill')!
-      .match(/url\(#(svg-gradient-\d+)\)/)![1]; // Получаем ID градиента
-    const gradient = svg.getElementById(gradientId) as SVGGElement;
-
-    const stop1 = gradient.childNodes[0] as SVGStopElement;
-    const stop2 = gradient.childNodes[1] as SVGStopElement;
-    stop1.setAttribute('stop-color', '#c3963c');
-    stop2.setAttribute('stop-color', '#fadb9e');
+    !isWebKit &&
+      updateGradientColors(el, svg, { from: '#c3963c', to: '#fadb9e' });
   }
 
   function handleMouseOut(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
     $hoveredRegion = null;
-    const gradientId = el
-      .getAttribute('fill')!
-      .match(/url\(#(svg-gradient-\d+)\)/)![1];
-    const gradient = svg.getElementById(gradientId) as SVGGElement;
-    const stop1 = gradient.childNodes[0] as SVGStopElement;
-    const stop2 = gradient.childNodes[1] as SVGStopElement;
-    stop1.setAttribute('stop-color', '#164264');
-    stop2.setAttribute('stop-color', '#033455');
+    !isWebKit &&
+      updateGradientColors(el, svg, { from: '#164264', to: '#033455' });
   }
+
   function updateCoordinates() {
     if (svg && mapNews.length > 0) {
       pointsCoordinates.set(
@@ -47,6 +55,7 @@
     }
   }
 
+  $: isWebKit = $platform === 'macOS';
   onMount(async () => {
     await tick(); // Ждем, пока DOM полностью отрендерится
     updateCoordinates();
@@ -71,14 +80,16 @@
   style="enable-background:new 0 0 1140 624;"
   xml:space="preserve"
 >
-  <defs>
-    {#each regionsPaths as path, i (path.d)}
-      <linearGradient id="svg-gradient-{i}">
-        <stop class="transition-all" offset="0" stop-color="#164264" />
-        <stop class="transition-all" offset="1" stop-color="#033455" />
-      </linearGradient>
-    {/each}
-  </defs>
+  {#if !isWebKit}
+    <defs>
+      {#each regionsPaths as path, i (path.d)}
+        <linearGradient id="svg-gradient-{i}">
+          <stop class="transition-all" offset="0" stop-color="#164264" />
+          <stop class="transition-all" offset="1" stop-color="#033455" />
+        </linearGradient>
+      {/each}
+    </defs>
+  {/if}
 
   <g class="relative">
     {#each regionsPaths as path, i (path.d)}
@@ -86,13 +97,12 @@
         style="animation-delay: {i * 20}ms;"
         data-region={path.name || 'region' + i + 1}
         class={cn(
-          {
-            'highlight-anim': $loading && $mapVisible,
-          },
+          { 'highlight-anim': $loading && $mapVisible },
+          { 'hover:fill-accent': isWebKit },
           'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl',
         )}
         d={path.d}
-        fill="url(#svg-gradient-{i})"
+        fill={!isWebKit ? `url(#svg-gradient-${i})` : '#164264'}
         on:mouseover={handleMouseOver}
         on:mouseout={handleMouseOut}
         on:focus={handleMouseOver}
@@ -106,11 +116,19 @@
 
 <style lang="postcss">
   .highlight-anim {
+    fill: #033455;
     animation: highlight 1s ease-in-out infinite alternate;
   }
   @keyframes highlight {
+    0% {
+      fill: #164264;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 15px #164264);
+      stroke-width: 0.5px;
+    }
     100% {
-      fill: #fbcb6a3a;
+      fill: #fbcb6a;
+      opacity: 0.8;
       filter: drop-shadow(0 0 15px #fbcb6a);
       stroke-width: 1.5px;
     }
