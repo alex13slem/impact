@@ -8,7 +8,8 @@ export const filteredWardsCoordinates = derived(
   ([$pointsCoordinates, $filterCharityProgram]) => {
     return $pointsCoordinates.filter(
       (point: PointWithCoordinates) =>
-        !$filterCharityProgram || point.slug === $filterCharityProgram,
+        !$filterCharityProgram ||
+        point.charityProgramSlug === $filterCharityProgram,
     );
   },
 );
