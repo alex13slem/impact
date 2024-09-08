@@ -1,0 +1,18 @@
+name: Call Webhook on Commit
+
+# Запускать при пуше в ветку main (или любую другую)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-webhook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Webhook
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"ref": "refs/heads/main"}' \
+          http://37.143.10.41:3000/api/deploy/TPd62ICriGbvBAdKztdne
