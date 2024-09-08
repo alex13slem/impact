@@ -6,10 +6,9 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://impact-astro-064416-5a924a-37-143-10-41.traefik.me',
+  // site: 'https://impact-astro-064416-5a924a-37-143-10-41.traefik.me',
   integrations: [tailwind(), svelte()],
-  output: 'server',
-  // site: 'https://example.com',
+  site: 'https://example.com',
   adapter: node({
     mode: 'standalone',
   }),
@@ -19,7 +18,7 @@ export default defineConfig({
   },
   vite: {
     ssr: {
-      // noExternal: ['path-to-regexp'],
+      noExternal: ['path-to-regexp'],
     },
     preview: {
       port: 3000,
