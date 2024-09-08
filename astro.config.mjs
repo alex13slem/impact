@@ -8,16 +8,22 @@ import node from '@astrojs/node';
 export default defineConfig({
   site: 'https://impact-astro-064416-5a924a-37-143-10-41.traefik.me',
   integrations: [tailwind(), svelte()],
-  output: 'hybrid',
+  output: 'server',
+  // site: 'https://example.com',
   adapter: node({
     mode: 'standalone',
   }),
   server: {
-    port: 4321,
+    port: 3000,
     host: true,
   },
-  preview: {
-    port: 4321,
-    host: true,
+  vite: {
+    ssr: {
+      // noExternal: ['path-to-regexp'],
+    },
+    preview: {
+      port: 3000,
+      host: true,
+    },
   },
 });
