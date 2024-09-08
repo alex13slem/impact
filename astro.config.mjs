@@ -13,11 +13,11 @@ export default defineConfig({
     mode: 'standalone',
   }),
   server: {
-    port: 3000,
+    port: 4321,
     host: true,
   },
   preview: {
-    port: 3000,
+    port: 4321,
     host: true,
   },
 });
