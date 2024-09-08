@@ -13,15 +13,12 @@ export default defineConfig({
     mode: 'standalone',
   }),
   server: {
-    port: 3000,
+    port: 3001,
     host: true,
   },
   vite: {
-    ssr: {
-      noExternal: ['path-to-regexp'],
-    },
     preview: {
-      port: 3000,
+      port: 3002,
       host: true,
     },
   },
