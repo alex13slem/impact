@@ -15,4 +15,4 @@ jobs:
         run: |
           curl -X POST -H "Content-Type: application/json" \
           -d '{"ref": "refs/heads/main"}' \
-          http://37.143.10.41:3000/api/deploy/TPd62ICriGbvBAdKztdne
+          ${{ secrets.WEBHOOK_URL }}
