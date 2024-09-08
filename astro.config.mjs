@@ -13,13 +13,11 @@ export default defineConfig({
     mode: 'standalone',
   }),
   server: {
-    port: 3001,
+    port: 3000,
     host: true,
   },
-  vite: {
-    preview: {
-      port: 3002,
-      host: true,
-    },
+  preview: {
+    port: 3000,
+    host: true,
   },
 });
