@@ -6,6 +6,7 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://impact-astro-064416-5a924a-37-143-10-41.traefik.me',
   integrations: [tailwind(), svelte()],
   output: 'hybrid',
   adapter: node({
