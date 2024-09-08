@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { hoveredRegion } from '@/lib/stores/hoveredRegionStore';
+  import type { PointWithCoordinates } from '@/lib/data/mapNews';
+  import { hoveredRegion, targetPopap } from '@/lib/stores/hoveredRegionStore';
   import { cn } from '@/lib/utils';
   import { Popover } from 'bits-ui';
   import { fade } from 'svelte/transition';
@@ -7,7 +8,6 @@
   import IconPrayerHands from '../ui/icons/icon-prayer-hands.svelte';
   import IconSocialUp from '../ui/icons/icon-social-up.svelte';
   import Popap from './popap.svelte';
-  import type { PointWithCoordinates } from '@/lib/data/mapNews';
 
   export let point: PointWithCoordinates;
 </script>
@@ -17,18 +17,29 @@
   class="absolute"
   style="top: {point.y}px; left: {point.x}px; transform: translate(-50%, -50%);"
 >
-  <Popover.Root>
+  <Popover.Root
+    onOpenChange={open => {
+      if (open) {
+        $targetPopap = point.id;
+        $hoveredRegion = point.region.slug;
+      } else {
+        $targetPopap = null;
+        $hoveredRegion = null;
+      }
+    }}
+  >
     <Popover.Trigger>
       <button
-        class={cn('hover:text-accent text-2xl', {
-          'text-dark': $hoveredRegion === point.region.slug,
+        class={cn('lg:hover:text-accent text-2xl', {
+          'text-dark':
+            $hoveredRegion === point.region.slug && $targetPopap === point.id,
         })}
       >
-        {#if point.slug === 'nezhnie-ruki'}
+        {#if point.charityProgramSlug === 'nezhnie-ruki'}
           <IconHeartHands variant="ghost" />
-        {:else if point.slug === 'pomozj-detyam'}
+        {:else if point.charityProgramSlug === 'pomozj-detyam'}
           <IconPrayerHands variant="ghost" />
-        {:else if point.slug === 'socialnye-lifty'}
+        {:else if point.charityProgramSlug === 'socialnye-lifty'}
           <IconSocialUp variant="ghost" />
         {/if}
       </button>

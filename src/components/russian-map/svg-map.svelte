@@ -94,9 +94,12 @@
         style="animation-delay: {i * 20}ms;"
         data-region={path.name || 'region' + i + 1}
         class={cn(
-          { 'highlight-anim': $loading && $mapVisible },
+          {
+            'highlight-anim': $loading && $mapVisible,
+            'fill-accent': $hoveredRegion === path.name,
+          },
           // { 'hover:fill-accent': isWebKit },
-          'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl hover:fill-accent',
+          'stroke-accent stroke-[0.3px] transition-all cursor-default outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl lg:hover:fill-accent',
         )}
         d={path.d}
         fill={'#164264'}

@@ -77,7 +77,7 @@
   {#each positionStaff as staff, idx (staff.id)}
     <p class="text-lg font-bold">{staff.name}</p>
     {#if idx !== positionStaff.length - 1}
-      <span> • </span>
+      <span class="hidden md:inline"> • </span>
     {/if}
   {/each}
 </div>

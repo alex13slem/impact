@@ -3,8 +3,9 @@ import { wardsWithRelatedData } from '@/lib/data/wards';
 import type { Region } from '../schemas/data/regionsSchema';
 
 export interface NewsPoint {
+  id: string;
   region: Omit<Region, 'id'>;
-  slug: string;
+  charityProgramSlug: string;
   title: string;
   image: string | boolean;
   description: string;
@@ -20,8 +21,9 @@ export interface PointWithCoordinates extends NewsPoint, Coordinates {}
 
 const wardsNews: NewsPoint[] = wardsWithRelatedData
   .filter(w => w.charityProgram.slug === 'pomozj-detyam')
-  .map(w => ({
-    slug: w.charityProgram.slug,
+  .map((w, idx) => ({
+    id: `${w.id}${idx}-${w.charityProgram.slug}`,
+    charityProgramSlug: w.charityProgram.slug,
     region: w.region,
     title: w.name,
     image: w.image,
@@ -31,8 +33,9 @@ const wardsNews: NewsPoint[] = wardsWithRelatedData
 
 const otherNews: NewsPoint[] = newsWithRelated
   .filter(n => n.charityProgram.slug !== 'pomozj-detyam')
-  .map(n => ({
-    slug: n.charityProgram.slug,
+  .map((n, idx) => ({
+    id: `${n.id}${idx}-${n.charityProgram.slug}`,
+    charityProgramSlug: n.charityProgram.slug,
     region: n.region,
     title: n.title,
     image: n.image,
@@ -40,5 +43,3 @@ const otherNews: NewsPoint[] = newsWithRelated
     link: '/news/' + n.slug,
   }));
 export const mapNews: NewsPoint[] = [...wardsNews, ...otherNews];
-
-// console.log(mapNews);

@@ -3,85 +3,15 @@
 import {
   partnersArraySchema,
   partnersSchema,
+  type Partner,
 } from '../schemas/data/partnersSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
+import { fetchCharityProgramById } from './charityPrograms';
 import { fetchNewsByIds } from './news';
 
-// export interface Partner {
-//   id: number;
-//   name: string;
-//   description: string;
-//   image: string;
-//   contributions: number[];
-// }
-
-// export const partners: Partner[] = [
-//   {
-//     id: 1,
-//     name: 'Партнер 1',
-//     description: 'Это первый партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [1, 2, 3],
-//   },
-//   {
-//     id: 2,
-//     name: 'Партнер 2',
-//     description: 'Это второй партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [1, 2, 3],
-//   },
-//   {
-//     id: 3,
-//     name: 'Партнер 3',
-//     description: 'Это третий партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [1, 2, 3],
-//   },
-//   {
-//     id: 4,
-//     name: 'Партнер 4',
-//     description: 'Это четвертый партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [],
-//   },
-//   {
-//     id: 5,
-//     name: 'Партнер 5',
-//     description: 'Это пятый партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [],
-//   },
-//   {
-//     id: 6,
-//     name: 'Партнер 6',
-//     description: 'Это пятый партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [],
-//   },
-//   {
-//     id: 7,
-//     name: 'Партнер 7',
-//     description: 'Это пятый партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [],
-//   },
-//   {
-//     id: 8,
-//     name: 'Партнер 8',
-//     description: 'Это пятый партнер',
-//     image: 'https://www.gdpconsulting.net/wp-content/uploads/2017/09/team.jpg',
-//     contributions: [],
-//   },
-// ];
-
-// export const partnersWithContribution = partners.map(partner => {
-//   const partnerContributions = contributions.filter(({ partners }) =>
-//     partners.some(id => id === partner.id),
-//   );
-//   return { ...partner, contributions: partnerContributions };
-// });
-
-// export type PartnerWithContribution = (typeof partnersWithContribution)[number];
+const getEventsByIds = async (ids: number[] | string) => {
+  return Array.isArray(ids) ? await fetchNewsByIds(ids) : [];
+};
 
 export const fetchPartners = withDataFetching(getWpData)(
   '/partners',
@@ -95,30 +25,24 @@ export const fetchPartnerById = (id: number) =>
     partnersSchema.omit({ id: true }),
   );
 
-// Вспомогательная функция для получения событий по ID
+async function getPartnerWithRelatedData(partner: Partner) {
+  return {
+    ...partner,
+    events: await getEventsByIds(partner.eventsIds),
+    charityProgram: await fetchCharityProgramById(partner.charityProgramId)(),
+  };
+}
 
 // Функция для получения всех партнёров с их связанными событиями
 export const fetchPartnersWithRelatedData = async () => {
   const partners = await fetchPartners();
-  return Promise.all(
-    partners.map(async partner => ({
-      ...partner,
-      events: Array.isArray(partner.eventsIds)
-        ? await fetchNewsByIds(partner.eventsIds)
-        : [],
-    })),
-  );
+  return Promise.all(partners.map(getPartnerWithRelatedData));
 };
 
 // Функция для получения партнёра по ID с его связанными событиями
 export const fetchPartnerWithRelatedById = async (id: number) => {
   const partner = await fetchPartnerById(id)();
-  return {
-    ...partner,
-    events: Array.isArray(partner.eventsIds)
-      ? await fetchNewsByIds(partner.eventsIds)
-      : [],
-  };
+  return getPartnerWithRelatedData({ ...partner, id });
 };
 
 // Пример вызова получения всех партнёров с их событиями

@@ -42,7 +42,10 @@
 
       <span
         class={cn(
-          'absolute pointer-events-none left-full top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
+          'absolute pointer-events-none left-full top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
+          {
+            'opacity-100': c.slug === $filterCharityProgram,
+          },
         )}>{c.name}</span
       >
     </button>
