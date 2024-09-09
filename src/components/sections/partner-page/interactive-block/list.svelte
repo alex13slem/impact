@@ -20,23 +20,23 @@
         <h3 class="text-base lg:text-2xl font-sov-mod uppercase">
           {event.title}
         </h3>
-        <!-- <svg
-          class="self-baseline text-3xl mt-1 ml-auto group-hover:text-accent transition-colors hidden xl:block"
-          width="1em"
-          height="0.5em"
-          viewBox="0 0 35 17"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M26.1364 1L33.5 8.5M33.5 8.5L26.1364 16M33.5 8.5L-3.27835e-07 8.5"
-            stroke="currentColor"
-          />
-        </svg> -->
       </header>
       <div class="xl:max-w-xl text-sm md:text-base lg:text-lg font-thin">
         <p>{event.description}</p>
       </div>
+      <svg
+        class="text-3xl mt-5 ml-auto text-accent transition-colors xl:hidden"
+        width="1em"
+        height="0.5em"
+        viewBox="0 0 35 17"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M26.1364 1L33.5 8.5M33.5 8.5L26.1364 16M33.5 8.5L-3.27835e-07 8.5"
+          stroke="currentColor"
+        />
+      </svg>
     </article>
 
     {#if idx < partner.events.length - 1}
