@@ -14,7 +14,7 @@ export default defineConfig({
     mode: 'standalone',
   }),
   server: {
-    port: 3000,
+    port: 4000,
     host: true,
   },
   vite: {
@@ -22,7 +22,7 @@ export default defineConfig({
       noExternal: ['path-to-regexp'],
     },
     preview: {
-      port: 3000,
+      port: 4000,
       host: true,
     },
   },
