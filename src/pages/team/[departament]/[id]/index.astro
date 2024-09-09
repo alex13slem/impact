@@ -7,46 +7,45 @@ import { cn } from "@/lib/utils";
 import { ViewTransitions } from 'astro:transitions';
 //@ts-ignore
 import phPhoto from '@/assets/img/ph-photo.webp';
-import type { GetStaticPaths } from "astro";
 import { convert } from 'html-to-text';
 
 // SSG
-export const getStaticPaths = (() => {
-  const paths = staffs.map(item => {
-    const sameDepartamentStaffs = staffs.filter(staff => staff.staffPositions[0] === item.staffPositions[0]);
-    const departament = staffsPositions.find(pos => pos.id === item.staffPositions[0])!;
-    const currentIndex = sameDepartamentStaffs.indexOf(item);
-    const prevItem = sameDepartamentStaffs[(currentIndex - 1 + sameDepartamentStaffs.length) % sameDepartamentStaffs.length];
-    const nextItem = sameDepartamentStaffs[(currentIndex + 1) % sameDepartamentStaffs.length];
-    const prevLink = `/team/${prevItem.staffPositions[0]}/${prevItem.id}`;
-    const nextLink = `/team/${nextItem.staffPositions[0]}/${nextItem.id}`;
-    return {
-      params: { id: item.id, departament: item.staffPositions[0] },
-      props: { staff:item, prevLink, nextLink, departament },
-    }
-  })
-  return paths;
+// export const getStaticPaths = (() => {
+//   const paths = staffs.map(item => {
+//     const sameDepartamentStaffs = staffs.filter(staff => staff.staffPositions[0] === item.staffPositions[0]);
+//     const departament = staffsPositions.find(pos => pos.id === item.staffPositions[0])!;
+//     const currentIndex = sameDepartamentStaffs.indexOf(item);
+//     const prevItem = sameDepartamentStaffs[(currentIndex - 1 + sameDepartamentStaffs.length) % sameDepartamentStaffs.length];
+//     const nextItem = sameDepartamentStaffs[(currentIndex + 1) % sameDepartamentStaffs.length];
+//     const prevLink = `/team/${prevItem.staffPositions[0]}/${prevItem.id}`;
+//     const nextLink = `/team/${nextItem.staffPositions[0]}/${nextItem.id}`;
+//     return {
+//       params: { id: item.id, departament: item.staffPositions[0] },
+//       props: { staff:item, prevLink, nextLink, departament },
+//     }
+//   })
+//   return paths;
 
-}) satisfies GetStaticPaths;
-const { staff, nextLink, prevLink, departament } = Astro.props;
+// }) satisfies GetStaticPaths;
+// const { staff, nextLink, prevLink, departament } = Astro.props;
 
 
 // SSR
-// const { id: paramsId } = Astro.params;
-// const id = Number(paramsId);
-// if (isNaN(id)) return Astro.redirect("/404");
-// const staff = staffs.find(item => item.id === id);
-// if (!staff) return Astro.redirect("/404");
+const { id: paramsId } = Astro.params;
+const id = Number(paramsId);
+if (isNaN(id)) return Astro.redirect("/404");
+const staff = staffs.find(item => item.id === id);
+if (!staff) return Astro.redirect("/404");
 
-// const departament = staffsPositions.find(pos => pos.id === staff.staffPositions[0]);
-// if (!departament) return Astro.redirect("/404");
+const departament = staffsPositions.find(pos => pos.id === staff.staffPositions[0]);
+if (!departament) return Astro.redirect("/404");
 
-// const sameDepartamentStaffs = staffs.filter(s => s.staffPositions[0] === staff.staffPositions[0]);
-// const currentIndex = sameDepartamentStaffs.indexOf(staff);
-// const prevItem = sameDepartamentStaffs[(currentIndex - 1 + sameDepartamentStaffs.length) % sameDepartamentStaffs.length];
-// const nextItem = sameDepartamentStaffs[(currentIndex + 1) % sameDepartamentStaffs.length];
-// const prevLink = `/team/${prevItem.staffPositions[0]}/${prevItem.id}`;
-// const nextLink = `/team/${nextItem.staffPositions[0]}/${nextItem.id}`;
+const sameDepartamentStaffs = staffs.filter(s => s.staffPositions[0] === staff.staffPositions[0]);
+const currentIndex = sameDepartamentStaffs.indexOf(staff);
+const prevItem = sameDepartamentStaffs[(currentIndex - 1 + sameDepartamentStaffs.length) % sameDepartamentStaffs.length];
+const nextItem = sameDepartamentStaffs[(currentIndex + 1) % sameDepartamentStaffs.length];
+const prevLink = `/team/${prevItem.staffPositions[0]}/${prevItem.id}`;
+const nextLink = `/team/${nextItem.staffPositions[0]}/${nextItem.id}`;
 
 const photo = typeof staff.image === 'string' ? staff.image : phPhoto.src;
 ---

@@ -4,24 +4,23 @@ import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
 import { newsWithRelated } from '@/lib/data/news';
-import type { GetStaticPaths } from 'astro';
 import { ViewTransitions } from 'astro:transitions';
 
-// const { slug } = Astro.params;
-// const item = newsWithRelated.find((i) => i.slug === slug);
-// if (!item) return Astro.redirect("/404");
+const { slug } = Astro.params;
+const item = newsWithRelated.find((i) => i.slug === slug);
+if (!item) return Astro.redirect("/404");
 
 
-export const getStaticPaths = (() => {
-  const paths = newsWithRelated.map((item) => ({
-    params: { slug: item.slug },
-    props: { item },
-  }))
+// export const getStaticPaths = (() => {
+//   const paths = newsWithRelated.map((item) => ({
+//     params: { slug: item.slug },
+//     props: { item },
+//   }))
 
-  return paths
-}) satisfies GetStaticPaths;
+//   return paths
+// }) satisfies GetStaticPaths;
 
-const { item } = Astro.props
+// const { item } = Astro.props
 
 
 ---

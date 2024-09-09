@@ -2,10 +2,7 @@
   import type { StaffsPosition } from '@/lib/schemas/data/staffsPositions';
   import type { Staff } from '@/lib/schemas/data/staffsSchema';
   import { cn } from '@/lib/utils';
-  import { onMount, tick } from 'svelte';
-  import { register, type SwiperContainer } from 'swiper/element';
-  import { Navigation } from 'swiper/modules';
-  import type { SwiperOptions } from 'swiper/types';
+  import { type SwiperContainer } from 'swiper/element';
   //@ts-ignore
   export let staffs: Staff[] = [];
   export let staffsPositions: StaffsPosition[] = [];
@@ -15,40 +12,40 @@
     staffPositions.find(id => id === targetPositionId),
   );
 
-  $: viewStaffName = positionStaff.at(0)?.name;
-  let currentSlide = 0;
+  // $: viewStaffName = positionStaff.at(0)?.name;
+  // let currentSlide = 0;
   let swiperEl: SwiperContainer;
   // const cnBtn =
   //   'lg:text-4xl w-16 h-16 lg:h-28 lg:w-28 flex justify-center items-center bg-opacity-0 text-dark rounded-full disabled:bg-dark disabled:text-white border border-dark disabled:opacity-50';
-  const options = {
-    modules: [Navigation],
-    spaceBetween: 20,
-    centeredSlides: true,
-    breakpoints: {
-      768: {
-        slidesPerView: 2,
-      },
-    },
-    on: {
-      slideChange(swiper) {
-        currentSlide = swiper.activeIndex;
-        viewStaffName =
-          swiper.slides[swiper.activeIndex].getAttribute('data-name')!;
-      },
-    },
-    navigation: {
-      nextEl: 'section.our-stuff .swiper-button-next',
-      prevEl: 'section.our-stuff .swiper-button-prev',
-    },
-  } as SwiperOptions;
+  // const options = {
+  //   modules: [Navigation],
+  //   spaceBetween: 20,
+  //   centeredSlides: true,
+  //   breakpoints: {
+  //     768: {
+  //       slidesPerView: 2,
+  //     },
+  //   },
+  //   on: {
+  //     slideChange(swiper) {
+  //       currentSlide = swiper.activeIndex;
+  //       viewStaffName =
+  //         swiper.slides[swiper.activeIndex].getAttribute('data-name')!;
+  //     },
+  //   },
+  //   navigation: {
+  //     nextEl: 'section.our-stuff .swiper-button-next',
+  //     prevEl: 'section.our-stuff .swiper-button-prev',
+  //   },
+  // } as SwiperOptions;
 
-  onMount(async () => {
-    Object.assign(swiperEl, options);
+  // onMount(async () => {
+  //   Object.assign(swiperEl, options);
 
-    await tick();
-    register();
-    swiperEl.initialize();
-  });
+  //   await tick();
+  //   register();
+  //   swiperEl.initialize();
+  // });
 </script>
 
 <nav
