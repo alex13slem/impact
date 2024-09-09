@@ -31,14 +31,14 @@ const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
           <SectHeading className='max-w-3xl mb-4 md:mb-4' level={1}>
             {seo?.name || 'Помощь тяжелобольным детям'}
           </SectHeading>
-          {
+          <!-- {
             !!viewDocs.length && (
               <Button href='/programs/pomozj-detyam/docs' className='flex items-center gap-4 shrink-0'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024"><path fill="currentColor" d="M768 0H416c-35.344 0-64 28.656-64 64h352v256h256v512H736v64h224c35.344 0 64-28.656 64-64V256.016zm0 256V90.496L933.472 256zM64 128c-35.344 0-64 28.656-64 64v768c0 35.344 28.656 64 64 64h544c35.344 0 64-28.656 64-64V384.016L416 128zm544 832H64V192h288v256h256zM416 384V218.496L581.472 384z"/></svg>
                 Документы для подачи заявки
               </Button>
             )
-          }
+          } -->
         </div>
         <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description || 'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'}</p>
 

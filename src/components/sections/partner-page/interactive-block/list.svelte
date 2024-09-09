@@ -5,7 +5,7 @@
 
   export let className: string = '';
 
-  export let partner: PartnerWithRelatedData = [];
+  export let partner: PartnerWithRelatedData;
 </script>
 
 <div class={cn(className, 'xl:max-w-3xl w-full')}>
@@ -15,6 +15,7 @@
       on:mouseleave={() => targetEventSlug.set(null)}
       class="relative group"
     >
+      <a href="/news/{event.slug}" class="absolute inset-0 opacity-0">.</a>
       <header class="mb-4 flex items-start gap-5">
         <h3 class="text-base lg:text-2xl font-sov-mod uppercase">
           {event.title}

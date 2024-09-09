@@ -9,6 +9,7 @@ export const docsSchema = object({
   link: string().url(),
   image: wpImageOptional,
   showIn: ShowInEnum,
+  order: z.coerce.number().optional(),
 });
 
 export const docsArraySchema = docsSchema.array();

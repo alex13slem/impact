@@ -12,164 +12,169 @@
   } from '@/lib/stores/pageLoadingStore';
   import { cn } from '@/lib/utils';
   import { gsap } from 'gsap';
+  import localforage from 'localforage';
   import { onMount } from 'svelte';
   import { blur } from 'svelte/transition';
   import SvgMap from '../../russian-map/svg-map.svelte';
 
+  export let showOnPage = false;
+
   let root: HTMLElement;
+  let introIsSeen: boolean | null = true;
+
+  function loadingComplete() {
+    document.body.classList.remove('loading');
+    loading.set(false);
+    localforage.setItem('introIsSeen', true);
+  }
+
+  function loadingStart() {
+    loading.set(true);
+    mapVisible.set(false);
+    sloganVisible.set(false);
+  }
 
   const animateMap = async () => {
-    gsap
-      .timeline({
-        onStart: () => {
-          loading.set(true);
-          mapVisible.set(false);
-          sloganVisible.set(false);
+    const timeline = gsap.timeline({
+      onStart: loadingStart,
+    });
+
+    // Initial set up
+    timeline.add([
+      gsap.set(
+        '#loading-section .map, #loading-section .impact .letter, #loading-section .slogan',
+        {
+          opacity: 0,
         },
-      })
-      .add([
-        gsap.set('#loading-section .map', {
-          opacity: 0,
-        }),
-        gsap.set('#loading-section .impact .letter', {
-          opacity: 0,
-        }),
-        gsap.set('#loading-section .slogan', {
-          opacity: 0,
-        }),
-      ])
-      .add([
-        gsap.to('#loading-section path.small', {
-          scale: 0,
+      ),
+    ]);
 
-          opacity: 0,
-          duration: 1.5,
-          ease: 'back.out',
-          transformOrigin: 'center center',
-          filter: 'blur(10px)',
-        }),
-        gsap.to('#loading-section path.big', {
-          scale: 0,
+    // Animate paths, horizontal and vertical lines
+    const animatePaths = (selector: string, delay = 0) => {
+      return gsap.to(selector, {
+        scale: 0,
+        opacity: 0,
+        duration: 1.5,
+        ease: 'back.out',
+        transformOrigin: 'center center',
+        filter: 'blur(10px)',
+        delay,
+      });
+    };
 
+    timeline.add([
+      animatePaths('#loading-section path.small'),
+      animatePaths('#loading-section path.big'),
+      animatePaths('#loading-section path.mid'),
+      gsap.to('#loading-section img.h-line.top', {
+        translateX: '-100%',
+        duration: 1,
+        ease: 'back.out',
+        opacity: 0,
+      }),
+      gsap.to('#loading-section img.h-line.bottom', {
+        translateX: '100%',
+        duration: 1,
+        ease: 'back.out',
+        opacity: 0,
+        delay: 0.1,
+      }),
+      gsap.to('#loading-section img.v-line.left', {
+        translateY: '100%',
+        duration: 1,
+        ease: 'back.out',
+        opacity: 0,
+        delay: 0.2,
+      }),
+      gsap.to('#loading-section img.v-line.right', {
+        translateY: '-100%',
+        duration: 1,
+        ease: 'back.out',
+        opacity: 0,
+        delay: 0.3,
+      }),
+      gsap.to('#loading-section .impact .letter', {
+        opacity: 1,
+        stagger: 0.1,
+        delay: 0.5,
+      }),
+      gsap.to('#loading-section .slogan', {
+        opacity: 1,
+      }),
+    ]);
+
+    // Animate slogan
+    timeline.add(
+      gsap.fromTo(
+        '#loading-section .slogan span',
+        {
           opacity: 0,
-          duration: 1.5,
-          ease: 'back.out',
-          transformOrigin: 'center center',
-          filter: 'blur(10px)',
-        }),
-        gsap.to('#loading-section path.mid', {
-          scale: 0,
-          opacity: 0,
-          duration: 1.5,
-          ease: 'back.out',
-          transformOrigin: 'center center',
-          filter: 'blur(10px)',
-        }),
-        gsap.to('#loading-section img.h-line.top', {
-          translateX: '-100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-        }),
-        gsap.to('#loading-section img.h-line.bottom', {
-          translateX: '100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-          delay: 0.1,
-        }),
-        gsap.to('#loading-section img.v-line.left', {
+          scale: 1.5,
           translateY: '100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-          delay: 0.2,
-        }),
-        gsap.to('#loading-section img.v-line.right', {
-          translateY: '-100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-          delay: 0.3,
-        }),
-        gsap.to('#loading-section .impact .letter', {
+        },
+        {
           opacity: 1,
-          stagger: 0.1,
-          delay: 0.5,
-        }),
-        gsap.to('#loading-section .slogan', {
-          opacity: 1,
-        }),
-        gsap.fromTo(
-          '#loading-section .slogan span',
-          {
-            opacity: 0,
-            scale: 1.5,
-            translateY: '100%',
+          scale: 1,
+          translateY: 0,
+          delay: 1.2,
+          duration: 1,
+          ease: 'power3',
+          stagger: 1 / 3,
+          onStart: () => sloganVisible.set(true),
+          onComplete: () => {
+            gsap.fromTo(
+              '#loading-section .map',
+              {
+                opacity: 0,
+              },
+              {
+                opacity: 1,
+                ease: 'power3.out',
+                duration: 1.5,
+                onStart: () => mapVisible.set(true),
+              },
+            );
           },
-          {
-            opacity: 1,
-            scale: 1,
-            translateY: 0,
-            delay: 1.2,
-            duration: 1,
-            ease: 'power3',
-            stagger: 1 / 3,
-            onStart: () => {
-              sloganVisible.set(true);
-            },
-            onComplete: () => {
-              gsap.fromTo(
-                '#loading-section .map',
-                {
-                  opacity: 0,
-                },
-                {
-                  opacity: 1,
-                  ease: 'power3.out',
-                  duration: 1.5,
-                  onStart: () => {
-                    mapVisible.set(true);
-                  },
-                },
-              );
-            },
-          },
-        ),
-      ])
-      .add([
-        gsap.to(
-          '#loading-section .impact, #loading-section .slogan, #loading-section .logo',
-          {
-            delay: 5,
-            filter: 'blur(10px)',
-            scale: 2,
-            ease: 'power2.inOut',
-            opacity: 0,
-            duration: 0.5,
-            onStart: () => {
-              document.body.classList.remove('loading');
-              loading.set(false);
-            },
-          },
-        ),
-        gsap.to('#loading-section .map', {
+        },
+      ),
+    );
+
+    // Final stage: fade out
+    timeline.add([
+      gsap.to(
+        '#loading-section .impact, #loading-section .slogan, #loading-section .logo',
+        {
           delay: 5,
-          transformOrigin: 'left center',
+          filter: 'blur(10px)',
+          scale: 2,
           ease: 'power2.inOut',
+          opacity: 0,
           duration: 0.5,
-          scale: 0.88,
-        }),
-      ]);
+          onStart: loadingComplete,
+        },
+      ),
+      gsap.to('#loading-section .map', {
+        delay: 5,
+        transformOrigin: 'left center',
+        ease: 'power2.inOut',
+        duration: 0.5,
+        scale: 0.88,
+      }),
+    ]);
   };
 
-  onMount(() => {
-    animateMap();
+  onMount(async () => {
+    introIsSeen = await localforage.getItem<boolean>('introIsSeen');
+    if (!showOnPage || introIsSeen) {
+      loadingComplete();
+    } else {
+      animateMap();
+    }
   });
 </script>
 
 <svelte:head>
-  {#if $loading}
+  {#if $loading && showOnPage && !introIsSeen}
     <style>
       body {
         overflow: hidden;
@@ -178,12 +183,17 @@
   {/if}
 </svelte:head>
 
-{#if $loading}
+{#if $loading && showOnPage && !introIsSeen}
   <section
     bind:this={root}
     transition:blur={{ duration: 1000 }}
     id="loading-section"
-    class="h-svh bg-cover fixed inset-0 z-50 pt-[53px] md:pt-[65px] lg:pt-[89px] overflow-clip"
+    class={cn(
+      'h-svh bg-cover fixed inset-0 z-50 pt-[53px] md:pt-[65px] lg:pt-[89px] overflow-clip',
+      {
+        'opacity-0': !showOnPage || introIsSeen,
+      },
+    )}
     style="background-image: url({bg.src});"
   >
     <div

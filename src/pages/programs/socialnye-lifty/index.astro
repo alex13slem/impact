@@ -37,13 +37,14 @@ const seo = siteSeo.find((item) => item.slug === 'socialnye-lifty');
               <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none"><a href={`/partners/${partner.id}`}>{partner.name}</a></h3>
               <div class="col-span-2 lg:col-span-1">
                 <h3 class="text-lg">О предприятии:</h3>
-                <div set:html={partner.description}></div>
+                <div class="prose" set:html={partner.description}></div>
               </div>
               <div class="col-span-2 lg:col-span-1">
                 <h3 class="text-lg">Совместное участие:</h3>
                 <ul class="list-disc list-inside">
                   {partner.events.filter((event) => event.charityProgram.slug === 'socialnye-lifty').map((event) => (
-                    <li class="font-thin text-sm md:text-base mt-1 first-of-type:mt-0">
+                    <li class="font-thin text-sm md:text-base mt-1 first-of-type:mt-0 relative">
+                      <a href={`/news/${event.slug}`} class="absolute inset-0 opacity-0">.</a>
                       <strong>{event.title}</strong><br>
                       {event.description}
                     </li>

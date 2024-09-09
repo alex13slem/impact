@@ -68,7 +68,7 @@
       class="w-full bg-transparent border-b border-white/90 outline-none text-lg py-1 px-2 focus-visible:border-accent transition-colors"
       type="text"
       name="organization"
-      placeholder="Название организации"
+      placeholder="Название организации/ИНН"
     />
     {#if $errors.organization}
       <p class="text-[0.75rem] leading-none mt-1 text-red-400">

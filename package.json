@@ -26,6 +26,7 @@
     "felte": "^1.2.14",
     "gsap": "^3.12.5",
     "html-to-text": "^9.0.5",
+    "localforage": "^1.10.0",
     "nodemailer": "^6.9.14",
     "sharp": "^0.33.5",
     "svelte": "^4.2.18",

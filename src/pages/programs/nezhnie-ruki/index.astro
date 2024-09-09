@@ -1,14 +1,14 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
-import Button from '@/components/ui/button.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { docs } from '@/lib/data/docs';
-import { partnersWithRelatedData } from '@/lib/data/partners';
+// import Button from '@/components/ui/button.svelte';
+// import SectHeading from '@/components/ui/sect-heading.svelte';
+// import { docs } from '@/lib/data/docs';
+// import { partnersWithRelatedData } from '@/lib/data/partners';
+import bg from '@/assets/img/bg-nezhnie-ruki.webp';
 import { siteSeo } from "@/lib/data/siteSeo";
 import { ViewTransitions } from 'astro:transitions';
-
-const viewDocs = docs.filter(doc => doc.showIn === 'nezhnie-ruki');
+// const viewDocs = docs.filter(doc => doc.showIn === 'nezhnie-ruki');
 
 const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
 ---
@@ -22,7 +22,7 @@ const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
 	/>
 
 	<main>
-    <section class="py-8 xl:py-20 overflow-clip">
+    <!-- <section class="py-8 xl:py-20 overflow-clip">
       <div class="container">
         <div class="lg:flex justify-between items-start">
           <SectHeading className='max-w-3xl mb-4 md:mb-4' level={1}>
@@ -62,6 +62,36 @@ const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
             </article>
         )})}
       </div>
+    </section> -->
+
+    <section id="description" style={`background-image: url(${bg.src});`} class="relative z-0 bg-center bg-cover overflow-clip ">
+      <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
+      <div class="relative container py-32 md:h-svh flex flex-col justify-center items-center min-h-svh">
+        <h2 class="text-center text-xl md:text-5xl lg:text-7xl font-sov-mod uppercase leading-snug mb-3 md:mb-4 lg:mb-10">
+          {seo?.name || 'Нежные руки'}
+        </h2>
+        <p class="hidden-block dir-bottom text-center text-xs md:text-base lg:text-lg max-w-xs md:max-w-2xl mx-auto font-thin ">
+          {seo?.description}
+        </p>
+        <button
+          onclick="history.back()"
+          class="absolute top-4 left-4 border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            ><path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+            /></svg
+          >
+          Назад
+        </button>
+      </div>
+
     </section>
-	</main>
+  </main>
 </RootLayout>

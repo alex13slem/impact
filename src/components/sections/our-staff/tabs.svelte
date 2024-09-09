@@ -18,8 +18,8 @@
   $: viewStaffName = positionStaff.at(0)?.name;
   let currentSlide = 0;
   let swiperEl: SwiperContainer;
-  const cnBtn =
-    'lg:text-4xl w-16 h-16 lg:h-28 lg:w-28 flex justify-center items-center bg-opacity-0 text-dark rounded-full disabled:bg-dark disabled:text-white border border-dark disabled:opacity-50';
+  // const cnBtn =
+  //   'lg:text-4xl w-16 h-16 lg:h-28 lg:w-28 flex justify-center items-center bg-opacity-0 text-dark rounded-full disabled:bg-dark disabled:text-white border border-dark disabled:opacity-50';
   const options = {
     modules: [Navigation],
     spaceBetween: 20,
@@ -74,8 +74,10 @@
   Сотрудник{#if positionStaff.length > 1}и{/if}
 </h3>
 <div class="flex justify-center gap-4 items-center max-w-5xl mx-auto flex-wrap">
-  {#each positionStaff as staff, idx (staff.id)}
-    <p class="text-lg font-bold">{staff.name}</p>
+  {#each positionStaff.sort( (a, b) => a.name.localeCompare(b.name), ) as staff, idx (staff.id)}
+    <p class="text-xl font-bold underline decoration-dark/40">
+      {staff.name}
+    </p>
     {#if idx !== positionStaff.length - 1}
       <span class="hidden md:inline"> • </span>
     {/if}

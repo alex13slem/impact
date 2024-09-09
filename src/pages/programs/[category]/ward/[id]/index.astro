@@ -97,9 +97,9 @@ const gallery:WpGallery[] = [{src: photo, alt: ward.name}, ...(Array.isArray(war
           )}
           <div class="mt-5">
             <button
-              class="relative border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
+              class="relative border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4 z-0"
             >
-              <a href="/" class="absolute inset-0 opacity-0">/index</a>
+              <a href="/" class="absolute inset-0 opacity-0 z-10">/index</a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -119,7 +119,7 @@ const gallery:WpGallery[] = [{src: photo, alt: ward.name}, ...(Array.isArray(war
           <div class="flex items-center justify-between gap-8 flex-col sm:flex-row">
             <div class="self-start sm:self-center">
               <p class="text-sm md:text-base font-thin">Подопечный Благотворительного фонда</p>
-              <h1 class="font-sov-mod text-3xl md:text-5xl">{ward.name}</h1>
+              <h1 class="font-sov-mod text-3xl md:text-5xl mt-2">{ward.name}</h1>
             </div>
             <nav class="flex gap-5 -order-1 sm:order-none self-start sm:self-center">
               {[prevLink, nextLink].map((link, index) => (
