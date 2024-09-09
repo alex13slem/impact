@@ -11,8 +11,8 @@
     sloganVisible,
   } from '@/lib/stores/pageLoadingStore';
   import { cn } from '@/lib/utils';
+  import { storage } from '@sveu/browser';
   import { gsap } from 'gsap';
-  import localforage from 'localforage';
   import { onMount } from 'svelte';
   import { blur } from 'svelte/transition';
   import SvgMap from '../../russian-map/svg-map.svelte';
@@ -21,11 +21,15 @@
 
   let root: HTMLElement;
   let introIsSeen: boolean | null = true;
+  const storageIntroIsSeen = storage('introIsSeen', false, {
+    store: 'session',
+  });
 
   function loadingComplete() {
     document.body.classList.remove('loading');
     loading.set(false);
-    localforage.setItem('introIsSeen', true);
+    // localforage.setItem('introIsSeen', true);
+    $storageIntroIsSeen = true;
   }
 
   function loadingStart() {
@@ -173,7 +177,10 @@
   };
 
   onMount(async () => {
-    introIsSeen = await localforage.getItem<boolean>('introIsSeen');
+    // introIsSeen = await localforage.getItem<boolean>('introIsSeen');
+    storageIntroIsSeen.subscribe(value => {
+      introIsSeen = value;
+    });
     if (!showOnPage || introIsSeen) {
       loadingComplete();
     } else {
@@ -192,7 +199,7 @@
   {/if}
 </svelte:head>
 
-{#if $loading && showOnPage && !introIsSeen}
+{#if $loading && showOnPage}
   <section
     bind:this={root}
     transition:blur={{ duration: 1000 }}
