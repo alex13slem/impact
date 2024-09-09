@@ -1,28 +1,27 @@
+import node from '@astrojs/node';
 import svelte from '@astrojs/svelte';
 import tailwind from '@astrojs/tailwind';
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
-
-import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
-  // site: 'https://impact-astro-064416-5a924a-37-143-10-41.traefik.me',
   integrations: [tailwind(), svelte()],
-  output: 'server',
+  output: 'hybrid',
   site: 'https://example.com',
-  adapter: netlify(),
+  adapter: node({
+    mode: 'standalone',
+  }),
   server: {
     port: 4000,
-    host: true
+    host: true,
   },
   vite: {
     ssr: {
-      noExternal: ['path-to-regexp']
+      // noExternal: ['path-to-regexp'],
     },
     preview: {
       port: 4000,
-      host: true
-    }
-  }
+      host: true,
+    },
+  },
 });
