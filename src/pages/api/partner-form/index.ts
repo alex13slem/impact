@@ -17,7 +17,7 @@ export const POST: APIRoute = async ({ request }) => {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: +process.env.SMTP_PORT!,
-      secure: true,
+      secure: false,
       auth: {
         user: process.env.SMTP_LOGIN,
         pass: process.env.SMTP_PASSWORD,
