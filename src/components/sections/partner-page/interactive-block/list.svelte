@@ -17,7 +17,9 @@
     >
       <a href="/news/{event.slug}" class="absolute inset-0 opacity-0">.</a>
       <header class="mb-4 flex items-start gap-5">
-        <h3 class="text-base lg:text-2xl font-sov-mod uppercase">
+        <h3
+          class="text-base lg:text-2xl font-sov-mod uppercase group-hover:underline"
+        >
           {event.title}
         </h3>
       </header>

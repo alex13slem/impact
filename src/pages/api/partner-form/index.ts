@@ -15,12 +15,12 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify(valid.error), { status: 400 });
     }
     const transporter = nodemailer.createTransport({
-      host: 'smtp.yandex.ru',
+      host: process.env.SMTP_HOST,
       port: 465,
-      secure: true, // true для 465 порта, false для других портов
+      secure: true,
       auth: {
-        user: process.env.YANDEX_SMTP_LOGIN, // Ваш email на Yandex
-        pass: process.env.YANDEX_SMTP_PASSWORD, // Пароль приложения (настройте в Yandex)
+        user: process.env.SMTP_LOGIN,
+        pass: process.env.SMTP_PASSWORD,
       },
     });
 
@@ -35,57 +35,51 @@ export const POST: APIRoute = async ({ request }) => {
     // });
 
     const info = await transporter.sendMail({
-      from: '"IMPACT" <a.s.scherba@yandex.by>', // От кого
-      to: process.env.YANDEX_SMTP_EMAIL_TO, // Кому (может быть ваш email для теста)
+      from: `"IMPACT" <${process.env.SMTP_EMAIL_FROM}>`, // От кого
+      to: process.env.SMTP_EMAIL_TO, // Кому (может быть ваш email для теста)
       subject: 'Заявка на партнерство', // Тема письма
       html: /* html */ `
         <!DOCTYPE html>
         <html lang="ru">
         <head>
           <meta charset="UTF-8">
+          <link href="https://db.onlinewebfonts.com/c/847b70f382f684546a8b4d05395fb35e?family=SovMod" rel="stylesheet">
           <title>Письмо</title>
           <style>
             body {
-              font-family: Arial, sans-serif;
-              font-size: 16px;
-              color: #333;
-              background-color: #f9f9f9;
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+              color: white;
+              background-color: #00203d;
+              border: 1px solid #fbcb6a;
             }
             h1 {
-              font-size: 24px;
-              font-weight: bold;
-              color: #00698f;
+              color: #fbcb6a;
+              font-family: 'SovMod', sans-serif;
             }
             p {
               margin-bottom: 20px;
             }
             a {
-              text-decoration: none;
-              color: #337ab7;
+              color: white;
             }
-            a:hover {
-              color: #23527c;
+            header {
+              border-bottom: 1px solid #fbcb6a;
+              padding: 20px;
             }
-            hr {
-              border: none;
-              border-top: 1px solid #ccc;
-              margin: 20px 0;
+            main {
+              padding: 20px;
             }
-            footer {
-              font-size: 14px;
-              color: #666;
-              text-align: center;
-            }
+
           </style>
         </head>
         <body>
-          <h1 style="text-align: center; margin-top: 40px;">${valid.data.organization}</h1>
-          <p><b>Email:</b> <a href='mailto:${valid.data.email}' style="font-size: 16px;">${valid.data.email}</a></p>
-          <p><b>Телефон:</b> <a href='tel:${valid.data.phone}' style="font-size: 16px;">${valid.data.phone}</a></p>
-          <hr>
-          <footer>
-            <p style="margin-bottom: 20px;">${valid.data.name}</p>
-          </footer>
+          <h1 style="text-align: center; padding-inline: 20px">Заявка на партнерство</h1>
+          <div style="padding: 20px">
+            <p><b>Название организации:</b> ${valid.data.organization}</p>
+            <p><b>Email:</b> <a href='mailto:${valid.data.email}' style="font-size: 16px;">${valid.data.email}</a></p>
+            <p><b>Телефон:</b> <a href='tel:${valid.data.phone}' style="font-size: 16px;">${valid.data.phone}</a></p>
+            <p><b>ФИО:</b> ${valid.data.name}</p>
+          </div>
         </body>
         </html>
       `,
