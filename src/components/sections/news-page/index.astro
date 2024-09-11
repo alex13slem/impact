@@ -1,11 +1,12 @@
 ---
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { charityPrograms } from '@/lib/data/charityPrograms';
+import { getCharityPrograms } from '@/lib/data/charityPrograms';
 import { getNews } from '@/lib/data/news';
 import CategorySelect from './interactive-block/category-select.svelte';
 import InteractiveNews from './interactive-block/index.svelte';
 
 const news = await getNews(Astro)
+const charityPrograms = await getCharityPrograms(Astro)
 ---
 
 <section class="py-6 xl:py-20">

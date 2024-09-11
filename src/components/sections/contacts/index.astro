@@ -5,13 +5,14 @@ import svgMail from "@/assets/img/email.svg";
 import svgOpenHours from "@/assets/img/open-hours.svg";
 import svgPhone from "@/assets/img/tel.svg";
 import SectHeading from "@/components/ui/sect-heading.svelte";
-import { contacts } from "@/lib/data/contacts";
+import { getContacts } from "@/lib/data/contacts";
 import { toAnchorPhoneNumber } from "@/lib/utils";
 import { getImage, Image } from "astro:assets";
 
 
 const bg = await getImage({src: bgSource})
 
+const contacts = await getContacts(Astro);
 const coords = contacts.mapCoords.trim().split(',').reverse().join(',').trim();
 const mapUrl = new URL('https://static-maps.yandex.ru/v1');
 const params = new URLSearchParams({

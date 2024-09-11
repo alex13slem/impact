@@ -1,6 +1,13 @@
-import { docsArraySchema } from '../schemas/data/docsSchema';
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
+import { docsArraySchema, type Docs } from '../schemas/data/docsSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 
 export const fetchDocs = withDataFetching(getWpData)('/docs', docsArraySchema);
 
-export const docs = await fetchDocs();
+export const getDocs = async (astro: AstroGlobal) =>
+  await axios
+    .get<Docs[]>('/api/docs', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);

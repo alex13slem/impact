@@ -1,9 +1,12 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
-import { staffs } from '@/lib/data/staffs';
-import { staffsPositions } from '@/lib/data/staffsPositions';
+
+import { getStaffs } from "@/lib/data/staffs";
+import { getStaffsPositions } from "@/lib/data/staffsPositions";
 import Tabs from "./tabs.svelte";
 
+const staffs = await getStaffs(Astro);
+const staffsPositions = await getStaffsPositions(Astro)
 ---
 
 <section class="our-stuff bg-white text-dark pt-8 lg:py-20 overflow-clip">

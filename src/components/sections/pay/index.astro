@@ -2,10 +2,11 @@
 import bgSourse from '@/assets/img/bg.webp';
 import Button from '@/components/ui/button.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { paymentData } from '@/lib/data/payment';
+import { getPayment } from '@/lib/data/payment';
 import { getImage } from 'astro:assets';
 
 const bg = await getImage({src: bgSourse})
+const paymentData = await getPayment(Astro)
 ---
 
 <section id="pay" class="pay bg-cover bg-center bg-fixed relative overflow-clip" style={`background-image: url(${bg.src});` }>

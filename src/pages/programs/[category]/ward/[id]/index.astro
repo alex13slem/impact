@@ -3,7 +3,7 @@ import phPhoto from '@/assets/img/ph-photo.webp';
 import { GallerySlider } from "@/components/gallery-slider";
 import { RootLayout } from "@/components/layouts/root";
 import { Seo } from "@/components/seo";
-import { wardsWithRelatedData } from "@/lib/data/wards";
+import { getWards } from '@/lib/data/wards';
 import type { WpGallery } from "@/lib/schemas/wpGallery";
 import { cn } from "@/lib/utils";
 import { ViewTransitions } from 'astro:transitions';
@@ -30,10 +30,11 @@ import { ViewTransitions } from 'astro:transitions';
 const { id: paramsId, category } = Astro.params;
 const id = Number(paramsId);
 if (isNaN(id)) return Astro.redirect("/404");
-const ward = wardsWithRelatedData.find(item => item.id === id);
+const wards = await getWards(Astro);
+const ward = wards.find(item => item.id === id);
 if (!ward) return Astro.redirect("/404");
 
-const sameCategoryWards = wardsWithRelatedData.filter(ward => ward.charityProgram.slug === category);
+const sameCategoryWards = wards.filter(ward => ward.charityProgram.slug === category);
 const currentIndex = sameCategoryWards.indexOf(ward);
 const prevItem = sameCategoryWards[(currentIndex - 1 + sameCategoryWards.length) % sameCategoryWards.length];
 const nextItem = sameCategoryWards[(currentIndex + 1) % sameCategoryWards.length];
@@ -45,10 +46,10 @@ const photo = typeof ward.image === 'string' ? ward.image : phPhoto.src;
 const gallery:WpGallery[] = [{src: photo, alt: ward.name}, ...(Array.isArray(ward.gallery) ? ward.gallery : [])];
 ---
 
-<ViewTransitions  />
 
 <RootLayout>
-	<Seo
+	<ViewTransitions  slot={'head'}/>
+  <Seo
 		slot={'seo'}
 		title={ward.name}
 		description={ward.description}

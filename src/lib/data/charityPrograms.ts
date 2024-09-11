@@ -1,6 +1,9 @@
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
 import {
   charityProgramsArraySchema,
   charityProgramsSchema,
+  type CharityProgram,
 } from '../schemas/data/charityProgramsSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 
@@ -15,6 +18,9 @@ export const fetchCharityProgramById = (id: number) =>
     charityProgramsSchema.omit({ id: true }),
   );
 
-export const charityPrograms = (await fetchCharityPrograms()).sort(
-  (a, b) => a.order - b.order,
-);
+export const getCharityPrograms = async (astro: AstroGlobal) =>
+  await axios
+    .get<CharityProgram[]>('/api/charity-programs', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);

@@ -39,6 +39,7 @@ const isHome = Astro.url.pathname === '/';
   {...props}
 >
   <Head >
+    <slot name="head" />
     <slot name="seo" />
     <meta name="referrer" content="origin" />
 

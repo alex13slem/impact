@@ -1,9 +1,9 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
 import { ViewDocs } from "@/components/view-docs";
+import { getDocs } from '@/lib/data/docs';
 
-import { docs } from "@/lib/data/docs";
-
+const docs = await getDocs(Astro)
 const viewDocs = docs.filter(doc => doc.showIn === 'landing');
 
 ---

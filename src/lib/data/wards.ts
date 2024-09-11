@@ -1,3 +1,5 @@
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
 import {
   wardsArraySchema,
   wardsSchema,
@@ -33,12 +35,25 @@ export const fetchWardWithRelatedById = async (id: number) => {
   return fetchRelatedDataForWard({ ...ward, id });
 };
 
-export const wardsWithRelatedData = await fetchWardsWithRelatedData();
+export const getWards = (astro: AstroGlobal) =>
+  axios
+    .get<WardWithRelatedData[]>('/api/wards', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);
 
-export const getWardsWithRelatedDataByCharity = (
+export const getWardsWithRelatedDataByCharity = async (
+  astro: AstroGlobal,
   slug: 'socialnye-lifty' | 'nezhnie-ruki' | 'pomozj-detyam',
 ) => {
-  return wardsWithRelatedData.filter(w => w.charityProgram.slug === slug);
+  return axios
+    .get<WardWithRelatedData[]>('/api/wards/', {
+      baseURL: astro.url.origin,
+      params: { 'charity-program': slug },
+    })
+    .then(res => res.data);
 };
 
-export type WardWithRelatedData = (typeof wardsWithRelatedData)[number];
+export type WardWithRelatedData = Awaited<
+  ReturnType<typeof fetchWardsWithRelatedData>
+>[number];

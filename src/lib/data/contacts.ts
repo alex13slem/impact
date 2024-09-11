@@ -1,9 +1,16 @@
-import { contactsSchema } from '../schemas/data/contactsSchema';
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
+import { contactsSchema, type Contacts } from '../schemas/data/contactsSchema';
 import { getWpSingularData, withDataFetching } from '../utils/wp';
 
-const fetchContacts = withDataFetching(getWpSingularData)(
+export const fetchContacts = withDataFetching(getWpSingularData)(
   'contacts',
   contactsSchema,
 );
 
-export const contacts = await fetchContacts();
+export const getContacts = async (astro: AstroGlobal) =>
+  axios
+    .get<Contacts>('/api/contacts', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);

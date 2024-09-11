@@ -1,20 +1,16 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
-// import Button from '@/components/ui/button.svelte';
-// import SectHeading from '@/components/ui/sect-heading.svelte';
-// import { docs } from '@/lib/data/docs';
-// import { partnersWithRelatedData } from '@/lib/data/partners';
 import bg from '@/assets/img/bg-nezhnie-ruki.webp';
-import { siteSeo } from "@/lib/data/siteSeo";
 import { ViewTransitions } from 'astro:transitions';
-// const viewDocs = docs.filter(doc => doc.showIn === 'nezhnie-ruki');
+import { getSiteSeo } from '@/lib/data/siteSeo';
 
+const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
 ---
-<ViewTransitions  />
 <RootLayout>
-	<Seo
+	<ViewTransitions  slot={'head'}/>
+  <Seo
 		slot={'seo'}
 		title={seo?.name || 'Нежные руки'}
 		description={seo?.description || ''}
@@ -22,48 +18,6 @@ const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
 	/>
 
 	<main>
-    <!-- <section class="py-8 xl:py-20 overflow-clip">
-      <div class="container">
-        <div class="lg:flex justify-between items-start">
-          <SectHeading className='max-w-3xl mb-4 md:mb-4' level={1}>
-            {seo?.name || 'Нежные руки'}
-          </SectHeading>
-          {
-            !!viewDocs.length && (
-              <Button href='/programs/nezhnie-ruki/docs' className='flex items-center gap-4 shrink-0'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024"><path fill="currentColor" d="M768 0H416c-35.344 0-64 28.656-64 64h352v256h256v512H736v64h224c35.344 0 64-28.656 64-64V256.016zm0 256V90.496L933.472 256zM64 128c-35.344 0-64 28.656-64 64v768c0 35.344 28.656 64 64 64h544c35.344 0 64-28.656 64-64V384.016L416 128zm544 832H64V192h288v256h256zM416 384V218.496L581.472 384z"/></svg>
-                Документы для подачи заявки
-              </Button>
-            )
-          }
-        </div>
-        <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description}</p>
-
-        {partnersWithRelatedData.map((partner) => {
-          if (partner.events.length && partner.events.some((event) => event.charityProgram.slug === 'nezhnie-ruki')) return (
-            <article class="grid md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20">
-              <img width="160" height="160" class="w-40 h-40 row-span-3 rounded-full md:sticky top-24 lg:top-28 object-contain bg-white/90 object-center" src={partner.image} alt={partner.name}>
-              <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none"><a href={`/partners/${partner.id}`}>{partner.name}</a></h3>
-              <div class="col-span-2 lg:col-span-1">
-                <h3 class="text-lg">О предприятии:</h3>
-                <div set:html={partner.description}></div>
-              </div>
-              <div class="col-span-2 lg:col-span-1">
-                <h3 class="text-lg">Совместное участие:</h3>
-                <ul class="list-disc list-inside">
-                  {partner.events.filter((event) => event.charityProgram.slug === 'nezhnie-ruki').map((event) => (
-                    <li class="font-thin text-sm md:text-base mt-1 first-of-type:mt-0">
-                      <strong>{event.title}</strong><br>
-                      {event.description}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-        )})}
-      </div>
-    </section> -->
-
     <section id="description" style={`background-image: url(${bg.src});`} class="relative z-0 bg-center bg-cover overflow-clip ">
       <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
       <div class="relative container py-32 md:h-svh flex flex-col justify-center items-center min-h-svh">

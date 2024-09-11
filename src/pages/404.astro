@@ -14,11 +14,11 @@ import { ViewTransitions } from 'astro:transitions';
 
 ---
 
-<ViewTransitions  />
 
 
 
 <RootLayout hasHeader={false}>
+  <ViewTransitions  slot={'head'} />
 	<Seo
 		slot={'seo'}
 		title={'Страница не создана'}

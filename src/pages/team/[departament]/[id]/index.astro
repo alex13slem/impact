@@ -1,12 +1,12 @@
 ---
 import { RootLayout } from "@/components/layouts/root";
 import { Seo } from "@/components/seo";
-import { staffs } from "@/lib/data/staffs";
-import { staffsPositions } from "@/lib/data/staffsPositions";
 import { cn } from "@/lib/utils";
 import { ViewTransitions } from 'astro:transitions';
 //@ts-ignore
 import phPhoto from '@/assets/img/ph-photo.webp';
+import { getStaffs } from "@/lib/data/staffs";
+import { getStaffsPositions } from "@/lib/data/staffsPositions";
 import { convert } from 'html-to-text';
 
 // SSG
@@ -34,9 +34,11 @@ import { convert } from 'html-to-text';
 const { id: paramsId } = Astro.params;
 const id = Number(paramsId);
 if (isNaN(id)) return Astro.redirect("/404");
+const staffs = await getStaffs(Astro);
 const staff = staffs.find(item => item.id === id);
 if (!staff) return Astro.redirect("/404");
 
+const staffsPositions = await getStaffsPositions(Astro);
 const departament = staffsPositions.find(pos => pos.id === staff.staffPositions[0]);
 if (!departament) return Astro.redirect("/404");
 
@@ -50,9 +52,9 @@ const nextLink = `/team/${nextItem.staffPositions[0]}/${nextItem.id}`;
 const photo = typeof staff.image === 'string' ? staff.image : phPhoto.src;
 ---
 
-<ViewTransitions  />
 
 <RootLayout>
+  <ViewTransitions  slot={'head'}/>
 	<Seo
 		slot={'seo'}
 		title={staff.name}

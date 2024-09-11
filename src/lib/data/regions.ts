@@ -1,6 +1,9 @@
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
 import {
   regionsArraySchema,
   regionsSchema,
+  type Region,
 } from '../schemas/data/regionsSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 
@@ -9,10 +12,15 @@ export const fetchRegions = withDataFetching(getWpData)(
   regionsArraySchema,
 );
 
-export const regions = await fetchRegions();
-
 export const fetchRegionById = (id: number) =>
   withDataFetching(getWpData)(
     `/regions/${id}`,
     regionsSchema.omit({ id: true }),
   );
+
+export const getRegions = async (astro: AstroGlobal) =>
+  axios
+    .get<Region[]>('/api/regions', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);

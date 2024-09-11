@@ -1,4 +1,6 @@
-import { goalsArraySchema } from '../schemas/data/goalsSchema';
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
+import { goalsArraySchema, type Goal } from '../schemas/data/goalsSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 
 export const fetchGoals = withDataFetching(getWpData)(
@@ -6,4 +8,11 @@ export const fetchGoals = withDataFetching(getWpData)(
   goalsArraySchema,
 );
 
-export const goals = (await fetchGoals()).sort((a, b) => a.order - b.order);
+export const getGoals = async (astro: AstroGlobal) =>
+  axios
+    .get<Goal[]>('/api/goals', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);
+
+// export const goals = (await fetchGoals()).sort((a, b) => a.order - b.order);

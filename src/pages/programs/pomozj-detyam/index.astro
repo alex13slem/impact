@@ -1,22 +1,24 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
-import Button from '@/components/ui/button.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { WardsSlider } from '@/components/wards-slider';
-import { docs } from '@/lib/data/docs';
-import { siteSeo } from "@/lib/data/siteSeo";
+import { getDocs } from '@/lib/data/docs';
+import { getSiteSeo } from '@/lib/data/siteSeo';
 import { getWardsWithRelatedDataByCharity } from '@/lib/data/wards';
 import { cn } from '@/lib/utils';
 import { ViewTransitions } from 'astro:transitions';
 
-const wards = getWardsWithRelatedDataByCharity('pomozj-detyam');
+const wards = await getWardsWithRelatedDataByCharity(Astro,'pomozj-detyam');
 
+const docs = await getDocs(Astro)
 const viewDocs = docs.filter(doc => doc.showIn === 'pomozj-detyam');
+
+const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
 ---
-<ViewTransitions  />
 <RootLayout>
+  <ViewTransitions  slot={'head'}/>
 	<Seo
 		slot={'seo'}
 		title={seo?.name || 'Помощь тяжелобольным детям'}

@@ -1,9 +1,13 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
-import { charityPrograms } from "@/lib/data/charityPrograms";
+import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
 import DesktopCard from "./desktop-card.astro";
 import Slider from "./slider.svelte";
+interface Props {
+  charityPrograms: CharityProgram[]
+}
 
+const {charityPrograms} = Astro.props
 ---
 
 <section id="social-programs" class="social-programs bg-white text-dark py-8 md:py-20 overflow-clip">

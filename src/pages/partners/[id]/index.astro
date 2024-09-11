@@ -2,13 +2,14 @@
 import { RootLayout } from "@/components/layouts/root";
 import { SectPartner } from "@/components/sections/partner-page";
 import { Seo } from "@/components/seo";
-import { partnersWithRelatedData } from "@/lib/data/partners";
+import { getPartners } from "@/lib/data/partners";
 import { ViewTransitions } from 'astro:transitions';
 
 const { id: paramsId } = Astro.params;
 const id = Number(paramsId);
 if (isNaN(id)) return Astro.redirect("/404");
-const partner = partnersWithRelatedData.filter(p => !!p.events.length).find(p => p.id === id);
+const partners = await getPartners(Astro);
+const partner = partners.filter(p => !!p.events?.length).find(p => p.id === id);
 if (!partner) return Astro.redirect("/404");
 
 // export const getStaticPaths = (() => {
@@ -31,8 +32,8 @@ if (!partner) return Astro.redirect("/404");
 
 
 ---
-<ViewTransitions  />
 <RootLayout>
+	<ViewTransitions  slot={'head'} />
 	<Seo
 		slot={'seo'}
 		title={partner.name}

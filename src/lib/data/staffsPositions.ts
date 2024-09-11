@@ -1,4 +1,9 @@
-import { staffsPositionArraySchema } from '../schemas/data/staffsPositions';
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
+import {
+  staffsPositionArraySchema,
+  type StaffsPosition,
+} from '../schemas/data/staffsPositions';
 import { getWpData, withDataFetching } from '../utils/wp';
 
 export const fetchStaffsPositions = withDataFetching(getWpData)(
@@ -6,6 +11,13 @@ export const fetchStaffsPositions = withDataFetching(getWpData)(
   staffsPositionArraySchema,
 );
 
-export const staffsPositions = (await fetchStaffsPositions()).sort(
-  (a, b) => a.order - b.order,
-);
+export const getStaffsPositions = (astro: AstroGlobal) =>
+  axios
+    .get<StaffsPosition[]>('/api/staff-positions', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);
+
+// export const staffsPositions = (await fetchStaffsPositions()).sort(
+//   (a, b) => a.order - b.order,
+// );

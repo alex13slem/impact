@@ -1,9 +1,9 @@
 ---
 import SectHeading from "@/components/ui/sect-heading.svelte";
-import { partnersWithRelatedData } from "@/lib/data/partners";
+import { getPartners } from "@/lib/data/partners";
 import Slider from "./slider.svelte";
 
-
+const partners = await getPartners(Astro);
 ---
 
 <section id="our-partners" class="our-partners bg-white text-dark py-8 lg:py-20 overflow-clip">
@@ -14,5 +14,5 @@ import Slider from "./slider.svelte";
       и детскими учреждениями, а также российскими компаниями, которые разделяют наши цели и оказывают поддержку в их достижении.
     </p>
   </div>
-  <Slider partners={partnersWithRelatedData} client:load />
+  <Slider {partners} client:load />
 </section>

@@ -11,10 +11,6 @@ export const fetchOurMissionSlides = withDataFetching(getWpData)(
   ourMissionSlideArraySchema,
 );
 
-export const ourMissionSlides = (await fetchOurMissionSlides()).sort(
-  (a, b) => a.order - b.order,
-);
-
 export const getOurMissionSlides = async (astro: AstroGlobal) =>
   axios
     .get<OurMissionSlide[]>('/api/our-mission', {

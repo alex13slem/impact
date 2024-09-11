@@ -8,20 +8,28 @@ import { SectOurMission } from '@/components/sections/our-mission';
 import { SectOurPartners } from '@/components/sections/our-partners';
 import { SectOurStuff } from '@/components/sections/our-staff';
 import { SectPay } from '@/components/sections/pay';
-import { goals } from '@/lib/data/goals';
 import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
 
 import { SectOurGoals } from '@/components/sections/our-goals';
+import { getCharityPrograms } from '@/lib/data/charityPrograms';
+import { getGoals } from '@/lib/data/goals';
 import { getNews } from '@/lib/data/news';
-import { siteSeo } from "@/lib/data/siteSeo";
-import { wardsWithRelatedData } from '@/lib/data/wards';
-
-const news = await getNews(Astro);
+import { getSiteSeo } from '@/lib/data/siteSeo';
+import { getWards } from '@/lib/data/wards';
 
 
+const siteSeo = await getSiteSeo(Astro);
 
 const seo = siteSeo.find((item) => item.slug === 'home');
+
+const [goals, wards, news, charityPrograms] = await Promise.all([
+	getGoals(Astro),
+	getWards(Astro),
+	getNews(Astro),
+	getCharityPrograms(Astro)
+]);
+
 ---
 
 <RootLayout>
@@ -33,10 +41,10 @@ const seo = siteSeo.find((item) => item.slug === 'home');
 	/>
 
 	<main >
-		<SectHero {news} wards={wardsWithRelatedData}/>
+		<SectHero {wards} {news} {charityPrograms}/>
 		<SectDescription />
 		<SectOurMission />
-		<SectCharityPrograms />
+		<SectCharityPrograms {charityPrograms}/>
 		<SectOurPartners />
 		<SectOurStuff />
 		{ goals.map((goal) => <SectOurGoals {goal} />) }

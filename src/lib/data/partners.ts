@@ -1,9 +1,10 @@
-// import { contributions } from './contributions';
-
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
 import {
   partnersArraySchema,
   partnersSchema,
   type Partner,
+  type PartnerWithRelations,
 } from '../schemas/data/partnersSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 import { fetchCharityProgramById } from './charityPrograms';
@@ -45,8 +46,9 @@ export const fetchPartnerWithRelatedById = async (id: number) => {
   return getPartnerWithRelatedData({ ...partner, id });
 };
 
-// Пример вызова получения всех партнёров с их событиями
-export const partnersWithRelatedData = await fetchPartnersWithRelatedData();
-
-// Тип данных партнёра с событиями
-export type PartnerWithRelatedData = (typeof partnersWithRelatedData)[number];
+export const getPartners = async (astro: AstroGlobal) =>
+  axios
+    .get<PartnerWithRelations[]>('/api/partners', {
+      baseURL: astro.url.origin,
+    })
+    .then(res => res.data);
