@@ -10,5 +10,8 @@ export const GET: APIRoute = async ({ params }) => {
   if (!data) {
     return new Response('Not found', { status: 404 });
   }
+
+  console.log(data);
+
   return new Response(JSON.stringify(data), { status: 200 });
 };
