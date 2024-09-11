@@ -7,6 +7,8 @@ export async function getWpData(url: string) {
     baseURL: process.env.WP_URL + '/wp-json/acf/v3',
     headers: {
       Accept: 'application/json',
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
     },
     params: {
       per_page: 100,
