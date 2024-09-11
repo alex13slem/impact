@@ -1,5 +1,5 @@
-import type { NewsItemWithRelated } from '../schemas/data/newsSchema';
 import type { Region } from '../schemas/data/regionsSchema';
+import type { NewsItemWithRelated } from './news';
 import type { WardWithRelatedData } from './wards';
 
 export interface NewsPoint {

@@ -1,12 +1,11 @@
 ---
 import IMPACT from '@/assets/img/IMPACT.png';
 import {  getMapNews} from '@/lib/data/mapNews';
-import { getLastNews } from "@/lib/data/news";
+import { getLastNews, type NewsItemWithRelated } from "@/lib/data/news";
 import { Image } from "astro:assets";
 import RussianMap from "../../russian-map";
 import Heading from './heading.svelte';
 import type { WardWithRelatedData } from '@/lib/data/wards';
-import type { NewsItemWithRelated } from '@/lib/schemas/data/newsSchema';
 import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 
 interface Props {

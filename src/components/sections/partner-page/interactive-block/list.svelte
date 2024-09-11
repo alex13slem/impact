@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
+  import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
   import { cn } from '@/lib/utils';
 
   export let className: string = '';
 
-  export let partner: PartnerWithRelations;
+  export let partner: PartnerWithRelatedData;
 
   const events = partner.events || [];
 </script>

@@ -2,11 +2,11 @@
   import { cn } from '@/lib/utils';
   import { fade } from 'svelte/transition';
   //@ts-ignore
-  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
+  import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
 
   export let className: string = '';
-  export let partner: PartnerWithRelations;
+  export let partner: PartnerWithRelatedData;
 
   $: event = partner.events?.find(item => item.slug === $targetEventSlug);
 </script>

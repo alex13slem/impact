@@ -3,7 +3,6 @@ import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { WardsSlider } from '@/components/wards-slider';
-import { getDocs } from '@/lib/data/docs';
 import { getSiteSeo } from '@/lib/data/siteSeo';
 import { getWardsWithRelatedDataByCharity } from '@/lib/data/wards';
 import { cn } from '@/lib/utils';
@@ -11,7 +10,7 @@ import { ViewTransitions } from 'astro:transitions';
 
 const wards = await getWardsWithRelatedDataByCharity(Astro,'pomozj-detyam');
 
-const docs = await getDocs(Astro)
+// const docs = await getDocs(Astro)
 
 const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');

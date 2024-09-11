@@ -2,32 +2,35 @@
 import { RootLayout } from "@/components/layouts/root";
 import { SectPartner } from "@/components/sections/partner-page";
 import { Seo } from "@/components/seo";
-import { getPartners } from "@/lib/data/partners";
+import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
+import type { GetStaticPaths } from "astro";
 import { ViewTransitions } from 'astro:transitions';
 
-const { id: paramsId } = Astro.params;
-const id = Number(paramsId);
-if (isNaN(id)) return Astro.redirect("/404");
-const partners = await getPartners(Astro);
-const partner = partners.filter(p => !!p.events?.length).find(p => p.id === id);
-if (!partner) return Astro.redirect("/404");
+// const { id: paramsId } = Astro.params;
+// const id = Number(paramsId);
+// if (isNaN(id)) return Astro.redirect("/404");
+// const partners = (await fetchPartnersWithRelatedData()).filter(p => !!p.events.length);
+// const partner = partners.filter(p => !!p.events?.length).find(p => p.id === id);
+// if (!partner) return Astro.redirect("/404");
 
-// export const getStaticPaths = (() => {
-//   const paths = partnersWithRelatedData
-//     .filter(p => !!p.events.length)
-//     .map( (partner) => {
-//     return {
-//       params: {
-//         id: partner.id
-//       },
-//       props: {
-//         partner
-//       }
-//     }
-//   });
-//   return paths;
-// }) satisfies GetStaticPaths;
-// const { partner } = Astro.props
+export const getStaticPaths = ( async () => {
+	const partners = (await fetchPartnersWithRelatedData()).filter(p => !!p.events.length);
+
+  const paths = partners
+    .filter(p => !!p.events.length)
+    .map( (partner) => {
+    return {
+      params: {
+        id: partner.id
+      },
+      props: {
+        partner
+      }
+    }
+  });
+  return paths;
+}) satisfies GetStaticPaths;
+const { partner } = Astro.props
 
 
 

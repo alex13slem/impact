@@ -3,43 +3,45 @@ import phPhoto from '@/assets/img/ph-photo.webp';
 import { GallerySlider } from "@/components/gallery-slider";
 import { RootLayout } from "@/components/layouts/root";
 import { Seo } from "@/components/seo";
-import { getWards } from '@/lib/data/wards';
+import { fetchWardsWithRelatedData } from '@/lib/data/wards';
 import type { WpGallery } from "@/lib/schemas/wpGallery";
 import { cn } from "@/lib/utils";
+import type { GetStaticPaths } from 'astro';
 import { ViewTransitions } from 'astro:transitions';
 
-// export const getStaticPaths = (() => {
-//   const paths = wardsWithRelatedData.map(item => {
-//     const sameCategoryWards = wardsWithRelatedData.filter(ward => ward.charityProgram.slug === item.charityProgram.slug);
-//     const currentIndex = sameCategoryWards.indexOf(item);
-//     const prevItem = sameCategoryWards[(currentIndex - 1 + sameCategoryWards.length) % sameCategoryWards.length];
-//     const nextItem = sameCategoryWards[(currentIndex + 1) % sameCategoryWards.length];
-//     const prevLink = `/programs/${prevItem.charityProgram.slug}/ward/${prevItem.id}`;
-//     const nextLink = `/programs/${nextItem.charityProgram.slug}/ward/${nextItem.id}`;
-//     return {
-//       params: { id: item.id, category: item.charityProgram.slug },
-//       props: { ward:item, prevLink, nextLink },
-//     }
-//   })
-//   return paths;
+export const getStaticPaths = ( async () => {
+  const wards = await fetchWardsWithRelatedData();
+  const paths = wards.map(item => {
+    const sameCategoryWards = wards.filter(ward => ward.charityProgram.slug === item.charityProgram.slug);
+    const currentIndex = sameCategoryWards.indexOf(item);
+    const prevItem = sameCategoryWards[(currentIndex - 1 + sameCategoryWards.length) % sameCategoryWards.length];
+    const nextItem = sameCategoryWards[(currentIndex + 1) % sameCategoryWards.length];
+    const prevLink = `/programs/${prevItem.charityProgram.slug}/ward/${prevItem.id}`;
+    const nextLink = `/programs/${nextItem.charityProgram.slug}/ward/${nextItem.id}`;
+    return {
+      params: { id: item.id, category: item.charityProgram.slug },
+      props: { ward:item, prevLink, nextLink },
+    }
+  })
+  return paths;
 
-// }) satisfies GetStaticPaths;
-// const { ward, nextLink, prevLink } = Astro.props;
+}) satisfies GetStaticPaths;
+const { ward, nextLink, prevLink } = Astro.props;
 
 
-const { id: paramsId, category } = Astro.params;
-const id = Number(paramsId);
-if (isNaN(id)) return Astro.redirect("/404");
-const wards = await getWards(Astro);
-const ward = wards.find(item => item.id === id);
-if (!ward) return Astro.redirect("/404");
+// const { id: paramsId, category } = Astro.params;
+// const id = Number(paramsId);
+// if (isNaN(id)) return Astro.redirect("/404");
+// const wards = await getWards(Astro);
+// const ward = wards.find(item => item.id === id);
+// if (!ward) return Astro.redirect("/404");
 
-const sameCategoryWards = wards.filter(ward => ward.charityProgram.slug === category);
-const currentIndex = sameCategoryWards.indexOf(ward);
-const prevItem = sameCategoryWards[(currentIndex - 1 + sameCategoryWards.length) % sameCategoryWards.length];
-const nextItem = sameCategoryWards[(currentIndex + 1) % sameCategoryWards.length];
-const prevLink = `/programs/${prevItem.charityProgram.slug}/ward/${prevItem.id}`;
-const nextLink = `/programs/${nextItem.charityProgram.slug}/ward/${nextItem.id}`;
+// const sameCategoryWards = wards.filter(ward => ward.charityProgram.slug === category);
+// const currentIndex = sameCategoryWards.indexOf(ward);
+// const prevItem = sameCategoryWards[(currentIndex - 1 + sameCategoryWards.length) % sameCategoryWards.length];
+// const nextItem = sameCategoryWards[(currentIndex + 1) % sameCategoryWards.length];
+// const prevLink = `/programs/${prevItem.charityProgram.slug}/ward/${prevItem.id}`;
+// const nextLink = `/programs/${nextItem.charityProgram.slug}/ward/${nextItem.id}`;
 
 
 const photo = typeof ward.image === 'string' ? ward.image : phPhoto.src;

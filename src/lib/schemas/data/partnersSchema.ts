@@ -1,6 +1,6 @@
+import type { NewsItemWithRelated } from '@/lib/data/news';
 import { array, number, object, string, z } from 'zod';
 import type { CharityProgram } from './charityProgramsSchema';
-import type { NewsItemWithRelated } from './newsSchema';
 
 export const partnersSchema = object({
   id: number(),
