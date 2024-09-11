@@ -7,8 +7,10 @@ export async function getWpData(url: string) {
     baseURL: process.env.WP_URL + '/wp-json/acf/v3',
     headers: {
       Accept: 'application/json',
-      'Cache-Control': 'no-cache',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
       Pragma: 'no-cache',
+      Expires: '0',
+      'Surrogate-Control': 'no-store',
     },
     params: {
       per_page: 100,
@@ -36,6 +38,10 @@ export async function getWpSingularData(slug: string) {
     baseURL: process.env.WP_URL + '/wp-json/acf/v3/options/options/',
     headers: {
       Accept: 'application/json',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+      'Surrogate-Control': 'no-store',
     },
   });
   if (response.status !== 200) {
