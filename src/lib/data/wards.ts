@@ -47,7 +47,7 @@ export const getWardsWithRelatedDataByCharity = async (
   slug: 'socialnye-lifty' | 'nezhnie-ruki' | 'pomozj-detyam',
 ) => {
   return axios
-    .get<WardWithRelatedData[]>('/api/wards/', {
+    .get<WardWithRelatedData[]>('/api/wards', {
       baseURL: astro.site!.origin,
       params: { 'charity-program': slug },
     })

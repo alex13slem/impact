@@ -67,9 +67,9 @@
   {/each}
 </nav>
 
-<h3 class="text-lg font-medium text-center mb-5">
+<!-- <h3 class="text-lg font-medium text-center mb-5">
   Сотрудник{#if positionStaff.length > 1}и{/if}
-</h3>
+</h3> -->
 <div class="flex justify-center gap-4 items-center max-w-5xl mx-auto flex-wrap">
   {#each positionStaff.sort( (a, b) => a.name.localeCompare(b.name), ) as staff, idx (staff.id)}
     <p class="text-xl font-bold underline decoration-dark/40">
