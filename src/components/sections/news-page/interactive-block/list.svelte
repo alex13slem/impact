@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { NewsWithRelated } from '@/lib/data/news';
+  import type { NewsItemWithRelated } from '@/lib/data/news';
   import {
     targetCategoryId,
     targetNewsId,
@@ -7,7 +7,7 @@
   import { cn } from '@/lib/utils';
 
   export let className: string = '';
-  export let news: NewsWithRelated[] = [];
+  export let news: NewsItemWithRelated[] = [];
 
   $: viewedNews = $targetCategoryId
     ? news.filter(item => item.charityProgramId === $targetCategoryId)
@@ -33,7 +33,9 @@
             day: 'numeric',
           })}
         </time>
-        <h3 class="text-base lg:text-2xl font-sov-mod uppercase xl:max-w-md">
+        <h3
+          class="text-xs sm:text-base lg:text-2xl font-sov-mod uppercase xl:max-w-md"
+        >
           {item.title}
         </h3>
         <svg

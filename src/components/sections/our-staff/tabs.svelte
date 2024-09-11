@@ -72,7 +72,7 @@
 </h3> -->
 <div class="flex justify-center gap-4 items-center max-w-5xl mx-auto flex-wrap">
   {#each positionStaff.sort( (a, b) => a.name.localeCompare(b.name), ) as staff, idx (staff.id)}
-    <p class="text-xl font-bold underline decoration-dark/40">
+    <p class="text-lg md:text-xl font-bold underline decoration-dark/40">
       {staff.name}
     </p>
     {#if idx !== positionStaff.length - 1}

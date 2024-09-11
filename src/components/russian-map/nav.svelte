@@ -42,7 +42,7 @@
 
       <span
         class={cn(
-          'absolute pointer-events-none left-full top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
+          'max-w-20 md:max-w-none leading-none text-xs md:text-base absolute pointer-events-none left-full top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
           {
             'opacity-100': c.slug === $filterCharityProgram,
           },
