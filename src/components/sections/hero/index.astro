@@ -1,13 +1,47 @@
 ---
 import IMPACT from '@/assets/img/IMPACT.png';
 import { charityPrograms } from '@/lib/data/charityPrograms';
-import { mapNews } from '@/lib/data/mapNews';
+import {  type NewsPoint } from '@/lib/data/mapNews';
 import { getLastNews } from "@/lib/data/news";
 import { Image } from "astro:assets";
 import RussianMap from "../../russian-map";
 import Heading from './heading.svelte';
+import type { NewsItemWithRelated } from '@/lib/schemas/data/newsSchema';
+import type { WardWithRelatedData } from '@/lib/data/wards';
 
-const landingNews = getLastNews(5)
+interface Props {
+	news: NewsItemWithRelated[]
+	wards: WardWithRelatedData[]
+}
+
+const {news, wards} = Astro.props
+
+const landingNews = getLastNews(news,5)
+
+const wardsNews: NewsPoint[] = wards
+  .filter(w => w.charityProgram.slug === 'pomozj-detyam')
+  .map((w, idx) => ({
+    id: `${w.id}${idx}-${w.charityProgram.slug}`,
+    charityProgramSlug: w.charityProgram.slug,
+    region: w.region,
+    title: w.name,
+    image: w.image,
+    description: w.description,
+    link: '/programs/' + w.charityProgram.slug + '/ward/' + w.id,
+  }));
+
+const otherNews: NewsPoint[] = news
+  .filter(n => n.charityProgram.slug !== 'pomozj-detyam')
+  .map((n, idx) => ({
+    id: `${n.id}${idx}-${n.charityProgram.slug}`,
+    charityProgramSlug: n.charityProgram.slug,
+    region: n.region,
+    title: n.title,
+    image: n.image,
+    description: n.description,
+    link: '/news/' + n.slug,
+  }));
+const mapNews: NewsPoint[] = [...wardsNews, ...otherNews];
 
 ---
 

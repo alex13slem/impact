@@ -3,19 +3,13 @@ import { RootLayout } from '@/components/layouts/root';
 import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
+import { getNews } from '@/lib/data/news';
 import { ViewTransitions } from 'astro:transitions';
-import axios from 'axios';
 
 const { slug } = Astro.params;
-const item = await axios.get(`/api/news/${slug}`, {baseURL:Astro.url.origin,
-	headers: {
-		Accept: 'application/json',
-		'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-		Pragma: 'no-cache',
-		Expires: '0',
-		'Surrogate-Control': 'no-store',
-	}
-}).then(res => res.data);
+const news = await getNews(Astro);
+
+const item = news.find(item => item.slug === slug);
 if (!item) return Astro.redirect("/404");
 
 
@@ -42,6 +36,6 @@ if (!item) return Astro.redirect("/404");
 	/>
 	<main>
     <SectNewsDetail {item} />
-    <SectLastNews />
+    <SectLastNews {news}/>
 	</main>
 </RootLayout>

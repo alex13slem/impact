@@ -1,5 +1,8 @@
 import { boolean, coerce, number, object, string, z } from 'zod';
 import { wpGallery } from '../wpGallery';
+import type { Region } from './regionsSchema';
+import type { CharityProgram } from './charityProgramsSchema';
+import type { Ward } from './wardsSchema';
 
 export const newsSchema = object({
   id: number(),
@@ -20,3 +23,8 @@ export const newsSchema = object({
 export const newsArraySchema = newsSchema.array();
 
 export type NewsItem = z.infer<typeof newsSchema>;
+export type NewsItemWithRelated = NewsItem & {
+  region: Region;
+  charityProgram: CharityProgram;
+  ward: Ward | undefined;
+};

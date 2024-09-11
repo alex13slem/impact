@@ -13,7 +13,12 @@ import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
 
 import { SectOurGoals } from '@/components/sections/our-goals';
+import { getNews } from '@/lib/data/news';
 import { siteSeo } from "@/lib/data/siteSeo";
+import { wardsWithRelatedData } from '@/lib/data/wards';
+
+const news = await getNews(Astro);
+
 
 
 const seo = siteSeo.find((item) => item.slug === 'home');
@@ -28,7 +33,7 @@ const seo = siteSeo.find((item) => item.slug === 'home');
 	/>
 
 	<main >
-		<SectHero />
+		<SectHero {news} wards={wardsWithRelatedData}/>
 		<SectDescription />
 		<SectOurMission />
 		<SectCharityPrograms />

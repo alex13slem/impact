@@ -1,19 +1,11 @@
 ---
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { charityPrograms } from '@/lib/data/charityPrograms';
-import axios from 'axios';
+import { getNews } from '@/lib/data/news';
 import CategorySelect from './interactive-block/category-select.svelte';
 import InteractiveNews from './interactive-block/index.svelte';
 
-const news = await axios.get('/api/news', {baseURL:Astro.url.origin,
-  headers: {
-    Accept: 'application/json',
-    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-    Pragma: 'no-cache',
-    Expires: '0',
-    'Surrogate-Control': 'no-store',
-  }
-}).then(res => res.data);
+const news = await getNews(Astro)
 ---
 
 <section class="py-6 xl:py-20">

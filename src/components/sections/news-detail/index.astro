@@ -1,12 +1,12 @@
 ---
 import { GallerySlider } from '@/components/gallery-slider';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import type { NewsWithRelated } from '@/lib/data/news';
+import type { NewsItemWithRelated } from '@/lib/schemas/data/newsSchema';
 import type { WpGallery } from '@/lib/schemas/wpGallery';
 import { cn } from '@/lib/utils';
 
 interface Props {
-  item: NewsWithRelated
+  item: NewsItemWithRelated
 }
 
 const { item } = Astro.props

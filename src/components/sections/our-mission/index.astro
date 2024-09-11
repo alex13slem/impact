@@ -1,12 +1,13 @@
 ---
 import bgSource from '@/assets/img/bg.webp';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { ourMissionSlides } from '@/lib/data/ourMissionSlides';
+import { getOurMissionSlides } from '@/lib/data/ourMissionSlides';
 import { getImage } from "astro:assets";
 import { Slider } from "./slider";
 
 
 const bg = await getImage({src: bgSource})
+const ourMissionSlides = await getOurMissionSlides(Astro)
 
 ---
 

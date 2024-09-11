@@ -1,7 +1,10 @@
+import type { AstroGlobal } from 'astro';
+import axios from 'axios';
 import {
   newsArraySchema,
   newsSchema,
   type NewsItem,
+  type NewsItemWithRelated,
 } from '../schemas/data/newsSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 import { fetchCharityProgramById } from './charityPrograms';
@@ -11,10 +14,10 @@ import { fetchWardById } from './wards';
 // Получение списка новостей
 export const fetchNews = withDataFetching(getWpData)('/news', newsArraySchema);
 
-// Фильтрация и сортировка новостей
-export const news = (await fetchNews())
-  .filter(n => !n.draft)
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+// // Фильтрация и сортировка новостей
+// export const news = (await fetchNews())
+//   .filter(n => !n.draft)
+//   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 // Вспомогательная функция для получения связанных данных для новости
 export const fetchRelatedDataForNews = async (news: NewsItem) => {
@@ -34,10 +37,10 @@ export const fetchRelatedDataForNews = async (news: NewsItem) => {
   };
 };
 
-// Получение всех новостей с их связанными данными
-export async function fetchNewsWithRelated() {
-  return await Promise.all(news.map(fetchRelatedDataForNews));
-}
+// // Получение всех новостей с их связанными данными
+// export async function fetchNewsWithRelated() {
+//   return await Promise.all(news.map(fetchRelatedDataForNews));
+// }
 
 // Получение одной новости по ID с её связанными данными
 export const fetchNewsWithRelatedById = async (id: number) => {
@@ -52,10 +55,20 @@ export const fetchNewsByIds = async (ids: number[]) => {
 };
 
 // Список всех новостей с их связанными данными
-export const newsWithRelated = await fetchNewsWithRelated();
+// export const newsWithRelated = await fetchNewsWithRelated();
 
 // Функция для получения последних новостей (по умолчанию 5)
-export const getLastNews = (num = 5) => news.slice(0, num);
+export const getLastNews = (news: NewsItem[], num = 5) => news.slice(0, num);
 
 // Тип данных для новости с её связанными данными
-export type NewsWithRelated = (typeof newsWithRelated)[number];
+// export type NewsWithRelated = (typeof newsWithRelated)[number];
+
+export const getNews = async (astro: AstroGlobal) =>
+  axios
+    .get<NewsItemWithRelated[]>('/api/news', {
+      baseURL: astro.url.origin,
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+    .then(res => res.data);
