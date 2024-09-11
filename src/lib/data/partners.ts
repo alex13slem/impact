@@ -52,3 +52,7 @@ export const getPartners = async (astro: AstroGlobal) =>
       baseURL: astro.url.origin,
     })
     .then(res => res.data);
+
+export type PartnerWithRelatedData = Awaited<
+  ReturnType<typeof fetchPartnersWithRelatedData>
+>[number];

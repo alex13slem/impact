@@ -12,7 +12,6 @@ import { ViewTransitions } from 'astro:transitions';
 const wards = await getWardsWithRelatedDataByCharity(Astro,'pomozj-detyam');
 
 const docs = await getDocs(Astro)
-const viewDocs = docs.filter(doc => doc.showIn === 'pomozj-detyam');
 
 const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');

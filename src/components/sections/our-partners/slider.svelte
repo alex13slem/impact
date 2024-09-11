@@ -1,8 +1,7 @@
 <script lang="ts">
-  import type { PartnerWithRelatedData } from '@/lib/data/partners';
-
   import { cn } from '@/lib/utils';
 
+  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
   import { onMount, tick } from 'svelte';
   import type { SwiperContainer } from 'swiper/element';
   import { register } from 'swiper/element';
@@ -24,7 +23,7 @@
   } as SwiperOptions;
 
   export let className: string = '';
-  export let partners: PartnerWithRelatedData[] = [];
+  export let partners: PartnerWithRelations[] = [];
   let swiperEl: SwiperContainer;
 
   onMount(async () => {

@@ -1,15 +1,17 @@
 <script lang="ts">
-  import type { PartnerWithRelatedData } from '@/lib/data/partners';
+  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
   import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
   import { cn } from '@/lib/utils';
 
   export let className: string = '';
 
-  export let partner: PartnerWithRelatedData;
+  export let partner: PartnerWithRelations;
+
+  const events = partner.events || [];
 </script>
 
 <div class={cn(className, 'xl:max-w-3xl w-full')}>
-  {#each partner.events as event, idx}
+  {#each events as event, idx}
     <article
       on:mouseenter={() => targetEventSlug.set(event.slug)}
       on:mouseleave={() => targetEventSlug.set(null)}
@@ -41,7 +43,7 @@
       </svg>
     </article>
 
-    {#if idx < partner.events.length - 1}
+    {#if idx < events.length - 1}
       <hr class="my-7 border-white border-opacity-15" />
     {/if}
   {/each}

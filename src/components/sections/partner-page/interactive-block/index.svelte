@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { PartnerWithRelatedData } from '@/lib/data/partners';
+  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
   import { cn } from '@/lib/utils';
   import List from './list.svelte';
   import Preview from './preview.svelte';
 
-  export let partner: PartnerWithRelatedData;
+  export let partner: PartnerWithRelations;
   export let className: string = '';
 </script>
 

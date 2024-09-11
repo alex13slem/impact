@@ -1,10 +1,10 @@
 ---
 import SectHeading from '@/components/ui/sect-heading.svelte'
-import type { PartnerWithRelatedData } from '@/lib/data/partners'
+import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema'
 import InteractiveBlock from './interactive-block/index.svelte'
 
 interface Props {
-  partner: PartnerWithRelatedData
+  partner: PartnerWithRelations
 }
 
 const { partner } = Astro.props
