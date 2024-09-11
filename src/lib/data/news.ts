@@ -17,7 +17,7 @@ export const news = (await fetchNews())
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 // Вспомогательная функция для получения связанных данных для новости
-const fetchRelatedDataForNews = async (news: NewsItem) => {
+export const fetchRelatedDataForNews = async (news: NewsItem) => {
   const [charityProgram, region, ward] = await Promise.all([
     fetchCharityProgramById(news.charityProgramId)(),
     fetchRegionById(news.regionId)(),
