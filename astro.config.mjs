@@ -7,7 +7,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   integrations: [tailwind(), svelte()],
   output: 'hybrid',
-  // site: 'https://example.com',
+  site: 'https://impactfoundation.ru',
   adapter: node({
     mode: 'standalone',
   }),

@@ -14,6 +14,6 @@ export const fetchOurMissionSlides = withDataFetching(getWpData)(
 export const getOurMissionSlides = async (astro: AstroGlobal) =>
   axios
     .get<OurMissionSlide[]>('/api/our-mission', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data);

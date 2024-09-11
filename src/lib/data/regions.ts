@@ -21,6 +21,6 @@ export const fetchRegionById = (id: number) =>
 export const getRegions = async (astro: AstroGlobal) =>
   axios
     .get<Region[]>('/api/regions', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data);

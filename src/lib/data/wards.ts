@@ -38,7 +38,7 @@ export const fetchWardWithRelatedById = async (id: number) => {
 export const getWards = (astro: AstroGlobal) =>
   axios
     .get<WardWithRelatedData[]>('/api/wards', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data);
 
@@ -48,7 +48,7 @@ export const getWardsWithRelatedDataByCharity = async (
 ) => {
   return axios
     .get<WardWithRelatedData[]>('/api/wards/', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
       params: { 'charity-program': slug },
     })
     .then(res => res.data);

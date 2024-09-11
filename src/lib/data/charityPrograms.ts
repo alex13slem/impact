@@ -21,6 +21,6 @@ export const fetchCharityProgramById = (id: number) =>
 export const getCharityPrograms = async (astro: AstroGlobal) =>
   await axios
     .get<CharityProgram[]>('/api/charity-programs', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data);

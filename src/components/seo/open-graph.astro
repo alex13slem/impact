@@ -18,7 +18,7 @@ imageUrls.tg || (imageUrls.tg = imageUrls.fb);
 imageUrls.vk || (imageUrls.vk = imageUrls.fb);
 imageUrls.tw || (imageUrls.tw = imageUrls.fb);
 
-const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <>

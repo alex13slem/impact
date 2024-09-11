@@ -8,6 +8,6 @@ export const fetchDocs = withDataFetching(getWpData)('/docs', docsArraySchema);
 export const getDocs = async (astro: AstroGlobal) =>
   await axios
     .get<Docs[]>('/api/docs', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data);

@@ -49,7 +49,7 @@ export const fetchPartnerWithRelatedById = async (id: number) => {
 export const getPartners = async (astro: AstroGlobal) =>
   axios
     .get<PartnerWithRelations[]>('/api/partners', {
-      baseURL: astro.url.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data);
 
