@@ -3,11 +3,19 @@ import { RootLayout } from '@/components/layouts/root';
 import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
-import { newsWithRelated } from '@/lib/data/news';
 import { ViewTransitions } from 'astro:transitions';
+import axios from 'axios';
 
 const { slug } = Astro.params;
-const item = newsWithRelated.find((i) => i.slug === slug);
+const item = await axios.get(`/api/news/${slug}`, {baseURL:Astro.url.origin,
+	headers: {
+		Accept: 'application/json',
+		'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+		Pragma: 'no-cache',
+		Expires: '0',
+		'Surrogate-Control': 'no-store',
+	}
+}).then(res => res.data);
 if (!item) return Astro.redirect("/404");
 
 
