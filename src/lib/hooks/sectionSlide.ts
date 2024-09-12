@@ -12,13 +12,12 @@ export function sectionSlide(node: HTMLElement) {
       trigger: node,
       start: 'top top',
       end: 'bottom top',
-      snap: 1,
-      scrub: 3,
-      pin: true,
-      pinSpacing: false,
-      onLeave: () => {
-        ScrollTrigger.refresh();
-      },
+      snap: 1, // Позволяет Snap к ближайшему положению
+      scrub: 1, // Добавляет "скраб" для плавности
+      pin: true, // Фиксирует элемент
+      pinSpacing: false, // Отключает дополнительное пространство
+      anticipatePin: 1, // Сглаживает фиксацию
+      invalidateOnRefresh: true, // Инвалидирует триггеры при обновлении, уменьшает количество вызовов refresh
     },
   });
 }

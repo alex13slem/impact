@@ -1,3 +1,3 @@
-import SectOurGoals from './index.astro';
+import SectOurGoals from './index.svelte';
 
 export { SectOurGoals };

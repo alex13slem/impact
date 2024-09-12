@@ -14,14 +14,32 @@
   onMount(() => {
     isHomePage = window.location.pathname === '/';
   });
+
+  let isTop = true;
+  let ticking = false;
+  function handleScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const currentIsTop = window.scrollY < 15;
+        if (currentIsTop !== isTop) isTop = currentIsTop;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
 </script>
+
+<svelte:window on:scroll={handleScroll} />
 
 <header
   bind:this={root}
   use:scrollHidden={{ triggerHeight: isHomePage ? '100svh' : 0 }}
   data-target="site-header"
   class={cn(
-    ' py-4 border-b border-white border-opacity-10 backdrop-blur sticky top-0 z-40 transition-opacity bg-dark bg-opacity-30',
+    ' py-4 border-b border-white border-opacity-0  sticky top-0 z-40 transition-all duration-700',
+    {
+      'bg-dark bg-opacity-30 border-opacity-5 backdrop-blur': !isTop,
+    },
   )}
 >
   <div class="container flex justify-between items-center">
@@ -38,7 +56,7 @@
       >
         <a href="/#pay" class="absolute inset-0 opacity-0">.</a>
         <span
-          class="py-2 px-3 border border-current rounded-xl flex items-center gap-2"
+          class="py-2 px-3 border border-white/40 rounded-xl flex items-center gap-2"
         >
           Как помочь
           <svg
@@ -67,7 +85,7 @@
         <a
           href={item.link}
           on:click={() => ($mobileMenuVisible = false)}
-          class="py-2 border-b border-white border-opacity-30 justify-between flex items-baseline gap-2 uppercase text-lg"
+          class="py-2 border-b border-white/40 justify-between flex items-baseline gap-2 uppercase text-lg"
         >
           {item.name}
           <!-- <svg

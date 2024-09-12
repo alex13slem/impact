@@ -9,7 +9,8 @@
   class={cn(
     {
       'bg-current ': variant === 'fill',
-      'border border-current ': variant === 'outline',
+      'border border-white/70 group-hover:border-current':
+        variant === 'outline',
     },
     'inline-flex rounded-full w-[1em] h-[1em] justify-center items-center transition-colors',
     className,
@@ -17,7 +18,7 @@
 >
   <svg
     class:text-dark={variant === 'fill'}
-    class="mt-[2px] transition-colors"
+    class="mt-[2px]"
     width="0.65em"
     height="0.65em"
     viewBox="0 0 19 17"

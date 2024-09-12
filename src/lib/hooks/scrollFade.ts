@@ -4,9 +4,8 @@ export function scrollHidden(
 ) {
   let currentPos = 0;
   let prevPos = 0;
-  let opacity = 1;
-  let top = parseFloat(getComputedStyle(node).top) || 0;
-  let headerHeight: number;
+  // let top = parseFloat(getComputedStyle(node).top) || 0;
+  // let headerHeight: number;
   const triggerPoint =
     typeof triggerHeight === 'string'
       ? (parseFloat(triggerHeight) / 100) * window.innerHeight
@@ -29,46 +28,27 @@ export function scrollHidden(
     if (currentPos !== prevPos) {
       if (currentPos < triggerPoint) {
         top = 0;
-        opacity = 1;
       } else {
         const posStep = currentPos - prevPos;
 
         if (top - posStep > 0) {
           top = 0;
-          opacity = 1;
         } else if (top - posStep >= -headerHeight) {
           top -= posStep;
-          opacity = 1 + top / headerHeight;
         } else {
           top = -headerHeight - 1;
-          opacity = 0;
         }
       }
 
-      node.setAttribute(
-        'style',
-        `
-        opacity: ${opacity};
-        transform: translateY(${top}px);
-        `,
-      );
+      node.setAttribute('style', `--tw-bg-opacity: `);
+      // node.style.transform = `translateY(${top}px)`;
     }
 
     prevPos = currentPos;
     ticking = false; // Сбрасываем флаг
   }
 
-  // Дебаунс для изменения размеров
-  let resizeTimeout: number;
-  function handleResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = window.setTimeout(() => {
-      headerHeight = node.clientHeight;
-    }, 150); // Уменьшаем частоту вычисления высоты хедера при ресайзе
-  }
-
   window.addEventListener('scroll', handleScroll);
-  window.addEventListener('resize', handleResize);
 
   // Инициализируем headerHeight
   headerHeight = node.clientHeight;
@@ -76,7 +56,6 @@ export function scrollHidden(
   return {
     destroy() {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
     },
   };
 }

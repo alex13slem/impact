@@ -1,3 +1,7 @@
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background-color: theme(colors.dark);
   color: hsl(209, 100%, 98%);

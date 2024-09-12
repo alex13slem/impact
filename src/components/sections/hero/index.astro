@@ -1,12 +1,12 @@
 ---
 import IMPACT from '@/assets/img/IMPACT.png';
-import {  getMapNews} from '@/lib/data/mapNews';
+import { getMapNews } from '@/lib/data/mapNews';
 import { getLastNews, type NewsItemWithRelated } from "@/lib/data/news";
+import type { WardWithRelatedData } from '@/lib/data/wards';
+import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 import { Image } from "astro:assets";
 import RussianMap from "../../russian-map";
 import Heading from './heading.svelte';
-import type { WardWithRelatedData } from '@/lib/data/wards';
-import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 
 interface Props {
 	wards: WardWithRelatedData[]
@@ -21,13 +21,13 @@ const landingNews = getLastNews(news,5)
 
 const mapNews = getMapNews(news, wards)
 
+// <script>
+// import { sectionSlide } from "@/lib/hooks/sectionSlide"
+// 	const root = document.querySelector('#hero') as HTMLElement
+// 	sectionSlide(root)
+// </script>
 ---
 
-<script>
-import { sectionSlide } from "@/lib/hooks/sectionSlide"
-	const root = document.querySelector('#hero') as HTMLElement
-	sectionSlide(root)
-</script>
 
 <section id="hero" class="section-slide bg-dark  relative z-0 overflow-x-clip">
 	<!-- <Image src={BG} alt="abstract" class="absolute inset-0 object-cover w-full h-full -z-10" /> -->

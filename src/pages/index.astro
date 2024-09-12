@@ -46,10 +46,10 @@ const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.d
 		<SectHero {wards} news={sortedNews} {charityPrograms}/>
 		<SectDescription />
 		<SectOurMission />
-		<SectCharityPrograms {charityPrograms}/>
+		<SectCharityPrograms {charityPrograms} />
 		<SectOurPartners />
 		<SectOurStuff />
-		{ goals.map((goal) => <SectOurGoals {goal} />) }
+		{ goals.map((goal) => <SectOurGoals {goal} client:load />) }
 		<SectPay />
 		<SectDocuments />
 		<SectContacts />

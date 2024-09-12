@@ -14,12 +14,17 @@
     loop: true,
     slidesPerView: 'auto',
 
-    speed: 5000,
+    speed: 3000,
     autoplay: {
       delay: 0,
-      pauseOnMouseEnter: true,
     },
-    centeredSlides: true,
+    injectStyles: [
+      `
+      :host .swiper-wrapper {
+        transition-timing-function: linear;
+      }
+      `,
+    ],
   } as SwiperOptions;
 
   export let className: string = '';
