@@ -57,7 +57,7 @@
     </div> -->
     <img
       loading="lazy"
-      src={p.image}
+      src={p.image ? String(p.image) : ''}
       alt={p.name}
       class="logo w-full h-full object-contain"
     />

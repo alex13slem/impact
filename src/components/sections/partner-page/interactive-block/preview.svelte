@@ -30,7 +30,7 @@
   {:else}
     <img
       transition:fade={{ duration: 100 }}
-      src={partner.image}
+      src={partner.image.toString()}
       class="w-full h-full object-contain object-center"
       alt=""
     />

@@ -41,7 +41,7 @@ const { partner } = Astro.props
 		slot={'seo'}
 		title={partner.name}
 		description={partner.description}
-		imageUrls={{fb: partner.image || ''}}
+		imageUrls={{fb: partner.image.toString()}}
 	/>
 	<main>
     <SectPartner {partner} />

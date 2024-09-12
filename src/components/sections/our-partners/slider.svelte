@@ -31,6 +31,10 @@
   export let partners: PartnerWithRelations[] = [];
   let swiperEl: SwiperContainer;
 
+  const partnersWithLogos = partners
+    .filter(p => p.image)
+    .map(p => ({ ...p, image: String(p.image) }));
+
   onMount(async () => {
     Object.assign(swiperEl, options);
 
@@ -41,7 +45,7 @@
 </script>
 
 <swiper-container init="false" bind:this={swiperEl} class={cn('', className)}>
-  {#each [...partners, ...partners, ...partners] as p}
+  {#each [...partnersWithLogos, ...partnersWithLogos, ...partnersWithLogos] as p}
     <Slide {p} />
   {/each}
 </swiper-container>

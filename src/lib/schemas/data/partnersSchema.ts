@@ -1,12 +1,13 @@
 import type { NewsItemWithRelated } from '@/lib/data/news';
 import { array, number, object, string, z } from 'zod';
+import { wpImageOptional } from '../wpImageOptional';
 import type { CharityProgram } from './charityProgramsSchema';
 
 export const partnersSchema = object({
   id: number(),
   name: string().min(1),
   description: string().min(1),
-  image: string().url(),
+  image: wpImageOptional,
   eventsIds: array(number()).or(string()),
   charityProgramId: number(),
 });

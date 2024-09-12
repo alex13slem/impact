@@ -36,7 +36,7 @@ const partners = await getPartners(Astro);
         {partners.map((partner) => {
           if (partner.events?.length && partner.events.some((event) => event.charityProgram.slug === 'socialnye-lifty')) return (
             <article class="grid grid-cols-1 md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20">
-              <img width="160" height="160" class="w-40 h-40 row-span-3  rounded-full md:sticky top-24 lg:top-28 object-contain bg-white/90 object-center" src={partner.image} alt={partner.name}>
+              <img width="160" height="160" class="w-40 h-40 row-span-3  rounded-full md:sticky top-24 lg:top-28 object-contain bg-white/90 object-center" src={partner.image.toString()} alt={partner.name}>
               <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none"><a href={`/partners/${partner.id}`}>{partner.name}</a></h3>
               <div class="col-span-2 lg:col-span-1">
                 <h3 class="text-lg">О предприятии:</h3>
