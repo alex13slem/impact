@@ -4,14 +4,14 @@ export interface NavLink {
 }
 
 export const navLinks: NavLink[] = [
-  {
-    name: 'О фонде',
-    link: '/#description',
-  },
-  {
-    name: 'Миссия',
-    link: '/#our-mission',
-  },
+  // {
+  //   name: 'О фонде',
+  //   link: '/#description',
+  // },
+  // {
+  //   name: 'Миссия',
+  //   link: '/#our-mission',
+  // },
   {
     name: 'Программы',
     link: '/#social-programs',
@@ -20,10 +20,10 @@ export const navLinks: NavLink[] = [
     name: 'Партнёры',
     link: '/#our-partners',
   },
-  {
-    name: 'Цели',
-    link: '/#our-goals',
-  },
+  // {
+  //   name: 'Цели',
+  //   link: '/#our-goals',
+  // },
   {
     name: 'Как помочь',
     link: '/#pay',

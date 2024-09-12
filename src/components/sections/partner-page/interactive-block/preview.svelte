@@ -13,7 +13,7 @@
 
 <div
   class={cn(
-    'bg-white bg-opacity-60  flex-1 hidden xl:block aspect-video rounded-3xl overflow-clip mb-5 sticky top-28 transition-all',
+    'bg-white bg-opacity-40  flex-1 hidden xl:block aspect-video rounded-3xl overflow-clip mb-5 sticky top-28 transition-all',
     {
       'p-5': !event,
     },
@@ -27,7 +27,7 @@
       src={event.image}
       alt={event.title}
     />
-  {:else}
+  {:else if partner.image}
     <img
       transition:fade={{ duration: 100 }}
       src={partner.image.toString()}

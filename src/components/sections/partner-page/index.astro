@@ -19,11 +19,13 @@ const { partner } = Astro.props
     <div
       class={'xl:hidden bg-white bg-opacity-60 aspect-video rounded-3xl overflow-clip my-5 p-5'}
     >
-    <img
-      src={partner.image.toString()}
-      class="w-full h-full object-contain object-center "
-      alt=""
-    />
+    {partner.image && (
+      <img
+        src={partner.image.toString()}
+        class="w-full h-full object-contain object-center "
+        alt={partner.name}
+      />
+    )}
     </div>
     <InteractiveBlock className='mt-8' client:load {partner} />
   </div>

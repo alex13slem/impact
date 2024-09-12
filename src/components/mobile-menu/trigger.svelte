@@ -1,35 +1,19 @@
 <script lang="ts">
   import { mobileMenuVisible } from '@/lib/stores/mobileMenuStore';
   import { cn } from '@/lib/utils';
+  import { fly } from 'svelte/transition';
+  import { handleClose, handleOpen } from '.';
 </script>
 
 <button
   data-target="mobile-menu-trigger"
-  class=" w-[40px] h-[20px] relative flex justify-end"
-  on:click={() => {
-    $mobileMenuVisible = !$mobileMenuVisible;
-  }}
+  class="group relative flex justify-end items-center gap-4 xl:hidden text-accent"
+  on:click={() => ($mobileMenuVisible ? handleClose() : handleOpen())}
 >
+  {#if $mobileMenuVisible}
+    <span transition:fly={{ duration: 500, y: 10 }}>Закрыть</span>
+  {/if}
   <svg
-    class={cn('absolute inset-0 ml-auto ', {
-      'opacity-0': !$mobileMenuVisible,
-    })}
-    width="21"
-    height="21"
-    viewBox="0 0 21 21"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M1 1L20 20" stroke="currentColor" />
-    <path d="M20 1L0.999999 20" stroke="currentColor" />
-  </svg>
-  <svg
-    class={cn(
-      {
-        'opacity-0': $mobileMenuVisible,
-      },
-      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-accent',
-    )}
     width="40"
     height="11"
     viewBox="0 0 40 11"
@@ -41,14 +25,20 @@
       stroke="currentColor"
       stroke-opacity="1"
       stroke-width="1"
-      class="group-hover:-translate-x-1 transition-transform"
+      class={cn('transition-all duration-500', {
+        'translate-y-1': $mobileMenuVisible,
+        'xl:group-hover:-translate-x-1': !$mobileMenuVisible,
+      })}
     />
     <path
       d="M40 10.5L0 10.5"
       stroke="currentColor"
       stroke-opacity="1"
       stroke-width="1"
-      class="group-hover:translate-x-1 transition-transform"
+      class={cn('transition-all duration-500', {
+        'opacity-0 translate-x-full': $mobileMenuVisible,
+        'xl:group-hover:translate-x-1': !$mobileMenuVisible,
+      })}
     />
   </svg>
 </button>

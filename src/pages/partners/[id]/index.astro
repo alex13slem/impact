@@ -1,4 +1,5 @@
 ---
+import ogImage from "@/assets/img/og.webp";
 import { RootLayout } from "@/components/layouts/root";
 import { SectPartner } from "@/components/sections/partner-page";
 import { Seo } from "@/components/seo";
@@ -41,7 +42,7 @@ const { partner } = Astro.props
 		slot={'seo'}
 		title={partner.name}
 		description={partner.description}
-		imageUrls={{fb: partner.image.toString()}}
+		imageUrls={{fb: partner.image ? partner.image.toString() : ogImage.src}}
 	/>
 	<main>
     <SectPartner {partner} />
