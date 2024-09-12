@@ -42,7 +42,8 @@ const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
         </div>
         <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description || 'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'}</p>
 
-        <div class="mt-16 relative">
+        <h2 class="text-3xl mt-16 font-sov-mod uppercase">Наши подопечные</h2>
+        <div class="mt-12 relative">
           <WardsSlider {wards} client:load />
           {['prev', 'next'].map((dir) => (
               <button

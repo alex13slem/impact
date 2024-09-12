@@ -61,7 +61,7 @@
         'flex gap-2 py-5 px-6 border border-dark border-opacity-40 rounded-full leading-none transition-all flex-shrink-0',
       )}
     >
-      <span>0{idx + 1}</span>
+      <!-- <span>0{idx + 1}</span> -->
       {pos.name}
     </button>
   {/each}

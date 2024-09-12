@@ -21,13 +21,13 @@
   use:scrollHidden={{ triggerHeight: isHomePage ? '100svh' : 0 }}
   data-target="site-header"
   class={cn(
-    ' py-4 border-b border-white border-opacity-80 backdrop-blur sticky top-0 z-40 transition-opacity bg-dark bg-opacity-30',
+    ' py-4 border-b border-white border-opacity-10 backdrop-blur sticky top-0 z-40 transition-opacity bg-dark bg-opacity-30',
   )}
 >
   <div class="container flex justify-between items-center">
     <a href="/"
       ><img
-        class={'h-5 md:h-8 lg:h-14 object-contain object-left w-fit'}
+        class={'h-7 md:h-8 lg:h-14 object-contain object-left w-fit'}
         src={siteLogo.src}
         alt="Impact"
       /></a
@@ -70,7 +70,7 @@
           class="py-2 border-b border-white border-opacity-30 justify-between flex items-baseline gap-2 uppercase text-lg"
         >
           {item.name}
-          <svg
+          <!-- <svg
             class="h-3 w-4"
             width="12.686523"
             height="9.692383"
@@ -85,7 +85,7 @@
               stroke-opacity="1"
               stroke-width="1"
             />
-          </svg>
+          </svg> -->
         </a>
       {/each}
     </MobileMenu>

@@ -31,6 +31,7 @@
           {new Date(item.date).toLocaleDateString('ru-RU', {
             month: 'numeric',
             day: 'numeric',
+            year: 'numeric',
           })}
         </time>
         <h3

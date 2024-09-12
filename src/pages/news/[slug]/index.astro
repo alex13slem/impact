@@ -17,10 +17,12 @@ import { ViewTransitions } from 'astro:transitions';
 export const getStaticPaths = ( async () => {
 	const news = (await fetchNews()).filter(n => !n.draft)
 	const newsWithRelations = await Promise.all(news.map(fetchRelatedDataForNews));
-  const paths = newsWithRelations.map((item) => ({
+  const paths = newsWithRelations.map((item) =>{
+		const currentCategoryNews  = newsWithRelations.filter(n => n.charityProgram.slug === item.charityProgram.slug)
+		return{
     params: { slug: item.slug },
-    props: { item, news: newsWithRelations },
-  }))
+    props: { item, news: currentCategoryNews },
+  }})
 
   return paths
 }) satisfies GetStaticPaths;

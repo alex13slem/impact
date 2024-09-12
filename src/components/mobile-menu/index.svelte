@@ -21,7 +21,7 @@
         on:outclick={() => ($mobileMenuVisible = false)}
         transition:slide={{ duration: 300 }}
         class={cn(
-          'absolute top-0 right-0 w-full bottom-auto px-4 pt-16 md:pt-24 lg:pt-28 pb-12 max-w-lg bg-dark/80 backdrop-blur overflow-y-auto',
+          'absolute top-0 right-0 w-full bottom-auto px-4 pt-20 md:pt-24 lg:pt-28 pb-12 max-w-lg bg-dark/80 backdrop-blur overflow-y-auto',
           className,
         )}
       >

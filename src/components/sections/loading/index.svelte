@@ -54,6 +54,7 @@
           opacity: 0,
         }),
       ])
+      .delay(1)
       .add([
         gsap.to('#loading-section path.small', {
           scale: 0,
@@ -205,7 +206,7 @@
     transition:blur={{ duration: 1000 }}
     id="loading-section"
     class={cn(
-      'h-svh bg-cover fixed inset-0 z-50 pt-[53px] md:pt-[65px] lg:pt-[89px] overflow-clip',
+      'h-svh bg-cover fixed inset-0 z-50 pt-[61px] md:pt-[65px] lg:pt-[89px] overflow-clip',
       {
         'opacity-0': !showOnPage || introIsSeen,
       },
