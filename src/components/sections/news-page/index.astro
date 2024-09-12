@@ -5,7 +5,7 @@ import { getNews } from '@/lib/data/news';
 import CategorySelect from './interactive-block/category-select.svelte';
 import InteractiveNews from './interactive-block/index.svelte';
 
-const news = await getNews(Astro)
+const news = (await getNews(Astro)).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 const charityPrograms = await getCharityPrograms(Astro)
 ---
 

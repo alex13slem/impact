@@ -18,10 +18,12 @@ export const getStaticPaths = ( async () => {
 	const news = (await fetchNews()).filter(n => !n.draft)
 	const newsWithRelations = await Promise.all(news.map(fetchRelatedDataForNews));
   const paths = newsWithRelations.map((item) =>{
-		const currentCategoryNews  = newsWithRelations.filter(n => n.charityProgram.slug === item.charityProgram.slug)
+		const currentCategoryNews  = newsWithRelations
+			.filter(n => n.charityProgram.slug === item.charityProgram.slug)
+			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 		return{
-    params: { slug: item.slug },
-    props: { item, news: currentCategoryNews },
+			params: { slug: item.slug },
+			props: { item, news: currentCategoryNews },
   }})
 
   return paths

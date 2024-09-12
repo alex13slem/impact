@@ -30,6 +30,8 @@ const [goals, wards, news, charityPrograms] = await Promise.all([
 	getCharityPrograms(Astro)
 ]);
 
+const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
 ---
 
 <RootLayout>
@@ -41,7 +43,7 @@ const [goals, wards, news, charityPrograms] = await Promise.all([
 	/>
 
 	<main >
-		<SectHero {wards} {news} {charityPrograms}/>
+		<SectHero {wards} news={sortedNews} {charityPrograms}/>
 		<SectDescription />
 		<SectOurMission />
 		<SectCharityPrograms {charityPrograms}/>
