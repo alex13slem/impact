@@ -5,11 +5,14 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
   if (!node) return;
   gsap.registerPlugin(ScrollTrigger);
 
+  const section = node.closest('section');
+  if (!section) return;
+
   const timeline = gsap.timeline({
     scrollTrigger: {
-      trigger: node,
+      trigger: section,
       start: 'top 100%', // Начать анимацию до попадания элемента в центр экрана
-      end: 'top 70%', // Завершить, когда элемент в центре экрана
+      end: 'top 50%', // Завершить, когда элемент в центре экрана
       scrub: 1,
       // once: true,
       // markers: true,
