@@ -28,7 +28,7 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
       duration: 0.5,
       ease: 'power1.out',
       snap: { innerText: 1 },
-      // immediateRender: false,
+      immediateRender: false,
     },
   );
 }
