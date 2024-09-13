@@ -14,7 +14,6 @@
 
 <!-- use:sectionSlide -->
 <section
-  id="our-goals"
   class={cn(
     className,
     'bg-cover bg-center relative z-0 py-8 min-h-svh flex flex-col justify-center px-4',
