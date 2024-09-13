@@ -8,10 +8,10 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
   const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: node,
-      start: 'top 120%', // Начать анимацию до попадания элемента в центр экрана
-      end: 'top 60%', // Завершить, когда элемент в центре экрана
+      start: 'top 100%', // Начать анимацию до попадания элемента в центр экрана
+      end: 'top 70%', // Завершить, когда элемент в центре экрана
       scrub: 1,
-      once: true,
+      // once: true,
       markers: false, // Установите true для отладки
     },
   });

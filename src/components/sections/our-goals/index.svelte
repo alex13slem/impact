@@ -30,7 +30,7 @@
       use:goalsCounter={{ counter }}
       class="counter hidden-block dir-bottom text-9xl md:text-[50vmin] leading-none font-sov-mod tracking-tighter pr-6"
     >
-      0
+      {counter}
     </p>
     <div class="pl-16 lg:pb-10 pt-10 w-fit relative z-0">
       <article
