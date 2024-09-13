@@ -12,7 +12,7 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
       end: 'top 70%', // Завершить, когда элемент в центре экрана
       scrub: 1,
       // once: true,
-      markers: false, // Установите true для отладки
+      // markers: true,
     },
   });
 
@@ -28,7 +28,7 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
       duration: 0.5,
       ease: 'power1.out',
       snap: { innerText: 1 },
-      immediateRender: false,
+      // immediateRender: false,
     },
   );
 }
