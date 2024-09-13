@@ -21,8 +21,10 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
     {
       innerText: '0',
       opacity: 0,
+      translateY: '100%',
     },
     {
+      translateY: 0,
       opacity: 1,
       innerText: counter,
       duration: 0.5,

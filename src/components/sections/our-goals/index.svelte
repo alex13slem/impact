@@ -28,7 +28,7 @@
   <div class="flex justify-center flex-wrap xl:flex-nowrap items-center">
     <p
       use:goalsCounter={{ counter }}
-      class="counter hidden-block dir-bottom text-9xl md:text-[50vmin] leading-none font-sov-mod tracking-tighter pr-6"
+      class="counter text-9xl md:text-[50vmin] leading-none font-sov-mod tracking-tighter pr-6"
     >
       {counter}
     </p>
