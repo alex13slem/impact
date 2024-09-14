@@ -2,19 +2,20 @@
   import type { StaffsPosition } from '@/lib/schemas/data/staffsPositions';
   import type { Staff } from '@/lib/schemas/data/staffsSchema';
   import { cn } from '@/lib/utils';
-  import { type SwiperContainer } from 'swiper/element';
   //@ts-ignore
   export let staffs: Staff[] = [];
   export let staffsPositions: StaffsPosition[] = [];
 
   let targetPositionId = staffsPositions.at(0)?.id;
-  $: positionStaff = staffs.filter(({ staffPositions }) =>
-    staffPositions.find(id => id === targetPositionId),
-  );
+  $: positionStaff = staffs
+    .filter(({ staffPositions }) =>
+      staffPositions.find(id => id === targetPositionId),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   // $: viewStaffName = positionStaff.at(0)?.name;
   // let currentSlide = 0;
-  let swiperEl: SwiperContainer;
+  // let swiperEl: SwiperContainer;
   // const cnBtn =
   //   'lg:text-4xl w-16 h-16 lg:h-28 lg:w-28 flex justify-center items-center bg-opacity-0 text-dark rounded-full disabled:bg-dark disabled:text-white border border-dark disabled:opacity-50';
   // const options = {
@@ -51,7 +52,7 @@
 <nav
   class="flex gap-4 max-w-5xl lg:justify-center lg:flex-wrap mx-auto mb-8 lg:mb-11 overflow-auto pb-3 px-4 lg:p-0 w-svw md:w-auto relative -left-4"
 >
-  {#each staffsPositions as pos, idx (pos.id)}
+  {#each staffsPositions as pos (pos.id)}
     <button
       on:click={() => (targetPositionId = pos.id)}
       class={cn(
@@ -61,17 +62,21 @@
         'flex gap-2 py-5 px-6 border border-dark border-opacity-40 rounded-full leading-none transition-all flex-shrink-0',
       )}
     >
-      <!-- <span>0{idx + 1}</span> -->
       {pos.name}
     </button>
   {/each}
 </nav>
 
-<!-- <h3 class="text-lg font-medium text-center mb-5">
-  Сотрудник{#if positionStaff.length > 1}и{/if}
-</h3> -->
-<div class="flex justify-center gap-4 items-center max-w-5xl mx-auto flex-wrap">
-  {#each positionStaff.sort( (a, b) => a.name.localeCompare(b.name), ) as staff, idx (staff.id)}
+<ul class="font-medium text-xl w-fit mx-auto text-center">
+  {#each positionStaff as staff (staff.id)}
+    <li>
+      {staff.name}
+    </li>
+  {/each}
+</ul>
+
+<!-- <div class="flex justify-center gap-4 items-center max-w-5xl mx-auto flex-wrap">
+  {#each positionStaff as staff, idx (staff.id)}
     <p class="text-lg md:text-xl font-bold underline decoration-dark/40">
       {staff.name}
     </p>
@@ -79,7 +84,7 @@
       <span class="hidden md:inline"> • </span>
     {/if}
   {/each}
-</div>
+</div> -->
 
 <!-- Desktop -->
 <!-- <div class="lg:flex flex-wrap gap-x-6 gap-y-9 justify-center hidden">

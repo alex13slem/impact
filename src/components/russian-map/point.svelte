@@ -10,6 +10,7 @@
   import Popap from './popap.svelte';
 
   export let point: PointWithCoordinates;
+  export let className: string = '';
 </script>
 
 <div
@@ -30,10 +31,15 @@
   >
     <Popover.Trigger>
       <button
-        class={cn('lg:hover:text-accent text-2xl', {
-          'text-dark':
-            $hoveredRegion === point.region.slug && $targetPopap === point.id,
-        })}
+        class={cn(
+          'lg:hover:text-accent text-2xl animate-pulse [animation-delay:calc(var(--i)*.1s)]',
+          className,
+          {
+            'text-dark animate-none':
+              $hoveredRegion === point.region.slug && $targetPopap === point.id,
+          },
+        )}
+        {...$$restProps}
       >
         {#if point.charityProgramSlug === 'nezhnie-ruki'}
           <IconHeartHands variant="ghost" />

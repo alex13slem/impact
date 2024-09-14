@@ -6,8 +6,8 @@
   import { cn } from '@/lib/utils';
   import { onMount, tick } from 'svelte';
   import Nav from './nav.svelte';
-  import SvgMap from './svg-map.svelte';
   import MapPoint from './point.svelte';
+  import SvgMap from './svg-map.svelte';
 
   export let charityPrograms: CharityProgram[] = [];
   export let className: string = '';
@@ -35,6 +35,9 @@
     })}
   />
   {#each viewNewsPoints as point}
-    <MapPoint {point} />
+    <MapPoint
+      {point}
+      style={`--i: ${Math.random() * viewNewsPoints.length};`}
+    />
   {/each}
 </div>
