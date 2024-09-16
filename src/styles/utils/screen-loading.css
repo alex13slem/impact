@@ -1,8 +1,8 @@
-body.loading {
+body.loaded {
   .app {
-    opacity: 0;
+    opacity: 1 !important;
   }
 }
 .app {
-  transition: opacity 0.1s;
+  /* transition: opacity 0.1s; */
 }

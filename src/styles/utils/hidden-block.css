@@ -1,10 +1,10 @@
 .hidden-block {
-  opacity: 0;
-  --offset: 3rem;
+  /* opacity: 0; */
+  --offset: 8rem;
   --x: 0px;
   --y: 0px;
   transform: translate(var(--x), var(--y));
-  transition: opacity 1s, transform 1s;
+  transition: transform 0.5s;
 
   &.dir-left {
     --x: calc(var(--offset) * -1);
@@ -20,7 +20,7 @@
   }
 
   &.hidden-block--visible {
-    opacity: 1;
+    /* opacity: 1; */
     --x: 0px;
     --y: 0px;
   }

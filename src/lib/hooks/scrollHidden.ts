@@ -1,16 +1,16 @@
 export function scrollHidden(
   node: HTMLElement,
-  { triggerHeight }: { triggerHeight: string | number } = { triggerHeight: 0 },
+  opts?: Partial<{ enable: boolean }>,
 ) {
+  const { enable = true } = opts || {};
+
+  if (!enable) return;
+
   let currentPos = 0;
   let prevPos = 0;
   let opacity = 1;
   let top = parseFloat(getComputedStyle(node).top) || 0;
   let headerHeight: number;
-  const triggerPoint =
-    typeof triggerHeight === 'string'
-      ? (parseFloat(triggerHeight) / 100) * window.innerHeight
-      : triggerHeight;
 
   // Оптимизация прокрутки с использованием requestAnimationFrame
   let ticking = false;
@@ -27,7 +27,7 @@ export function scrollHidden(
 
     // Оптимизация: избегаем лишних обновлений transform
     if (currentPos !== prevPos) {
-      if (currentPos < triggerPoint) {
+      if (currentPos === 0) {
         top = 0;
         opacity = 1;
       } else {

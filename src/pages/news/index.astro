@@ -2,23 +2,23 @@
 import { RootLayout } from '@/components/layouts/root';
 import { SectNews } from '@/components/sections/news-page';
 import { Seo } from '@/components/seo';
-import { getSiteSeo } from "@/lib/data/siteSeo";
+import { getSiteSeo } from '@/lib/data/siteSeo';
 import { ViewTransitions } from 'astro:transitions';
 
 const siteSeo = await getSiteSeo(Astro);
-const seo = siteSeo.find((item) => item.slug === 'news');
-
+const seo = siteSeo.find(item => item.slug === 'news');
 ---
-<RootLayout>
-	<ViewTransitions  slot={'head'} />
-	<Seo
-		slot={'seo'}
-		title={seo?.name || 'Новости'}
-		description={seo?.description || ''}
-		imageUrls={{fb: seo?.image || ''}}
-	/>
 
-	<main>
-		<SectNews />
-	</main>
+<RootLayout>
+  <!-- <ViewTransitions slot={'head'} /> -->
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Новости'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
+
+  <main>
+    <SectNews />
+  </main>
 </RootLayout>

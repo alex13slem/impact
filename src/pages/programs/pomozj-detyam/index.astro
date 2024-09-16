@@ -16,7 +16,7 @@ const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
 ---
 <RootLayout>
-  <ViewTransitions  slot={'head'}/>
+  <!-- <ViewTransitions  slot={'head'}/> -->
 	<Seo
 		slot={'seo'}
 		title={seo?.name || 'Помощь тяжелобольным детям'}

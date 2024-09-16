@@ -7,15 +7,16 @@
 
 <button
   data-target="mobile-menu-trigger"
-  class="group relative flex justify-end items-center gap-4 xl:hidden text-accent"
+  class="group relative flex justify-end items-center gap-4 lg:hidden text-accent"
   on:click={() => ($mobileMenuVisible ? handleClose() : handleOpen())}
 >
   {#if $mobileMenuVisible}
     <span transition:fly={{ duration: 500, y: 10 }}>Закрыть</span>
   {/if}
   <svg
-    width="40"
-    height="11"
+    class="text-4xl md:text-5xl"
+    width="1em"
+    height="1em"
     viewBox="0 0 40 11"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +27,7 @@
       stroke-opacity="1"
       stroke-width="1"
       class={cn('transition-all duration-500', {
-        'translate-y-1': $mobileMenuVisible,
+        'translate-y-[6px]': $mobileMenuVisible,
         'xl:group-hover:-translate-x-1': !$mobileMenuVisible,
       })}
     />

@@ -18,9 +18,9 @@
   );
 </script>
 
-<swiper-slide class="h-[228px] w-[328px] flex items-end min-h-0">
+<swiper-slide class="flex items-end min-h-0 w-fit mx-5 md:mx-8 xl:mx-16">
   <button
-    class="h-[200px] w-[300px] relative rounded-3xl p-5 z-0 cursor-default"
+    class="w-[90px] h-[72px] md:w-[120px] md:h-[96px] xl:w-[192px] xl:h-[168px] relative rounded-3xl z-0 cursor-default"
   >
     {#if visibleCharityPrograms.length > 0}
       <a href={'/partners/' + p.id} class="absolute inset-0 opacity-0 z-10"
@@ -64,8 +64,8 @@
   </button>
 </swiper-slide>
 
-<style>
+<!-- <style>
   img.logo {
     filter: grayscale(1) sepia(20%) saturate(300%) hue-rotate(208deg);
   }
-</style>
+</style> -->

@@ -27,13 +27,14 @@
   {...$$restProps}
 >
   <Nav {charityPrograms} />
-  <SvgMap
-    {mapNews}
-    className={cn({
-      'drop-shadow-[0_0_2rem_hsl(209,50%,30%)] lg:drop-shadow-[0_0_18rem_hsl(209,100%,70%)] lg:pr-52':
-        !$loading,
-    })}
-  />
+  {#if !$loading}
+    <SvgMap
+      {mapNews}
+      className={cn(
+        'absolute inset-0 px-10 h-full lg:w-full overflow-auto drop-shadow-[0_0_2rem_hsl(209,50%,30%)] lg:drop-shadow-[0_0_18rem_hsl(209,100%,70%)] lg:pr-52',
+      )}
+    />
+  {/if}
   {#each viewNewsPoints as point}
     <MapPoint
       {point}

@@ -1,11 +1,9 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
-import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
 import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
 import type { GetStaticPaths } from 'astro';
-import { ViewTransitions } from 'astro:transitions';
 
 // const { slug } = Astro.params;
 // const news = await getNews(Astro);
@@ -13,36 +11,37 @@ import { ViewTransitions } from 'astro:transitions';
 // const item = news.find(item => item.slug === slug);
 // if (!item) return Astro.redirect("/404");
 
+export const getStaticPaths = (async () => {
+  const news = (await fetchNews()).filter(n => !n.draft);
+  const newsWithRelations = await Promise.all(
+    news.map(fetchRelatedDataForNews),
+  );
+  const paths = newsWithRelations.map(item => {
+    const currentCategoryNews = newsWithRelations
+      .filter(n => n.charityProgram.slug === item.charityProgram.slug)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return {
+      params: { slug: item.slug },
+      props: { item, news: currentCategoryNews },
+    };
+  });
 
-export const getStaticPaths = ( async () => {
-	const news = (await fetchNews()).filter(n => !n.draft)
-	const newsWithRelations = await Promise.all(news.map(fetchRelatedDataForNews));
-  const paths = newsWithRelations.map((item) =>{
-		const currentCategoryNews  = newsWithRelations
-			.filter(n => n.charityProgram.slug === item.charityProgram.slug)
-			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-		return{
-			params: { slug: item.slug },
-			props: { item, news: currentCategoryNews },
-  }})
-
-  return paths
+  return paths;
 }) satisfies GetStaticPaths;
 
-const { item , news} = Astro.props
-
-
+const { item, news } = Astro.props;
 ---
+
 <RootLayout>
-	<ViewTransitions  slot={'head'} />
-	<Seo
-		slot={'seo'}
-		title={item.title}
-		description={item.description}
-		imageUrls={{fb: item.image || ''}}
-	/>
-	<main>
+  <!-- <ViewTransitions slot={'head'} /> -->
+  <Seo
+    slot={'seo'}
+    title={item.title}
+    description={item.description}
+    imageUrls={{ fb: item.image || '' }}
+  />
+  <main>
     <SectNewsDetail {item} />
-    <SectLastNews {news}/>
-	</main>
+    <!-- <SectLastNews {news} /> -->
+  </main>
 </RootLayout>

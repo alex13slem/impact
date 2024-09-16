@@ -5,10 +5,21 @@
   import { scrollHidden } from '@/lib/hooks/scrollHidden';
   import { mobileMenuMounted } from '@/lib/stores/mobileMenuStore';
   import { cn } from '@/lib/utils';
+  import { breakpoints } from '@sveu/browser';
   import { onMount } from 'svelte';
   import { MobileMenu, MobileMenuTrigger } from '../mobile-menu';
+  import LogoSmall from '../ui/icons/logo-small.svelte';
 
-  let isHomePage: boolean = false;
+  const breakpoints_tailwind = {
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1280,
+  };
+
+  const { gte } = breakpoints(breakpoints_tailwind);
+  const isDesktopPlus = gte('lg');
+  let isHomePage: boolean = true;
   let root: HTMLElement;
 
   onMount(() => {
@@ -32,30 +43,31 @@
 <svelte:window on:scroll={handleScroll} />
 
 <header
+  use:scrollHidden={{ enable: $isDesktopPlus }}
   bind:this={root}
-  use:scrollHidden={{ triggerHeight: isHomePage ? '100svh' : 0 }}
   data-target="site-header"
   class={cn(
-    'py-4 border-b border-white border-opacity-0 sticky top-0 z-40 transition-all duration-700',
+    'mix-blend-difference lg:mix-blend-normal py-5 md:py-8 lg:border-b lg:border-white lg:border-opacity-0 sticky top-0 z-40 transition-[background,border,filter, inset] duration-700',
     {
-      'bg-dark bg-opacity-30 border-opacity-5 backdrop-blur': !isTop,
+      'lg:bg-dark/30 lg:border-opacity-5 lg:backdrop-blur': !isTop,
     },
   )}
 >
   <div class="container flex justify-between items-center">
-    <a href="/"
-      ><img
-        class={'h-7 md:h-8 lg:h-14 object-contain object-left w-fit'}
+    <a href="/">
+      <img
+        class={'hidden lg:inline-block h-10 xl:h-14 object-contain object-left w-fit'}
         src={siteLogo.src}
         alt="Impact"
-      /></a
-    >
+      />
+      <LogoSmall class="text-3xl md:text-5xl text-accent lg:hidden" />
+    </a>
 
-    <nav class="hidden xl:flex gap-8 items-center">
+    <nav class="hidden lg:flex gap-8 items-center">
       {#each navLinks.filter(item => !item.link.includes('pay')) as item}
         <a
           href={item.link}
-          class=" hover:text-accent transition-colors text-white/90 uppercase font-road-radio"
+          class=" hover:text-accent transition-colors text-white/90 uppercase font-road-radio text-xs xl:text-base"
           >{item.name}</a
         >
       {/each}
@@ -63,7 +75,7 @@
 
     <div class="flex gap-8 items-center">
       <button
-        class="xl:flex group justify-center items-center gap-7 hover:text-accent transition-colors text-white text-opacity-90 relative hidden"
+        class="lg:flex group justify-center items-center gap-7 hover:text-accent transition-colors text-white text-opacity-90 relative hidden"
       >
         <a href="/#pay" class="absolute inset-0 opacity-0">.</a>
         <span

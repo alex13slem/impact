@@ -1,3 +1,4 @@
-import LoadingSection from './index.svelte';
+import LoadingRegular from './loading-regular.svelte';
+import LoadingStart from './loading-start.svelte';
 
-export { LoadingSection };
+export { LoadingRegular, LoadingStart };

@@ -11,7 +11,7 @@
   export let charityPrograms: CharityProgram[] = [];
 </script>
 
-<nav class="flex flex-col items-start gap-2 w-fit sticky left-0 pl-4">
+<nav class="flex flex-col items-start gap-2 w-fit sticky left-0 pl-5 md:pl-6">
   {#each charityPrograms as c}
     <button
       on:click={handleFilterCharityProgram}

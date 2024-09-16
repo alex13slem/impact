@@ -1,15 +1,14 @@
 ---
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
-import { LoadingSection } from '@/components/sections/loading';
+import { LoadingRegular, LoadingStart } from '@/components/sections/loading';
 import { cn } from '@/lib/utils';
 import '@/index.css';
 import type { HTMLAttributes } from 'astro/types';
 import { Head } from '../../head';
-import {Toaster} from 'svelte-sonner'
+import { Toaster } from 'svelte-sonner';
 
-export interface HtmlProps
-  extends Omit<HTMLAttributes<'html'>, 'title'> {
+export interface HtmlProps extends Omit<HTMLAttributes<'html'>, 'title'> {
   hasHeader?: boolean;
   hasFooter?: boolean;
 }
@@ -22,33 +21,29 @@ const {
 }: HtmlProps = Astro.props;
 
 const isHome = Astro.url.pathname === '/';
-
-
-
 ---
-
 
 <script>
   import '@/lib/plugins/hiddenBlocks';
-import 'locomotive-scroll/dist/locomotive-scroll.css';
+  import 'locomotive-scroll/dist/locomotive-scroll.css';
 
-import LocomotiveScroll from 'locomotive-scroll';
+  import LocomotiveScroll from 'locomotive-scroll';
 
-const locomotiveScroll = new LocomotiveScroll({
+  const locomotiveScroll = new LocomotiveScroll({
     lenisOptions: {
-        wrapper: window,
-        content: document.documentElement,
-        lerp: 0.1,  // Увеличиваем lerp для более быстрого отклика и завершения
-        duration: 1.5,  // Уменьшаем длительность инерции
-        __experimental__naiveDimensions: true,
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    } ,
-});
+      wrapper: window,
+      content: document.documentElement,
+      lerp: 0.1, // Увеличиваем lerp для более быстрого отклика и завершения
+      duration: 1.5, // Уменьшаем длительность инерции
+      __experimental__naiveDimensions: true,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+    },
+  });
 </script>
 
 <html
@@ -57,30 +52,29 @@ const locomotiveScroll = new LocomotiveScroll({
   transition:animate="initial"
   {...props}
 >
-  <Head >
+  <Head>
     <slot name="head" />
     <slot name="seo" />
     <meta name="referrer" content="origin" />
-
   </Head>
   <body
     class={cn(
-      `z-0`,
-      {
-        'loading': isHome
-      },
-      className
+      `z-0 `,
+
+      className,
     )}
   >
-     <LoadingSection client:load showOnPage={isHome} />
-    <div class="app js-scroll" data-scroll-container>
-      {hasHeader && <Header client:load/>}
+    <LoadingStart client:load showOnPage={isHome} />
+    <LoadingRegular client:load {isHome} />
+    <div
+      class="app js-scroll opacity-0 transition-opacity duration-100"
+      data-scroll-container
+    >
+      {hasHeader && <Header client:load />}
       <slot />
       {hasFooter && <Footer />}
     </div>
 
-    <Toaster client:load/>
+    <Toaster client:load />
   </body>
 </html>
-
-

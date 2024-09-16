@@ -13,8 +13,13 @@
     modules: [Autoplay],
     loop: true,
     slidesPerView: 'auto',
-
+    // slidesPerGroup: 5,
+    freeMode: true,
     speed: 3000,
+    shortSwipes: false,
+    longSwipes: false,
+    simulateTouch: false,
+    allowTouchMove: false,
     autoplay: {
       delay: 0,
     },
@@ -44,7 +49,11 @@
   });
 </script>
 
-<swiper-container init="false" bind:this={swiperEl} class={cn('', className)}>
+<swiper-container
+  init="false"
+  bind:this={swiperEl}
+  class={cn('transform-none grayscale ', className)}
+>
   {#each [...partnersWithLogos, ...partnersWithLogos, ...partnersWithLogos] as p}
     <Slide {p} />
   {/each}

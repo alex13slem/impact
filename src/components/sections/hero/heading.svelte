@@ -11,7 +11,7 @@
 
 <h1
   class={cn(
-    'font-sov-mod text-3xl md:text-5xl uppercase relative px-4 flex flex-col',
+    'font-sov-mod text-3xl md:text-5xl uppercase relative px-5 md:px-6 flex flex-col',
     className,
   )}
 >

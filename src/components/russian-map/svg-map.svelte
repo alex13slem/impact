@@ -52,9 +52,8 @@
     }
   }
 
-  // $: isWebKit = $platform === 'macOS';
-  onMount(async () => {
-    await tick(); // Ждем, пока DOM полностью отрендерится
+  onMount(() => {
+    tick(); // Ждем, пока DOM полностью отрендерится
     updateCoordinates();
   });
 </script>
@@ -62,13 +61,9 @@
 <svelte:window on:resize={updateCoordinates} />
 
 <svg
-  class={cn(
-    'absolute inset-0 px-10 h-full lg:w-full -z-10 transition-[filter] duration-1000 overflow-auto ',
-    className,
-    {
-      'opacity-0': $loading && !$mapVisible,
-    },
-  )}
+  class={cn('-z-10 transition-[filter] duration-1000', className, {
+    'opacity-0': $loading && !$mapVisible,
+  })}
   bind:this={svg}
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"

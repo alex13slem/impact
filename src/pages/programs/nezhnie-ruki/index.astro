@@ -6,25 +6,36 @@ import { ViewTransitions } from 'astro:transitions';
 import { getSiteSeo } from '@/lib/data/siteSeo';
 
 const siteSeo = await getSiteSeo(Astro);
-const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
+const seo = siteSeo.find(item => item.slug === 'nezhnie-ruki');
 ---
-<RootLayout>
-	<ViewTransitions  slot={'head'}/>
-  <Seo
-		slot={'seo'}
-		title={seo?.name || 'Нежные руки'}
-		description={seo?.description || ''}
-		imageUrls={{fb: seo?.image || ''}}
-	/>
 
-	<main>
-    <section id="description" style={`background-image: url(${bg.src});`} class="relative z-0 bg-center bg-cover overflow-clip ">
-      <div class="absolute inset-0 bg-[#042A47A1] -z-10"/>
-      <div class="relative container py-32 md:h-svh flex flex-col justify-center items-center min-h-svh">
-        <h2 class="text-center text-xl md:text-5xl lg:text-7xl font-sov-mod uppercase leading-snug mb-3 md:mb-4 lg:mb-10">
+<RootLayout>
+  <!-- <ViewTransitions  slot={'head'}/> -->
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Нежные руки'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
+
+  <main>
+    <section
+      id="description"
+      style={`background-image: url(${bg.src});`}
+      class="relative z-0 bg-center bg-cover overflow-clip"
+    >
+      <div class="absolute inset-0 bg-[#042A47A1] -z-10"></div>
+      <div
+        class="relative container py-32 md:h-svh flex flex-col justify-center items-center min-h-svh"
+      >
+        <h2
+          class="text-center text-xl md:text-5xl lg:text-7xl font-sov-mod uppercase leading-snug mb-3 md:mb-4 lg:mb-10"
+        >
           {seo?.name || 'Нежные руки'}
         </h2>
-        <p class="hidden-block dir-bottom text-center text-xs md:text-base lg:text-lg max-w-xs md:max-w-2xl mx-auto font-thin ">
+        <p
+          class="hidden-block dir-bottom text-center text-xs md:text-base lg:text-lg max-w-xs md:max-w-2xl mx-auto font-thin"
+        >
           {seo?.description}
         </p>
         <button
@@ -40,12 +51,11 @@ const seo = siteSeo.find((item) => item.slug === 'nezhnie-ruki');
               fill="currentColor"
               fill-rule="evenodd"
               d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-            /></svg
+            ></path></svg
           >
           Назад
         </button>
       </div>
-
     </section>
   </main>
 </RootLayout>

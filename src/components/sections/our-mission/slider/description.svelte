@@ -13,7 +13,7 @@
   init="false"
   bind:this={swiperEl}
   class={cn(
-    'description md:text-lg lg:text-3xl font-thin m-0 hidden-block dir-left min-h-28',
+    'description md:text-lg lg:text-3xl font-thin m-0 hidden-block dir-bottom min-h-28',
     className,
   )}
 >

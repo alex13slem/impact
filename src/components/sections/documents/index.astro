@@ -1,20 +1,21 @@
 ---
-import SectHeading from "@/components/ui/sect-heading.svelte";
-import { ViewDocs } from "@/components/view-docs";
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { ViewDocs } from '@/components/view-docs';
 import { getDocs } from '@/lib/data/docs';
 
-const docs = await getDocs(Astro)
+const docs = await getDocs(Astro);
 const viewDocs = docs.filter(doc => doc.showIn === 'landing');
-
 ---
 
 <section id="documents" class="py-8 md:py-20 overflow-clip bg-dark">
-  <div class="container max-w-screen-lg lg:min-h-svh flex flex-col justify-center">
+  <div
+    class="container max-w-screen-lg lg:min-h-svh flex flex-col justify-center"
+  >
     <SectHeading className="text-center">Документы</SectHeading>
-    <p class="hidden-block dir-left mb-10 text-sm md:text-lg font-thin text-center">
-      Хотите ознакомиться
-      с нашей деятельностью?
-      Скачивайте нашу документацию:
+    <p
+      class="hidden-block dir-bottom mb-10 text-sm md:text-lg font-thin text-center"
+    >
+      Хотите ознакомиться с нашей деятельностью? Скачивайте нашу документацию:
     </p>
     <ViewDocs docs={viewDocs} />
   </div>

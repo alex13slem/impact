@@ -15,13 +15,14 @@
 </script>
 
 <Select.Root
+  preventScroll={false}
   items={options}
   onSelectedChange={item => (item ? targetCategoryId.set(item.value) : null)}
 >
   <Select.Trigger
     class={cn(
       className,
-      'border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-2 backdrop-blur bg-dark bg-opacity-30',
+      'border border-current text-accent rounded-xl py-3 px-5 leading-none font-thin flex gap-2 backdrop-blur bg-dark bg-opacity-30',
     )}
   >
     <Select.Value placeholder="Все новости" />
@@ -41,7 +42,7 @@
     sideOffset={8}
     sameWidth={false}
     align="start"
-    class="border border-white py-3 px-6 rounded-xl font-thin backdrop-blur flex flex-col gap-1 bg-dark bg-opacity-30"
+    class="border border-current text-accent py-3 px-6 rounded-xl font-thin backdrop-blur flex flex-col gap-1 bg-dark bg-opacity-30"
   >
     {#if $targetCategoryId}
       <Select.Item value={null} label="Все новости">

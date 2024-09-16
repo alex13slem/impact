@@ -17,7 +17,15 @@
 </script>
 
 <Portal lock>
-  <div class="container fixed inset-0 z-30">
+  <div class="fixed inset-0 z-30 overflow-y-auto">
+    <div
+      class={cn(
+        'absolute inset-0 h-full bg-dark/80 backdrop-blur transition-all duration-500  ease-in scale-0 origin-top-right -z-10',
+        {
+          'scale-100 ease-out duration-[1.5s]': $mobileMenuVisible && isOpen,
+        },
+      )}
+    />
     <nav
       use:clickOutside={[
         ...ignoreClickElements,
@@ -25,18 +33,10 @@
       ]}
       on:outclick={handleClose}
       class={cn(
-        'absolute top-0 right-0 w-full bottom-auto px-4 pt-16 md:pt-20 lg:pt-24 pb-12 max-w-lg  overflow-clip',
+        'px-5 py-20 md:py-28 overflow-clip flex flex-col min-h-svh justify-center gap-7',
         className,
       )}
     >
-      <div
-        class={cn(
-          'absolute inset-0 bg-dark/80 backdrop-blur transition-all duration-500 scale-0 origin-top-right -z-10',
-          {
-            'scale-100': $mobileMenuVisible && isOpen,
-          },
-        )}
-      />
       <!-- <header class="flex justify-between items-center mb-4">
           <h2 class="font-sov-mod text-3xl uppercase leading-none">{title}</h2>
           <MobileMenuTrigger />
@@ -48,7 +48,7 @@
           on:click={handleClose}
           style="--i: {idx}"
           class={cn(
-            'link py-3 border-b border-white/40 justify-between flex items-baseline gap-2 uppercase text-lg opacity-0 transition-all duration-300 translate-y-full font-road-radio',
+            'link justify-between flex items-baseline gap-2 text-4xl md:text-5xl opacity-0 transition-all duration-500 translate-y-full font-serif',
             {
               'opacity-100 is-open translate-y-0': $mobileMenuVisible && isOpen,
             },
@@ -63,7 +63,7 @@
 
 <style>
   .link.is-open {
-    transition-delay: calc((var(--i) * 100ms) + 300ms);
+    transition-delay: calc((var(--i) * 200ms) + 500ms);
   }
   .link {
     transition-delay: calc(var(--i) * 100ms * -1);

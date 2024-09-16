@@ -9,9 +9,10 @@
     loading,
     mapVisible,
     sloganVisible,
+    storageIntroIsSeen,
   } from '@/lib/stores/pageLoadingStore';
+
   import { cn } from '@/lib/utils';
-  import { storage } from '@sveu/browser';
   import { gsap } from 'gsap';
   import { onMount } from 'svelte';
   import { blur } from 'svelte/transition';
@@ -21,14 +22,10 @@
 
   let root: HTMLElement;
   let introIsSeen: boolean | null = true;
-  const storageIntroIsSeen = storage('introIsSeen', false, {
-    store: 'session',
-  });
 
   function loadingComplete() {
-    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
     loading.set(false);
-    // localforage.setItem('introIsSeen', true);
     $storageIntroIsSeen = true;
   }
 
@@ -158,40 +155,44 @@
         gsap.to(
           '#loading-section .impact, #loading-section .slogan, #loading-section .logo',
           {
-            delay: 5,
-            filter: 'blur(10px)',
-            scale: 2,
+            // filter: 'blur(10px)',
+            // scale: 2,
             ease: 'power2.inOut',
             opacity: 0,
             duration: 0.5,
             onStart: loadingComplete,
+            delay: 5,
           },
         ),
         gsap.to('#loading-section .map', {
-          delay: 5,
-          transformOrigin: 'left center',
+          transformOrigin: 'center',
           ease: 'power2.inOut',
           duration: 0.5,
-          scale: 0.88,
+          opacity: 0,
+          scale: 1.2,
+          delay: 5,
         }),
       ]);
   };
 
   onMount(async () => {
-    // introIsSeen = await localforage.getItem<boolean>('introIsSeen');
     storageIntroIsSeen.subscribe(value => {
       introIsSeen = value;
     });
     if (!showOnPage || introIsSeen) {
+      // if (!showOnPage) {
       loadingComplete();
     } else {
       animateMap();
     }
+    // animateMap();
   });
 </script>
 
 <svelte:head>
+  <!-- {#if $loading && showOnPage} -->
   {#if $loading && showOnPage && !introIsSeen}
+    <!-- {#if true} -->
     <style>
       body {
         overflow: hidden;
@@ -200,42 +201,52 @@
   {/if}
 </svelte:head>
 
+<!-- {#if true} -->
 {#if $loading && showOnPage}
   <section
     bind:this={root}
     transition:blur={{ duration: 1000 }}
     id="loading-section"
     class={cn(
-      'h-svh bg-cover fixed inset-0 z-50 pt-[61px] md:pt-[65px] lg:pt-[89px] overflow-clip',
+      'h-svh bg-cover fixed inset-0 z-50 pt-[76px] md:pt-[112px] lg:pt-[121px] overflow-clip',
       {
+        // 'opacity-0': !showOnPage,
         'opacity-0': !showOnPage || introIsSeen,
       },
     )}
     style="background-image: url({bg.src});"
   >
     <div
-      class="container min-h-[calc(100svh-53px)] md:min-h-[calc(100svh-65px)] lg:min-h-[calc(100svh-89px)] py-5 md:py-8 lg:py-10 px-0 relative z-0 grid place-items-center"
+      class="container min-h-[calc(100svh-76px)] md:min-h-[calc(100svh-112px)] lg:min-h-[calc(100svh-121px)] pb-5 md:pb-8 lg:pb-10 px-0 relative z-0 grid place-items-center"
     >
-      <div class="contents">
-        <SvgMap className={cn('map pointer-events-none ')} />
-      </div>
+      <!-- <div class="contents">
+      </div> -->
+      <SvgMap
+        className={cn(
+          'col-start-1 col-end-1 row-start-1 row-end-1 p-4 map pointer-events-none ',
+        )}
+      />
       <img
-        class={cn(' absolute v-line left left-[calc(50%-76px)]')}
+        class={cn(
+          ' absolute v-line left left-[calc(50%-76px)] top-[calc(50%-230px)]',
+        )}
         src={line420.src}
         alt=""
       />
       <img
-        class={cn(' absolute v-line right left-[calc(50%+76px)]')}
+        class={cn(
+          ' absolute v-line right left-[calc(50%+76px)] top-[calc(50%-230px)]',
+        )}
         src={line420.src}
         alt=""
       />
       <img
-        class={cn(' absolute h-line top top-[calc(50%-137px)]')}
+        class={cn(' absolute h-line top top-[calc(50%-157px)]')}
         src={line460.src}
         alt=""
       />
       <img
-        class={cn('absolute h-line bottom top-[calc(50%+134px)]')}
+        class={cn('absolute h-line bottom top-[calc(50%+114px)]')}
         src={line460.src}
         alt=""
       />

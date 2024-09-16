@@ -29,7 +29,7 @@
 <swiper-container
   bind:this={swiperEl}
   init="false"
-  class={cn('relative max-w-64 sm:max-w-lg m-0', className)}
+  class={cn('relative max-w-64 xs:max-w-80 sm:max-w-lg m-0', className)}
 >
   {#each gallery as { src, alt }}
     <swiper-slide class="rounded-3xl overflow-clip">
