@@ -138,33 +138,37 @@
     >
       <img
         class={cn(
-          ' absolute v-line left left-[calc(50%-76px)] top-[calc(50%-230px)]',
+          ' absolute v-line left left-[calc(50%-55px)] md:left-[calc(50%-76px)] top-[calc(50%-230px)] md:top-[calc(50%-230px)]',
         )}
         src={line420.src}
         alt=""
       />
       <img
         class={cn(
-          ' absolute v-line right left-[calc(50%+76px)] top-[calc(50%-230px)]',
+          ' absolute v-line right left-[calc(50%+53px)] md:left-[calc(50%+76px)] top-[calc(50%-230px)] md:top-[calc(50%-230px)]',
         )}
         src={line420.src}
         alt=""
       />
       <img
-        class={cn(' absolute h-line top top-[calc(50%-157px)]')}
+        class={cn(
+          ' absolute h-line top top-[calc(50%-107px)] md:top-[calc(50%-152px)] lg:top-[calc(50%-157px)]',
+        )}
         src={line460.src}
         alt=""
       />
       <img
-        class={cn('absolute h-line bottom top-[calc(50%+114px)]')}
+        class={cn(
+          'absolute h-line bottom top-[calc(50%+86px)] md:top-[calc(50%+119px)] lg:top-[calc(50%+114px)]',
+        )}
         src={line460.src}
         alt=""
       />
 
       <svg
-        class="logo relative col-start-1 col-end-1 row-start-1 row-end-1"
-        width="152"
-        height="271"
+        class="logo relative col-start-1 col-end-1 row-start-1 row-end-1 text-[12rem] md:text-[271px]"
+        width="1em"
+        height="1em"
         viewBox="0 0 152 271"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

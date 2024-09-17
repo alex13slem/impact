@@ -23,7 +23,7 @@
 </script>
 
 <div
-  class={cn('relative z-0 overflow-x-auto lg:overflow-visible', className)}
+  class={cn('relative z-0 overflow-x-auto pt-1 lg:overflow-visible', className)}
   {...$$restProps}
 >
   <Nav {charityPrograms} />
