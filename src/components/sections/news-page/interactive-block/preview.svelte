@@ -43,7 +43,7 @@
   </div>
 
   <div class="flex gap-4">
-    <ButtonBack href="/">На главную</ButtonBack>
+    <ButtonBack />
 
     <CategorySelect {charityPrograms} />
   </div>

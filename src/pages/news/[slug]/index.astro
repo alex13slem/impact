@@ -1,5 +1,6 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
+import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
 import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
@@ -17,12 +18,12 @@ export const getStaticPaths = (async () => {
     news.map(fetchRelatedDataForNews),
   );
   const paths = newsWithRelations.map(item => {
-    const currentCategoryNews = newsWithRelations
-      .filter(n => n.charityProgram.slug === item.charityProgram.slug)
+    const currentPartnerNews = newsWithRelations
+      .filter(n => n.partnerId === item.partnerId && n.slug !== item.slug)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return {
       params: { slug: item.slug },
-      props: { item, news: currentCategoryNews },
+      props: { item, news: currentPartnerNews },
     };
   });
 
@@ -42,6 +43,6 @@ const { item, news } = Astro.props;
   />
   <main>
     <SectNewsDetail {item} />
-    <!-- <SectLastNews {news} /> -->
+    {news.length > 0 && <SectLastNews {news} />}
   </main>
 </RootLayout>

@@ -5,60 +5,93 @@ import { Seo } from '@/components/seo';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { getPartners } from '@/lib/data/partners';
 import { getSiteSeo } from '@/lib/data/siteSeo';
-import { ViewTransitions } from 'astro:transitions';
 
 const siteSeo = await getSiteSeo(Astro);
-const seo = siteSeo.find((item) => item.slug === 'socialnye-lifty');
+const seo = siteSeo.find(item => item.slug === 'socialnye-lifty');
 
 const partners = await getPartners(Astro);
+const currentUrl = Astro.url.pathname;
 ---
 
 <RootLayout>
   <!-- <ViewTransitions  slot={'head'}/> -->
-	<Seo
-		slot={'seo'}
-		title={seo?.name || 'Социальные лифты'}
-		description={seo?.description || ''}
-		imageUrls={{fb: seo?.image || ''}}
-	/>
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Социальные лифты'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
 
-	<main>
+  <main>
     <section class="py-8 xl:py-20">
       <div class="container">
         <div class="md:flex justify-between items-start">
-          <SectHeading className='max-w-md mb-4 md:mb-4' level={1}>
+          <SectHeading className="max-w-md mb-4 md:mb-4" level={1}>
             {seo?.name || 'Социальные лифты'}
           </SectHeading>
           <PartnerFormTrigger client:load>Стать партнёром</PartnerFormTrigger>
         </div>
-        <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description || 'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'}</p>
+        <p class="text-sm font-thin md:text-base max-w-3xl mt-4">
+          {
+            seo?.description ||
+              'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'
+          }
+        </p>
 
-        {partners.map((partner) => {
-          if (partner.events?.length && partner.events.some((event) => event.charityProgram.slug === 'socialnye-lifty')) return (
-            <article class="grid grid-cols-1 md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20">
-              <img width="160" height="160" class="w-40 h-40 row-span-3  rounded-full md:sticky top-24 lg:top-28 object-contain bg-white/90 object-center" src={partner.image.toString()} alt={partner.name}>
-              <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none"><a href={`/partners/${partner.id}`}>{partner.name}</a></h3>
-              <div class="col-span-2 lg:col-span-1">
-                <h3 class="text-lg">О предприятии:</h3>
-                <div class="prose" set:html={partner.description}></div>
-              </div>
-              <div class="col-span-2 lg:col-span-1">
-                <h3 class="text-lg">Совместное участие:</h3>
-                <ul class="list-disc list-inside">
-                  {partner.events.filter((event) => event.charityProgram.slug === 'socialnye-lifty').map((event) => (
-                    <li class="font-thin text-sm md:text-base mt-1 first-of-type:mt-0 relative">
-                      {!event.draft && (
-                        <a href={`/news/${event.slug}`} class="absolute inset-0 opacity-0">.</a>
-                      )}
-                      <strong>{event.title}</strong><br>
-                      {event.description}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-        )})}
+        {
+          partners.map(partner => {
+            if (
+              partner.events?.length &&
+              partner.events.some(
+                event => event.charityProgram.slug === 'socialnye-lifty',
+              )
+            )
+              return (
+                <article class="grid grid-cols-1 md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20">
+                  <img
+                    width="160"
+                    height="160"
+                    class="w-40 h-40 row-span-3  rounded-full md:sticky top-24 lg:top-28 object-contain bg-white/90 object-center"
+                    src={partner.image.toString()}
+                    alt={partner.name}
+                  />
+                  <h2 class="col-span-2 font-sov-mod text-xl md:text-2xl uppercase leading-none">
+                    <a href={`/partners/${partner.id}`}>{partner.name}</a>
+                  </h2>
+                  <div class="col-span-2 lg:col-span-1">
+                    <h3 class="text-lg">О предприятии:</h3>
+                    <div class="prose" set:html={partner.description} />
+                  </div>
+                  <div class="col-span-2 lg:col-span-1">
+                    <h3 class="text-lg">Совместное участие:</h3>
+                    <ul class="list-disc list-inside">
+                      {partner.events
+                        .filter(
+                          event =>
+                            event.charityProgram.slug === 'socialnye-lifty',
+                        )
+                        .map(event => (
+                          <li class="font-thin text-sm md:text-base mt-1 first-of-type:mt-0 relative">
+                            {!event.draft && (
+                              <a
+                                href={`/news/${event.slug}?from=${encodeURIComponent(currentUrl)}`}
+                                class="absolute inset-0 opacity-0"
+                              >
+                                .
+                              </a>
+                            )}
+                            <strong>{event.title}</strong>
+                            <br />
+                            {event.description}
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                </article>
+              );
+          })
+        }
       </div>
     </section>
-	</main>
+  </main>
 </RootLayout>

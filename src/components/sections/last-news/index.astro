@@ -10,13 +10,15 @@ interface Props extends HTMLAttributes<'section'> {
 const {  class: className,news, ...props } = Astro.props
 
 const lastNews = getLastNews(news,4)
+
+const currentUrl = Astro.url.pathname
 ---
 
 <section class={cn('py-8 md:py-20', className)} {...props}>
   <div class="container xl:grid grid-cols-4 gap-5">
     {lastNews.map((item) => (
       <article class="relative group ">
-        <a href={"/news/" + item.slug} class="absolute inset-0 opacity-0">/news/{item.slug}</a>
+        <a href={"/news/" + item.slug + "?from=" + encodeURIComponent(currentUrl)} class="absolute inset-0 opacity-0">/news/{item.slug}</a>
         <img src={item.image} alt={item.title} class="w-full rounded-3xl aspect-video bg-white bg-opacity-60 mb-5 hidden xl:block object-cover object-center">
         <time datetime={new Date(item.date).toString()} class="text-sm px-3 py-1 xl:border border-white rounded-full leading-none bg-white xl:bg-transparent text-dark xl:text-inherit">
           {new Date(item.date).toLocaleDateString('ru-RU', {
@@ -32,12 +34,11 @@ const lastNews = getLastNews(news,4)
         <div class="prose mt-1 hidden xl:block" set:html={item.description}/>
 
 
-        <p class="mt-5 text-lg group-hover:text-accent transition-colors hidden xl:block">
-          <a href={"/news/" + item.slug} class="flex items-center gap-4">Читать подробнее
-            <svg width="1em" height="0.5em" viewBox="0 0 35 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M26.1364 1L33.5 8.5M33.5 8.5L26.1364 16M33.5 8.5L-3.27835e-07 8.5" stroke="currentColor"/>
-            </svg>
-          </a>
+        <p class="mt-5 text-lg group-hover:text-accent transition-colors hidden xl:flex justify-between items-center">
+          <span>Читать подробнее</span>
+          <svg width="1em" height="0.5em" viewBox="0 0 35 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M26.1364 1L33.5 8.5M33.5 8.5L26.1364 16M33.5 8.5L-3.27835e-07 8.5" stroke="currentColor"/>
+          </svg>
         </p>
 
       </article>

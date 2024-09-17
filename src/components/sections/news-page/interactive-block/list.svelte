@@ -5,6 +5,7 @@
     targetNewsId,
   } from '@/lib/stores/newsInteractiveStore';
   import { cn } from '@/lib/utils';
+  import { onMount } from 'svelte';
 
   export let className: string = '';
   export let news: NewsItemWithRelated[] = [];
@@ -12,6 +13,11 @@
   $: viewedNews = $targetCategoryId
     ? news.filter(item => item.charityProgramId === $targetCategoryId)
     : news;
+
+  let currentUrl: string;
+  onMount(() => {
+    currentUrl = window.location.href;
+  });
 </script>
 
 <div class={cn(className, 'xl:max-w-3xl w-full')}>
@@ -20,8 +26,9 @@
       on:mouseenter={() => targetNewsId.set(item.id)}
       class="relative group"
     >
-      <a href="/news/{item.slug}" class="absolute inset-0 opacity-0"
-        >/news/{item.slug}</a
+      <a
+        href={`/news/${item.slug}?from=${encodeURIComponent(currentUrl)}`}
+        class="absolute inset-0 opacity-0">/news/{item.slug}</a
       >
       <header class="mb-4 flex items-start gap-5">
         <time
