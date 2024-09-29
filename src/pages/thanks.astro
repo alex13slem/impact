@@ -4,9 +4,8 @@ import { Seo } from '@/components/seo';
 import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
 import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getThanks } from '@/lib/data/thanks';
 
-const thanks = await getThanks(Astro);
+// const thanks = await getThanks(Astro);
 const breadcrumbs = [
   { name: 'Главная', url: '/' },
   { name: 'Благодарности', url: '/thanks' },
@@ -29,7 +28,7 @@ const breadcrumbs = [
           <SectHeadingAccent>Благодарности</SectHeadingAccent>
         </SectHeading>
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {
+          <!-- {
             thanks.map(thank => (
               <article class="border border-white/90 hover:border-accent transition-colors p-6 pb-11 rounded-3xl">
                 <div class="bg-white/90 rounded-2xl overflow-clip">
@@ -45,7 +44,7 @@ const breadcrumbs = [
                 <p class="text-sm mt-5">{thank.description}</p>
               </article>
             ))
-          }
+          } -->
         </div>
       </div>
     </section>

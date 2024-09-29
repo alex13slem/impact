@@ -36,9 +36,12 @@ export const getCharityProgramBySlug = async (
   await axios
     .get<CharityProgram>(`/api/charity-programs/${slug}`, {
       baseURL: astro.url!.origin,
+      headers: {
+        Accept: 'application/json',
+      },
     })
     .then(res => res.data)
     .catch(e => {
       console.error(e.message);
-      throw new Error('Failed to fetch data in getCharityProgramBySlug');
+      throw new Error(e);
     });

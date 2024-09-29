@@ -25,4 +25,7 @@ export default defineConfig({
       host: true,
     },
   },
+  experimental: {
+    globalRoutePriority: true,
+  },
 });

@@ -28,7 +28,7 @@ const breadcrumbs = [
     name: 'Нежные руки',
   },
 ];
-const program = await getCharityProgramBySlug(Astro, 'nezhnie-ruki');
+// const program = await getCharityProgramBySlug(Astro, 'nezhnie-ruki');
 ---
 
 <RootLayout>
@@ -48,13 +48,13 @@ const program = await getCharityProgramBySlug(Astro, 'nezhnie-ruki');
             className="max-w-4xl mb-4 md:mb-4 text-balance flex-grow"
             level={1}
           >
-            <SectHeadingAccent>{program.name}</SectHeadingAccent>
+            <!-- <SectHeadingAccent>{program.name}</SectHeadingAccent> -->
           </SectHeading>
 
-          <div
+          <!-- <div
             class="flex-grow text-sm font-thin md:text-base max-w-3xl"
             set:html={program.description}
-          />
+          /> -->
         </div>
         <InteractiveBlock className="mt-8" news={categoryNews} client:load />
       </div>

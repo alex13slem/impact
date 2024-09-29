@@ -1,6 +1,8 @@
 import { fetchWardsWithRelatedData } from '@/lib/data/wards';
 import type { APIRoute } from 'astro';
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
   const charityProgram = searchParams.get('charity-program');
