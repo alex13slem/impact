@@ -3,17 +3,19 @@ import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
 import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
 import Button from '@/components/ui/button.svelte';
+import IconDownload from '@/components/ui/icon-download.svelte';
 import IconDocs from '@/components/ui/icons/icon-docs.svelte';
 import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { WardsSlider } from '@/components/wards-slider';
+import { getCharityProgramBySlug } from '@/lib/data/charityPrograms';
 import { getDocs } from '@/lib/data/docs';
 import { getSiteSeo } from '@/lib/data/siteSeo';
 import { getWardsWithRelatedDataByCharity } from '@/lib/data/wards';
 import { cn } from '@/lib/utils';
 
 const wards = await getWardsWithRelatedDataByCharity(Astro, 'pomozj-detyam');
-// const program = await getCharityProgramBySlug(Astro, 'pomozj-detyam');
+const program = await getCharityProgramBySlug(Astro, 'pomozj-detyam');
 const docs = await getDocs(Astro);
 const viewDocs = docs.filter(doc => doc.showIn === 'pomozj-detyam');
 
@@ -53,7 +55,7 @@ const breadcrumbs = [
             className="max-w-4xl mb-4 md:mb-4 text-balance flex-grow"
             level={1}
           >
-            <!-- <SectHeadingAccent>{program.name}</SectHeadingAccent> -->
+            <SectHeadingAccent>{program.name}</SectHeadingAccent>
           </SectHeading>
           <div
             class="flex flex-col gap-4 xl:order-none order-1 mt-4 xl:mt-0 w-full lg:w-auto"
@@ -66,7 +68,7 @@ const breadcrumbs = [
                 </Button>
               )
             }
-            <!-- {
+            {
               program.presentation && (
                 <Button
                   variant="outline"
@@ -78,12 +80,12 @@ const breadcrumbs = [
                   программу
                 </Button>
               )
-            } -->
+            }
           </div>
-          <!-- <div
+          <div
             class="flex-grow text-sm font-thin md:text-base max-w-3xl"
             set:html={program.description}
-          /> -->
+          />
         </div>
 
         <SectHeading className="!text-4xl !mt-16 !mb-8 "

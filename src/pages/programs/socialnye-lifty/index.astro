@@ -13,7 +13,7 @@ import { getSiteSeo } from '@/lib/data/siteSeo';
 
 const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find(item => item.slug === 'socialnye-lifty');
-// const program = await getCharityProgramBySlug(Astro, 'socialnye-lifty');
+const program = await getCharityProgramBySlug(Astro, 'socialnye-lifty');
 const partners = await getPartners(Astro);
 const currentUrl = Astro.url.pathname;
 
@@ -51,7 +51,7 @@ const breadcrumbs = [
             className="max-w-xl mb-4 md:mb-4 text-balance flex-grow"
             level={1}
           >
-            <!-- <SectHeadingAccent>{program.name}</SectHeadingAccent> -->
+            <SectHeadingAccent>{program.name}</SectHeadingAccent>
           </SectHeading>
           <div
             class="flex flex-col gap-4 xl:order-none order-1 mt-4 xl:mt-0 w-full lg:w-auto"
@@ -59,7 +59,7 @@ const breadcrumbs = [
             <PartnerFormTrigger className="w-full" client:load
               >Стать партнёром</PartnerFormTrigger
             >
-            <!-- {
+            {
               program.presentation && (
                 <Button
                   variant="outline"
@@ -71,7 +71,7 @@ const breadcrumbs = [
                   программу
                 </Button>
               )
-            } -->
+            }
           </div>
           <!-- <div
             class="flex-grow text-sm font-thin md:text-base max-w-3xl"
