@@ -13,7 +13,7 @@ export async function getWpData(url: string) {
     },
   });
   if (response.status !== 200) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data in getWpData');
   }
 
   if (Array.isArray(response.data)) {
@@ -37,7 +37,7 @@ export async function getWpSingularData(slug: string) {
     },
   });
   if (response.status !== 200) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data in getWpSingularData');
   }
 
   return response.data[slug];

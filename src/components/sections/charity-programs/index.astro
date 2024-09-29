@@ -1,26 +1,88 @@
 ---
-import SectHeading from "@/components/ui/sect-heading.svelte";
-import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
-import DesktopCard from "./desktop-card.astro";
-import Slider from "./slider.svelte";
+import Button from '@/components/ui/button.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 interface Props {
-  charityPrograms: CharityProgram[]
+  charityPrograms: CharityProgram[];
 }
 
-const {charityPrograms} = Astro.props
+const { charityPrograms } = Astro.props;
 ---
 
-<section id="social-programs" class="social-programs bg-white text-dark py-8 md:py-20 overflow-clip">
-  <div class="container">
-    <SectHeading className="text-center">Наши программы</SectHeading>
-    <div class="hidden grid-cols-3 gap-5 lg:grid">
-      {
-        charityPrograms.map((program, idx) => (
-          <DesktopCard {program} style={`transition-delay: ${idx * 500}ms`} class={'hidden-block dir-bottom'}/>
-        ))
-      }
+<section
+  id="social-programs"
+  class="social-programs text-dark overflow-clip relative z-10"
+>
+  <div class="container relative py-8 md:py-20 pr-8">
+    <div
+      class="absolute right-4 top-0 w-[150%] h-[100%] bg-white -z-10 rounded-3xl"
+    >
     </div>
 
-    <Slider {charityPrograms} client:load className="lg:hidden" />
+    <SectHeading className="text-center">Наши программы</SectHeading>
+
+    <div class="xl:hidden mb-10">
+      {
+        charityPrograms.map(c => (
+          <article class="mb-4 last:mb-5 relative group">
+            <a href={'/programs/' + c.slug} class="absolute inset-0" />
+            <h3 class="text-lg mb-5 border-b border-dark/15">{c.name}</h3>
+          </article>
+        ))
+      }
+      <p>
+        <a
+          href="/programs"
+          class="border-b border-dark flex gap-2 items-center w-fit"
+        >
+          Подробнее
+          <svg
+            class="text-[12px]"
+            width="1em"
+            height="1em"
+            viewBox="0 0 12.6865 9.69238"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <path
+              d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
+              stroke="currentColor"
+              stroke-opacity="1"
+              stroke-width="1"></path>
+          </svg>
+        </a>
+      </p>
+    </div>
+    <div class="flex gap-28 xl:pr-24 flex-col-reverse xl:flex-row">
+      <div class="flex-1">
+        {
+          charityPrograms.map(c => (
+            <img
+              src={c.image}
+              alt={c.name}
+              class="relative [&:not(:first-child)]:-mt-8 md:[&:not(:first-child)]:-mt-16 aspect-video object-cover object-center rounded-xl md:rounded-3xl [&:nth-child(1n)]:w-[270px] [&:nth-child(2n)]:w-[210px] [&:nth-child(3n)]:w-[190px] md:[&:nth-child(1n)]:w-[580px] md:[&:nth-child(2n)]:w-[465px] md:[&:nth-child(3n)]:w-[423px] [&:nth-child(2n)]:ml-auto [&:nth-child(2n)]:z-10 "
+            />
+          ))
+        }
+      </div>
+      <div class="max-w-lg flex-shrink-0 hidden xl:block">
+        {
+          charityPrograms.map(c => (
+            <article class="mb-8 last:mb-12 relative group">
+              <a href={'/programs/' + c.slug} class="absolute inset-0" />
+
+              <h3 class="text-2xl font-medium mb-5 group-hover:underline underline-offset-8">
+                {c.name}
+              </h3>
+              <div class="prose" set:html={c.description} />
+            </article>
+          ))
+        }
+        <div class="">
+          <Button variant="dark" href="/programs">Узнать подробнее</Button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

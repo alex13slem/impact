@@ -1,20 +1,13 @@
 ---
-import bgSourse from '@/assets/img/bg.webp';
 import Button from '@/components/ui/button.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import SvgScan from '@/components/ui/svg-scan.svelte';
 import { getPayment } from '@/lib/data/payment';
-import { getImage } from 'astro:assets';
 
-const bg = await getImage({ src: bgSourse });
 const paymentData = await getPayment(Astro);
 ---
 
-<section
-  id="pay"
-  class="pay bg-cover bg-center bg-fixed relative overflow-clip"
-  style={`background-image: url(${bg.src});`}
->
+<section id="pay" class="pay relative overflow-clip z-10">
   <div
     class="container max-w-5xl flex flex-col justify-between pt-8 md:pt-20 lg:grid grid-cols-[auto,1fr] lg:min-h-svh gap-10 lg:gap-28 text-center lg:text-left"
   >
@@ -40,7 +33,7 @@ const paymentData = await getPayment(Astro);
         Для оплаты отсканируйте QR-код в мобильном приложении банка или штатной
         камерой телефона.
       </p>
-      <Button href={paymentData.link} external> Оплатить онлайн </Button>
+      <Button href={paymentData.link} external>Помочь</Button>
     </div>
   </div>
 </section>

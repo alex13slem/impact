@@ -1,23 +1,26 @@
 <script lang="ts">
   import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 
-  import { targetCategoryId } from '@/lib/stores/newsInteractiveStore';
   import { cn } from '@/lib/utils';
   import { Select, type Selected } from 'bits-ui';
+  import { query } from '.';
 
   export let className: string = '';
   export let charityPrograms: CharityProgram[] = [];
 
-  const options: Selected<number>[] = charityPrograms.map(item => ({
-    value: item.id,
+  const options: Selected<string>[] = charityPrograms.map(item => ({
+    value: item.slug,
     label: item.name,
   }));
+
+  $: selected = options.find(item => item.value === $query.category);
 </script>
 
 <Select.Root
   preventScroll={false}
   items={options}
-  onSelectedChange={item => (item ? targetCategoryId.set(item.value) : null)}
+  bind:selected
+  onSelectedChange={item => ($query.category = item?.value)}
 >
   <Select.Trigger
     class={cn(
@@ -44,7 +47,7 @@
     align="start"
     class="border border-current text-accent py-3 px-6 rounded-xl font-thin backdrop-blur flex flex-col gap-1 bg-dark bg-opacity-30"
   >
-    {#if $targetCategoryId}
+    {#if $query?.category}
       <Select.Item value={null} label="Все новости">
         <button>Все новости</button>
         <Select.ItemIndicator />

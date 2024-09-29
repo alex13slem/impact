@@ -3,22 +3,22 @@
   import siteLogo from '@/assets/img/site-logo.png';
   import { navLinks } from '@/lib/data/navLinks';
   import { scrollHidden } from '@/lib/hooks/scrollHidden';
+  import type { Contacts } from '@/lib/schemas/data/contactsSchema';
   import { mobileMenuMounted } from '@/lib/stores/mobileMenuStore';
   import { cn } from '@/lib/utils';
+  import { breakpointsTw } from '@/lib/utils/tailwind';
   import { breakpoints } from '@sveu/browser';
   import { onMount } from 'svelte';
   import { MobileMenu, MobileMenuTrigger } from '../mobile-menu';
+  import IconTg from '../ui/icons/icon-tg.svelte';
+  import IconVk from '../ui/icons/icon-vk.svelte';
   import LogoSmall from '../ui/icons/logo-small.svelte';
 
-  const breakpoints_tailwind = {
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1280,
-  };
-
-  const { gte } = breakpoints(breakpoints_tailwind);
+  const { gte } = breakpoints(breakpointsTw);
   const isDesktopPlus = gte('lg');
+
+  export let contacts: Contacts;
+
   let isHomePage: boolean = true;
   let root: HTMLElement;
 
@@ -53,7 +53,7 @@
     },
   )}
 >
-  <div class="container flex justify-between items-center">
+  <div class="container flex justify-between items-end">
     <a href="/">
       <img
         class={'hidden lg:inline-block h-10 xl:h-14 object-contain object-left w-fit'}
@@ -63,7 +63,7 @@
       <LogoSmall class="text-3xl md:text-5xl text-accent lg:hidden" />
     </a>
 
-    <nav class="hidden lg:flex gap-8 items-center">
+    <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[6px]">
       {#each navLinks.filter(item => !item.link.includes('pay')) as item}
         <a
           href={item.link}
@@ -74,7 +74,16 @@
     </nav>
 
     <div class="flex gap-8 items-center">
-      <button
+      <div class="link xl:flex justify-center gap-4 hidden">
+        <a href={contacts.vk}>
+          <IconVk class="text-5xl" />
+        </a>
+
+        <a href={contacts.telegram}>
+          <IconTg class="text-5xl" />
+        </a>
+      </div>
+      <!-- <button
         class="lg:flex group justify-center items-center gap-7 hover:text-accent transition-colors text-white text-opacity-90 relative hidden"
       >
         <a href="/#pay" class="absolute inset-0 opacity-0">.</a>
@@ -98,13 +107,13 @@
             />
           </svg>
         </span>
-      </button>
+      </button> -->
 
       <MobileMenuTrigger />
     </div>
 
     {#if $mobileMenuMounted}
-      <MobileMenu />
+      <MobileMenu {contacts} />
     {/if}
   </div>
 </header>

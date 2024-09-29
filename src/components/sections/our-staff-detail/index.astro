@@ -1,0 +1,33 @@
+---
+import { getStaffs } from '@/lib/data/staffs';
+import { getStaffsPositions } from '@/lib/data/staffsPositions';
+import Tabs from './tabs.svelte';
+
+const staffs = await getStaffs(Astro);
+const staffsPositions = await getStaffsPositions(Astro);
+---
+
+<section class="our-stuff overflow-clip">
+  <div class="lg:container p-0 lg:px-4">
+    <div class="bg-dark bg-opacity-5 py-9 px-4 md:p-16 lg:rounded-3xl">
+      <div
+        class="text-balance prose hidden-block dir-bottom text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto mb-8 md:mb-10 lg:mb-16"
+      >
+        <p>
+          <b>
+            В нашей команде объединены люди, чьи опыт, знания, возможности и
+            искренняя вера в добро позволяют не просто оказать необходимую
+            помощь подопечным, а создать и внедрить современную и эффективную
+            программу социальной адаптации, не имеющей аналогов в нашей стране.
+          </b>
+        </p>
+        <p>
+          В рамках сотрудничества с крупнейшими медицинскими учреждениями России
+          способствовать повышению скорости и результативности оказания
+          высокотехнологичной медицинской помощи.
+        </p>
+      </div>
+      <Tabs client:load {staffs} {staffsPositions} />
+    </div>
+  </div>
+</section>

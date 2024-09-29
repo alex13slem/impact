@@ -1,0 +1,70 @@
+---
+import firmBg from '@/assets/img/bg.webp';
+import cursorFragment from '@/assets/img/cursor-fragment.svg';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import type { Goal } from '@/lib/schemas/data/goalsSchema';
+import type { HTMLAttributes } from 'astro/types';
+import { Image } from 'astro:assets';
+import Counter from './counter.svelte';
+
+interface Props extends HTMLAttributes<'section'> {
+  goal: Goal;
+  idx: number;
+}
+
+const { goal, class: className, idx, ...props } = Astro.props;
+
+const { image, description, counter } = goal;
+---
+
+<section
+  class="relative z-0 min-h-svh py-8 flex flex-col justify-center px-4 mb-4 xl:mb-0"
+  class:list={[
+    className,
+    { 'pl-8': [0, 2].includes(idx), 'pr-8': idx === 1, 'mb-0': idx === 2 },
+  ]}
+  {...props}
+>
+  {
+    [2].includes(idx) && (
+      <div
+        style={`--bg: url(${firmBg.src});`}
+        class="absolute w-full h-full -left-1/3 rounded-r-3xl -z-20 xl:hidden [background-image:var(--bg)] bg-cover bg-center xl:bg-fixed"
+        class:list={[{ '-top-1/3 ': idx === 0, '-bottom-1/3  ': idx === 2 }]}
+      />
+    )
+  }
+  <div
+    class="absolute inset-0 xl:inset-0 xl:rounded-none -z-10 overflow-clip"
+    class:list={[
+      {
+        'left-4 rounded-l-3xl': [0, 2].includes(idx),
+        'right-4 rounded-r-3xl': idx === 1,
+      },
+    ]}
+  >
+    <div class="absolute inset-0 bg-[#042A47A1] z-0"></div>
+    <div
+      class="bg-cover bg-center [background-image:var(--bg)] absolute inset-0 -z-10"
+      style={`--bg: url(${image});`}
+    >
+    </div>
+  </div>
+  <SectHeading className="text-center">
+    НАШИ <span class="text-accent">ЦЕЛИ</span>
+  </SectHeading>
+  <div class="flex justify-center flex-wrap xl:flex-nowrap items-center">
+    <Counter client:load {counter} />
+    <div class="pl-16 lg:pb-10 pt-10 w-fit relative z-0">
+      <article
+        class="max-w-xl p-4 md:px-16 md:py-5 bg-gradient-to-tl from-gr-start via-gr-middle to-gr-end text-dark text-base md:text-2xl rounded-3xl"
+        set:html={description}
+      />
+      <Image
+        src={cursorFragment}
+        alt="cursor"
+        class="absolute -scale-y-[1] lg:scale-100 top-4 md:top-0 lg:top-auto lg:bottom-0 left-0 -z-10"
+      />
+    </div>
+  </div>
+</section>

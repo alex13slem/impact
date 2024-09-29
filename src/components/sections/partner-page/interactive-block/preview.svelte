@@ -1,6 +1,6 @@
 <script lang="ts">
+  import bg from '@/assets/img/bg.webp';
   import { cn } from '@/lib/utils';
-  import { fade } from 'svelte/transition';
   //@ts-ignore
   import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
@@ -12,8 +12,9 @@
 </script>
 
 <div
+  style="background-image: url({bg.src});"
   class={cn(
-    'bg-white bg-opacity-40  flex-1 hidden xl:block aspect-video rounded-3xl overflow-clip mb-5 sticky top-28 transition-all',
+    '[background-image:var(--bg)] bg-cover flex-1 hidden xl:block aspect-video rounded-3xl overflow-clip mb-5 sticky top-28 transition-all',
     {
       'p-5': !event,
     },
@@ -22,14 +23,12 @@
 >
   {#if event}
     <img
-      transition:fade={{ duration: 100 }}
       class="w-full h-full object-cover object-center"
       src={event.image}
       alt={event.title}
     />
   {:else if partner.image}
     <img
-      transition:fade={{ duration: 100 }}
       src={partner.image.toString()}
       class="w-full h-full object-contain object-center"
       alt=""

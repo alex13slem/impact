@@ -3,10 +3,11 @@ import phPhoto from '@/assets/img/ph-photo.webp';
 import { GallerySlider } from '@/components/gallery-slider';
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
-import ButtonBack from '@/components/ui/button-back.svelte';
+import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
 import { fetchWardsWithRelatedData } from '@/lib/data/wards';
 import type { WpGallery } from '@/lib/schemas/wpGallery';
-import { cn } from '@/lib/utils';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
@@ -50,6 +51,21 @@ const gallery: WpGallery[] = [
   { src: photo, alt: ward.name },
   ...(Array.isArray(ward.gallery) ? ward.gallery : []),
 ];
+
+const breadcrumbs = [
+  {
+    name: 'Главная',
+    url: '/',
+  },
+  {
+    name: ward.charityProgram.name,
+    url: `/programs/${ward.charityProgram.slug}`,
+  },
+  {
+    name: ward.name,
+    url: `/programs/${ward.charityProgram.slug}/ward/${ward.id}`,
+  },
+];
 ---
 
 <RootLayout>
@@ -62,53 +78,16 @@ const gallery: WpGallery[] = [
   />
 
   <main>
-    <section class="pb-8 xl:pb-20">
+    <div class="container">
+      <Breadcrumbs {breadcrumbs} />
+    </div>
+    <section class="pb-8 xl:pb-20 overflow-clip">
       <div class="container flex flex-col xl:flex-row gap-10 xl:gap-20">
-        <div>
-          <div class="mb-5">
-            <ButtonBack client:load />
-          </div>
-          <div class="relative w-fit mx-auto">
-            <div
-              class="absolute inset-y-5 -inset-x-7 bg-white/20 -z-10 rounded-3xl"
-            >
-            </div>
-            <GallerySlider {gallery} client:load />
-            {
-              ['prev', 'next'].map(dir => (
-                <button
-                  class={cn(
-                    {
-                      'prev-btn left-0 -translate-x-1/2 rotate-180':
-                        dir === 'prev',
-                      'next-btn right-0 translate-x-1/2 ': dir === 'next',
-                    },
-                    'bg-dark absolute top-1/2 -translate-y-1/2 z-20  rounded-full  p-3 disabled:opacity-30 hover:bg-dark/80 transition-colors',
-                  )}
-                  slot="container-end"
-                >
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 12.6865 9.69238"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <path
-                      d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
-                      stroke="currentColor"
-                      stroke-opacity="1"
-                      stroke-width="1"
-                    />
-                  </svg>
-                </button>
-              ))
-            }
-          </div>
+        <div class="">
+          <GallerySlider {gallery} client:load />
           {
             ward.desire && (
-              <p class="mt-5 text-center xl:text-left">{ward.desire}</p>
+              <p class="mt-5 hidden xl:block text-xl">{ward.desire}</p>
             )
           }
         </div>
@@ -117,12 +96,12 @@ const gallery: WpGallery[] = [
             class="flex items-center justify-between gap-8 flex-col sm:flex-row"
           >
             <div class="self-start sm:self-center">
-              <p class="text-sm md:text-base font-thin">
+              <p class="text-lg md:text-xl font-thin text-balance">
                 Подопечный Благотворительного фонда
               </p>
-              <h1 class="font-sov-mod text-3xl md:text-5xl mt-2">
-                {ward.name}
-              </h1>
+              <SectHeading className=" !text-2xl md:!text-5xl !mt-2 !mb-0">
+                <SectHeadingAccent>{ward.name}</SectHeadingAccent>
+              </SectHeading>
             </div>
             <nav class="flex gap-5 -order-1 sm:order-none justify-center">
               {
@@ -131,15 +110,15 @@ const gallery: WpGallery[] = [
                     class="flex-1 flex flex-col gap-2"
                     class:list={[{ 'items-end text-right': index === 0 }]}
                   >
-                    <p class="text-xs max-w-20">{ward.name}</p>
+                    {/* <p class="text-xs max-w-20">{ward.name}</p> */}
                     <button
                       class={
-                        'relative bg-white/80 hover:bg-white transition-colors text-dark w-12 h-12 flex items-center justify-center rounded-2xl'
+                        'relative bg-gradient-to-br from-gr-start via-gr-middle to-gr-end transition-colors text-dark w-12 h-12 flex items-center justify-center rounded-full'
                       }
                     >
                       <a
                         href={`/programs/${ward.charityProgram.slug}/ward/${ward.id}`}
-                        class="absolute inset-0"
+                        class="absolute inset-0 z-10"
                       />
                       <svg
                         class:list={[
@@ -168,7 +147,12 @@ const gallery: WpGallery[] = [
             </nav>
           </div>
 
-          <div class="prose mt-10" set:html={ward.detailDescription} />
+          <div class="prose mt-5 xl:mt-10" set:html={ward.detailDescription} />
+          {
+            ward.desire && (
+              <p class="mt-4  text-lg md:text-xl xl:hidden">{ward.desire}</p>
+            )
+          }
         </div>
       </div>
     </section>

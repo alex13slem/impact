@@ -2,9 +2,7 @@
   //@ts-ignore
   import bg from '@/assets/img/bg.webp';
   //@ts-ignore
-  import line420 from '@/assets/img/line-420.svg';
   //@ts-ignore
-  import line460 from '@/assets/img/line-460.svg';
   import {
     regularLoadProcess,
     storageIntroIsSeen,
@@ -58,33 +56,33 @@
         transformOrigin: 'center center',
         filter: 'blur(10px)',
       }),
-      gsap.to('#loading-regular img.h-line.top', {
-        translateX: '-100%',
-        duration: 1,
-        ease: 'back.out',
-        opacity: 0,
-      }),
-      gsap.to('#loading-regular img.h-line.bottom', {
-        translateX: '100%',
-        duration: 1,
-        ease: 'back.out',
-        opacity: 0,
-        delay: 0.1,
-      }),
-      gsap.to('#loading-regular img.v-line.left', {
-        translateY: '100%',
-        duration: 1,
-        ease: 'back.out',
-        opacity: 0,
-        delay: 0.2,
-      }),
-      gsap.to('#loading-regular img.v-line.right', {
-        translateY: '-100%',
-        duration: 1,
-        ease: 'back.out',
-        opacity: 0,
-        delay: 0.3,
-      }),
+      // gsap.to('#loading-regular img.h-line.top', {
+      //   translateX: '-100%',
+      //   duration: 1,
+      //   ease: 'back.out',
+      //   opacity: 0,
+      // }),
+      // gsap.to('#loading-regular img.h-line.bottom', {
+      //   translateX: '100%',
+      //   duration: 1,
+      //   ease: 'back.out',
+      //   opacity: 0,
+      //   delay: 0.1,
+      // }),
+      // gsap.to('#loading-regular img.v-line.left', {
+      //   translateY: '100%',
+      //   duration: 1,
+      //   ease: 'back.out',
+      //   opacity: 0,
+      //   delay: 0.2,
+      // }),
+      // gsap.to('#loading-regular img.v-line.right', {
+      //   translateY: '-100%',
+      //   duration: 1,
+      //   ease: 'back.out',
+      //   opacity: 0,
+      //   delay: 0.3,
+      // }),
     ]);
     tl.to(
       ' #loading-regular',
@@ -136,7 +134,7 @@
     <div
       class="container min-h-[calc(100svh-76px)] md:min-h-[calc(100svh-112px)] lg:min-h-[calc(100svh-121px)] pb-5 md:pb-8 lg:pb-10 px-0 relative z-0 grid place-items-center"
     >
-      <img
+      <!-- <img
         class={cn(
           ' absolute v-line left left-[calc(50%-55px)] md:left-[calc(50%-76px)] top-[calc(50%-230px)] md:top-[calc(50%-230px)]',
         )}
@@ -163,7 +161,7 @@
         )}
         src={line460.src}
         alt=""
-      />
+      /> -->
 
       <svg
         class="logo relative col-start-1 col-end-1 row-start-1 row-end-1 text-[12rem] md:text-[271px]"

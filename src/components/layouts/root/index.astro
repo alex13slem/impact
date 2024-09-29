@@ -7,6 +7,7 @@ import '@/index.css';
 import type { HTMLAttributes } from 'astro/types';
 import { Head } from '../../head';
 import { Toaster } from 'svelte-sonner';
+import { getContacts } from '@/lib/data/contacts';
 
 export interface HtmlProps extends Omit<HTMLAttributes<'html'>, 'title'> {
   hasHeader?: boolean;
@@ -21,29 +22,30 @@ const {
 }: HtmlProps = Astro.props;
 
 const isHome = Astro.url.pathname === '/';
+const contacts = await getContacts(Astro);
 ---
 
 <script>
   import '@/lib/plugins/hiddenBlocks';
   import 'locomotive-scroll/dist/locomotive-scroll.css';
 
-  import LocomotiveScroll from 'locomotive-scroll';
+  // import LocomotiveScroll from 'locomotive-scroll';
 
-  const locomotiveScroll = new LocomotiveScroll({
-    lenisOptions: {
-      wrapper: window,
-      content: document.documentElement,
-      lerp: 0.1, // Увеличиваем lerp для более быстрого отклика и завершения
-      duration: 1.5, // Уменьшаем длительность инерции
-      __experimental__naiveDimensions: true,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    },
-  });
+  // const locomotiveScroll = new LocomotiveScroll({
+  //   lenisOptions: {
+  //     wrapper: window,
+  //     content: document.documentElement,
+  //     lerp: 0.1, // Увеличиваем lerp для более быстрого отклика и завершения
+  //     duration: 1.5, // Уменьшаем длительность инерции
+  //     __experimental__naiveDimensions: true,
+  //     orientation: 'vertical',
+  //     gestureOrientation: 'vertical',
+  //     smoothWheel: true,
+  //     wheelMultiplier: 1,
+  //     touchMultiplier: 2,
+  //     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+  //   },
+  // });
 </script>
 
 <html
@@ -70,7 +72,7 @@ const isHome = Astro.url.pathname === '/';
       class="app js-scroll opacity-0 transition-opacity duration-100"
       data-scroll-container
     >
-      {hasHeader && <Header client:load />}
+      {hasHeader && <Header {contacts} client:load />}
       <slot />
       {hasFooter && <Footer />}
     </div>

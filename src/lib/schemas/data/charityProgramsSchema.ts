@@ -1,4 +1,4 @@
-import { coerce, number, object, string, z } from 'zod';
+import { boolean, coerce, number, object, string, z } from 'zod';
 
 export const charityProgramsSchema = object({
   id: number(),
@@ -7,6 +7,7 @@ export const charityProgramsSchema = object({
   description: string().min(1),
   image: string().url(),
   order: coerce.number().min(0),
+  presentation: string().url().or(boolean()),
 });
 
 export const charityProgramsArraySchema = charityProgramsSchema.array();

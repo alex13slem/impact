@@ -7,12 +7,9 @@ const bg = await getImage({ src: bgSource });
 
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
-
-import { ViewTransitions } from 'astro:transitions';
 ---
 
 <RootLayout hasHeader={false}>
-  <!-- <ViewTransitions  slot={'head'} /> -->
   <Seo
     slot={'seo'}
     title={'Страница не создана'}

@@ -1,21 +1,54 @@
 ---
 import bgSource from '@/assets/img/bg.webp';
+import logo from '@/assets/img/logo.svg';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getOurMissionSlides } from '@/lib/data/ourMissionSlides';
-import { getImage } from "astro:assets";
-import { Slider } from "./slider";
+import { getImage, Image } from 'astro:assets';
 
+const bg = await getImage({ src: bgSource });
 
-const bg = await getImage({src: bgSource})
-const ourMissionSlides = await getOurMissionSlides(Astro)
-
+const articles = [
+  `<b class='text-accent'>Объединять людей</b> и компании
+ для оказания необходимой помощи тем, кто в ней нуждается.`,
+  `<b class='text-accent'>Дать силу сообществу</b> <br />
+и организациям для предоставления необходимой поддержки тем, кто в ней нуждается.`,
+  `<b class='text-accent'>Создать платформу</b> <br />
+для сотрудничества между
+людьми и организациями для предоставления важной помощи тем, кто в ней нуждается`,
+];
 ---
 
-<section id="our-mission" style={`background-image: url(${bg.src});`} class="our-mission relative z-0 bg-center bg-cover overflow-clip bg-fixed" >
-  <div class="container lg:min-h-[730px] py-8 md:py-20 flex flex-col">
-    <SectHeading className='text-center'>
-      НАША <span class="text-accent">МИССИЯ</span>
+<section
+  id="our-mission"
+  class="our-mission relative z-0 bg-center bg-cover overflow-x-clip xl:bg-fixed pt-8 md:pt-20"
+>
+  <div class="relative container">
+    <SectHeading className="text-center">
+      НАША <SectHeadingAccent>МИССИЯ</SectHeadingAccent>
     </SectHeading>
-    <Slider client:load {ourMissionSlides}/>
+    <div class="flex flex-col xl:flex-row">
+      <div class="flex-1 pb-8 xl:pb-20">
+        <div class="max-w-md text-pretty">
+          {articles.map(art => <article class="mb-4 prose" set:html={art} />)}
+        </div>
+      </div>
+
+      <div
+        class="flex-1 flex items-center justify-center relative py-[min(135px,20%)] max-w-[80%] w-full xl:max-w-none self-end"
+      >
+        <div
+          class="absolute top-0 left-0 w-[150%] h-[150%] -z-10 bg-cover rounded-3xl xl:bg-fixed"
+          style={`background-image: url(${bg.src});`}
+        >
+        </div>
+        <Image
+          class="w-[124px] h-[124px] md:w-[214px] md:h-[214px]"
+          height="214"
+          width="214"
+          src={logo}
+          alt="logo"
+        />
+      </div>
+    </div>
   </div>
 </section>

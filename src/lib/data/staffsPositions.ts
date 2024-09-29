@@ -14,9 +14,13 @@ export const fetchStaffsPositions = withDataFetching(getWpData)(
 export const getStaffsPositions = (astro: AstroGlobal) =>
   axios
     .get<StaffsPosition[]>('/api/staff-positions', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getStaffsPositions');
+    });
 
 // export const staffsPositions = (await fetchStaffsPositions()).sort(
 //   (a, b) => a.order - b.order,

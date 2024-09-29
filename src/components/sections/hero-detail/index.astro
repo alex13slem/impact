@@ -1,0 +1,12 @@
+---
+import bg from '@/assets/img/bg.webp';
+import { headerOffsets } from '@/components/header';
+---
+
+<section
+  style={`background-image: url(${bg.src});`}
+  class="bg-cover bg-center [background-image:var(--bg)] min-h-svh flex flex-col justify-center relative"
+  class:list={[headerOffsets.margin]}
+>
+  <slot />
+</section>

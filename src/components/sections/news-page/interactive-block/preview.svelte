@@ -1,39 +1,40 @@
 <script lang="ts">
-  import { targetNewsId } from '@/lib/stores/newsInteractiveStore';
   import { cn } from '@/lib/utils';
   //@ts-ignore
   import bg from '@/assets/img/bg.webp';
-  import ButtonBack from '@/components/ui/button-back.svelte';
   import type { NewsItemWithRelated } from '@/lib/data/news';
   import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
-  import { fade } from 'svelte/transition';
+  import type { Region } from '@/lib/schemas/data/regionsSchema';
+  import { query } from '.';
   import CategorySelect from './category-select.svelte';
+  import RegionSelect from './region-select.svelte';
 
   export let className: string = '';
   export let news: NewsItemWithRelated[] = [];
   export let charityPrograms: CharityProgram[] = [];
+  export let regions: Region[] = [];
 
-  $: newsItem = news.find(item => item.id === $targetNewsId);
+  let newsItem: NewsItemWithRelated | undefined;
+
+  $: newsItem = news.find(item => item.slug === $query.item);
 </script>
 
 <div
   class={cn(
     className,
-    'hidden xl:flex flex-col flex-1 self-start sticky top-28',
+    'hidden xl:flex flex-col flex-1 self-start sticky top-32',
   )}
 >
   <div>
     <div class="rounded-3xl overflow-clip mb-5 aspect-video">
       {#if !newsItem}
         <img
-          transition:fade={{ duration: 100 }}
           class="w-full h-full object-cover object-center"
           src={bg.src}
           alt={'bg'}
         />
       {:else}
         <img
-          transition:fade={{ duration: 100 }}
           class="w-full h-full object-cover object-center"
           src={newsItem.image}
           alt={newsItem.title}
@@ -43,8 +44,7 @@
   </div>
 
   <div class="flex gap-4">
-    <ButtonBack />
-
     <CategorySelect {charityPrograms} />
+    <RegionSelect {regions} />
   </div>
 </div>

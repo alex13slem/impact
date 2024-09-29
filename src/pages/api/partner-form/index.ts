@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request }) => {
     const body = await request.json();
     const valid = partnerFormSchema.safeParse(body);
     if (!valid.success) {
-      console.log(valid.error);
+      console.error(valid.error);
 
       return new Response(JSON.stringify(valid.error), { status: 400 });
     }

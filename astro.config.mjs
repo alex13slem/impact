@@ -8,6 +8,7 @@ export default defineConfig({
   integrations: [tailwind(), svelte()],
   output: 'hybrid',
   site: 'https://impactfoundation.ru',
+  // site: 'http://localhost:4000',
   adapter: node({
     mode: 'standalone',
   }),

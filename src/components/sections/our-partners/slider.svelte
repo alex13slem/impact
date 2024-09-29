@@ -52,7 +52,7 @@
 <swiper-container
   init="false"
   bind:this={swiperEl}
-  class={cn('transform-none grayscale ', className)}
+  class={cn('transform-none ', className)}
 >
   {#each [...partnersWithLogos, ...partnersWithLogos, ...partnersWithLogos] as p}
     <Slide {p} />

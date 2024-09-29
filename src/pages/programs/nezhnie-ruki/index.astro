@@ -1,16 +1,37 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
-import bg from '@/assets/img/bg-nezhnie-ruki.webp';
-import { ViewTransitions } from 'astro:transitions';
+import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { getCharityProgramBySlug } from '@/lib/data/charityPrograms';
+import { getNews } from '@/lib/data/news';
 import { getSiteSeo } from '@/lib/data/siteSeo';
+import { InteractiveBlock } from './_interactive-block';
 
 const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find(item => item.slug === 'nezhnie-ruki');
+const categoryNews = (await getNews(Astro)).filter(
+  n => n.charityProgram.slug === 'nezhnie-ruki',
+);
+const breadcrumbs = [
+  {
+    url: '/',
+    name: 'Главная',
+  },
+  {
+    url: '/programs',
+    name: 'Программы',
+  },
+  {
+    url: '/programs/nezhnie-ruki',
+    name: 'Нежные руки',
+  },
+];
+const program = await getCharityProgramBySlug(Astro, 'nezhnie-ruki');
 ---
 
 <RootLayout>
-  <!-- <ViewTransitions  slot={'head'}/> -->
   <Seo
     slot={'seo'}
     title={seo?.name || 'Нежные руки'}
@@ -19,42 +40,23 @@ const seo = siteSeo.find(item => item.slug === 'nezhnie-ruki');
   />
 
   <main>
-    <section
-      id="description"
-      style={`background-image: url(${bg.src});`}
-      class="relative z-0 bg-center bg-cover overflow-clip"
-    >
-      <div class="absolute inset-0 bg-[#042A47A1] -z-10"></div>
-      <div
-        class="relative container py-32 md:h-svh flex flex-col justify-center items-center min-h-svh"
-      >
-        <h2
-          class="text-center text-xl md:text-5xl lg:text-7xl font-sov-mod uppercase leading-snug mb-3 md:mb-4 lg:mb-10"
-        >
-          {seo?.name || 'Нежные руки'}
-        </h2>
-        <p
-          class="hidden-block dir-bottom text-center text-xs md:text-base lg:text-lg max-w-xs md:max-w-2xl mx-auto font-thin"
-        >
-          {seo?.description}
-        </p>
-        <button
-          onclick="history.back()"
-          class="absolute top-4 left-4 border border-white rounded-xl py-3 px-5 leading-none font-thin flex gap-4"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            ><path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-            ></path></svg
+    <section class="py-8 xl:pb-20 xl:pt-5">
+      <div class="container">
+        <Breadcrumbs {breadcrumbs} />
+        <div class="flex justify-between items-start flex-col gap-4">
+          <SectHeading
+            className="max-w-4xl mb-4 md:mb-4 text-balance flex-grow"
+            level={1}
           >
-          Назад
-        </button>
+            <SectHeadingAccent>{program.name}</SectHeadingAccent>
+          </SectHeading>
+
+          <div
+            class="flex-grow text-sm font-thin md:text-base max-w-3xl"
+            set:html={program.description}
+          />
+        </div>
+        <InteractiveBlock className="mt-8" news={categoryNews} client:load />
       </div>
     </section>
   </main>

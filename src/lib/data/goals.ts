@@ -11,8 +11,12 @@ export const fetchGoals = withDataFetching(getWpData)(
 export const getGoals = async (astro: AstroGlobal) =>
   axios
     .get<Goal[]>('/api/goals', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getGoals');
+    });
 
 // export const goals = (await fetchGoals()).sort((a, b) => a.order - b.order);

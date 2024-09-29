@@ -8,8 +8,9 @@ export const partnersSchema = object({
   name: string().min(1),
   description: string().min(1),
   image: wpImageOptional,
-  eventsIds: array(number()).or(string()),
+  eventsIds: array(number()).or(string().max(0)),
   charityProgramId: number(),
+  wardsIds: array(number()).or(string().max(0)),
 });
 
 export const partnersArraySchema = partnersSchema.array();

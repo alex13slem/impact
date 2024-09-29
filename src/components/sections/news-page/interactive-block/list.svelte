@@ -1,18 +1,21 @@
 <script lang="ts">
   import type { NewsItemWithRelated } from '@/lib/data/news';
-  import {
-    targetCategoryId,
-    targetNewsId,
-  } from '@/lib/stores/newsInteractiveStore';
   import { cn } from '@/lib/utils';
   import { onMount } from 'svelte';
+  import { query } from '.';
 
   export let className: string = '';
   export let news: NewsItemWithRelated[] = [];
 
-  $: viewedNews = $targetCategoryId
-    ? news.filter(item => item.charityProgramId === $targetCategoryId)
-    : news;
+  $: viewedNews = news.filter(item => {
+    const matchCategory = $query?.category
+      ? item.charityProgram.slug === $query.category
+      : true;
+    const matchRegion = $query?.region
+      ? item.region.slug === $query.region
+      : true;
+    return matchCategory && matchRegion;
+  });
 
   let currentUrl: string;
   onMount(() => {
@@ -23,7 +26,7 @@
 <div class={cn(className, 'xl:max-w-3xl w-full')}>
   {#each viewedNews as item, idx}
     <article
-      on:mouseenter={() => targetNewsId.set(item.id)}
+      on:mouseenter={() => ($query.item = item.slug)}
       class="relative group"
     >
       <a
@@ -33,7 +36,7 @@
       <header class="mb-4 flex items-start gap-5">
         <time
           datetime={new Date(item.date).toString()}
-          class="text-sm px-3 py-1 border border-white rounded-full mt-1"
+          class="text-xs md:text-sm px-3 py-1 border border-white rounded-full mt-1"
         >
           {new Date(item.date).toLocaleDateString('ru-RU', {
             month: 'numeric',
@@ -42,7 +45,7 @@
           })}
         </time>
         <h3
-          class="text-xs sm:text-base lg:text-2xl font-sov-mod uppercase xl:max-w-md"
+          class="text-xs xs:text-sm sm:text-base md:text-2xl font-sov-mod uppercase xl:max-w-md text-accent"
         >
           {item.title}
         </h3>

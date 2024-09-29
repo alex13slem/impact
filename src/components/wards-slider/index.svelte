@@ -7,6 +7,8 @@
   import { register } from 'swiper/element';
   import { Navigation } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
+  import SectHeadingAccent from '../ui/sect-heading-accent.svelte';
+  import SectHeading from '../ui/sect-heading.svelte';
 
   export let className: string = '';
   export let wards: WardWithRelatedData[] = [];
@@ -59,13 +61,13 @@
         width="320"
         alt={ward.name}
       />
-      <h2 class="mt-4 font-sov-mod text-2xl md:text-3xl">
-        {ward.name}
-      </h2>
-      {#each [ward.dateOfBirth ? { text: 'Возраст:', value: new Date().getFullYear() - new Date(ward.dateOfBirth).getFullYear() } : {}, { text: 'Регион:', value: ward.region.name }, { text: 'Диагноз:', value: ward.diagnosis }] as { text, value }}
+      <SectHeading className="!mt-4 !mb-0 !text-2xl md:!text-3xl normal-case">
+        <SectHeadingAccent>{ward.name}</SectHeadingAccent>
+      </SectHeading>
+      {#each [{ text: 'Регион проживания:', value: ward.region.name }, { text: 'Диагноз:', value: ward.diagnosis }] as { text, value }}
         {#if value}
           <div class="mt-2">
-            <h3>{text}</h3>
+            <h4>{text}</h4>
             <p class="mt-1 font-thin">{value}</p>
           </div>
         {/if}

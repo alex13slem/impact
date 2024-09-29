@@ -21,6 +21,24 @@ export const fetchCharityProgramById = (id: number) =>
 export const getCharityPrograms = async (astro: AstroGlobal) =>
   await axios
     .get<CharityProgram[]>('/api/charity-programs', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getCharityPrograms');
+    });
+
+export const getCharityProgramBySlug = async (
+  astro: AstroGlobal,
+  slug: string,
+) =>
+  await axios
+    .get<CharityProgram>(`/api/charity-programs/${slug}`, {
+      baseURL: astro.url!.origin,
+    })
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getCharityProgramBySlug');
+    });

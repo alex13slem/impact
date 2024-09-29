@@ -1,51 +1,100 @@
 ---
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
+import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
+import Button from '@/components/ui/button.svelte';
+import IconDownload from '@/components/ui/icon-download.svelte';
+import IconDocs from '@/components/ui/icons/icon-docs.svelte';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { WardsSlider } from '@/components/wards-slider';
+import { getCharityProgramBySlug } from '@/lib/data/charityPrograms';
+import { getDocs } from '@/lib/data/docs';
 import { getSiteSeo } from '@/lib/data/siteSeo';
 import { getWardsWithRelatedDataByCharity } from '@/lib/data/wards';
 import { cn } from '@/lib/utils';
-import { ViewTransitions } from 'astro:transitions';
 
-const wards = await getWardsWithRelatedDataByCharity(Astro,'pomozj-detyam');
-
-// const docs = await getDocs(Astro)
+const wards = await getWardsWithRelatedDataByCharity(Astro, 'pomozj-detyam');
+const program = await getCharityProgramBySlug(Astro, 'pomozj-detyam');
+const docs = await getDocs(Astro);
+const viewDocs = docs.filter(doc => doc.showIn === 'pomozj-detyam');
 
 const siteSeo = await getSiteSeo(Astro);
-const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
+const seo = siteSeo.find(item => item.slug === 'pomozj-detyam');
+
+const breadcrumbs = [
+  {
+    url: '/',
+    name: 'Главная',
+  },
+  {
+    url: '/programs',
+    name: 'Программы',
+  },
+  {
+    url: '/programs/pomozj-detyam',
+    name: 'Помощь детям',
+  },
+];
 ---
+
 <RootLayout>
-  <!-- <ViewTransitions  slot={'head'}/> -->
-	<Seo
-		slot={'seo'}
-		title={seo?.name || 'Помощь тяжелобольным детям'}
-		description={seo?.description || ''}
-		imageUrls={{fb: seo?.image || ''}}
-	/>
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Помощь тяжелобольным детям'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
 
-	<main>
-    <section class="py-8 xl:py-20 overflow-clip">
+  <main>
+    <section class="py-8 xl:pb-20 xl:pt-5">
       <div class="container">
-        <div class="lg:flex justify-between items-start">
-          <SectHeading className='max-w-3xl mb-4 md:mb-4' level={1}>
-            {seo?.name || 'Помощь тяжелобольным детям'}
+        <Breadcrumbs {breadcrumbs} />
+        <div class="flex justify-between items-start flex-wrap gap-4">
+          <SectHeading
+            className="max-w-4xl mb-4 md:mb-4 text-balance flex-grow"
+            level={1}
+          >
+            <SectHeadingAccent>{program.name}</SectHeadingAccent>
           </SectHeading>
-          <!-- {
-            !!viewDocs.length && (
-              <Button href='/programs/pomozj-detyam/docs' className='flex items-center gap-4 shrink-0'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024"><path fill="currentColor" d="M768 0H416c-35.344 0-64 28.656-64 64h352v256h256v512H736v64h224c35.344 0 64-28.656 64-64V256.016zm0 256V90.496L933.472 256zM64 128c-35.344 0-64 28.656-64 64v768c0 35.344 28.656 64 64 64h544c35.344 0 64-28.656 64-64V384.016L416 128zm544 832H64V192h288v256h256zM416 384V218.496L581.472 384z"/></svg>
-                Документы для подачи заявки
-              </Button>
-            )
-          } -->
+          <div
+            class="flex flex-col gap-4 xl:order-none order-1 mt-4 xl:mt-0 w-full lg:w-auto"
+          >
+            {
+              !!viewDocs && (
+                <Button variant="accent" href="/programs/pomozj-detyam/docs">
+                  <IconDocs class="text-2xl text-dark" /> Документы для подачи
+                  заявки
+                </Button>
+              )
+            }
+            {
+              program.presentation && (
+                <Button
+                  variant="outline"
+                  className=" hover:text-accent transition-colors"
+                  external
+                  href={program.presentation.toString()}
+                >
+                  <IconDownload class="text-2xl text-accent" /> Скачать
+                  программу
+                </Button>
+              )
+            }
+          </div>
+          <div
+            class="flex-grow text-sm font-thin md:text-base max-w-3xl"
+            set:html={program.description}
+          />
         </div>
-        <p class="text-sm font-thin md:text-base max-w-3xl mt-4">{seo?.description || 'Благотворительная программа по оказанию поддержки детям-сиротам и детям, оставшимся без попечения родителей, в сфере образования, профориентации, трудоустройства и социальной адаптации.'}</p>
 
-        <h2 class="text-3xl mt-16 font-sov-mod uppercase">Наши подопечные</h2>
-        <div class="mt-12 relative">
+        <SectHeading className="!text-4xl !mt-16 !mb-8 "
+          >Наши <SectHeadingAccent>подопечные</SectHeadingAccent></SectHeading
+        >
+        <div class="relative">
           <WardsSlider {wards} client:load />
-          {['prev', 'next'].map((dir) => (
+          {
+            ['prev', 'next'].map(dir => (
               <button
                 class={cn(
                   {
@@ -71,9 +120,10 @@ const seo = siteSeo.find((item) => item.slug === 'pomozj-detyam');
                   />
                 </svg>
               </button>
-            ))}
+            ))
+          }
         </div>
       </div>
     </section>
-	</main>
+  </main>
 </RootLayout>

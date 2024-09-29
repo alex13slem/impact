@@ -18,40 +18,40 @@ import { getNews } from '@/lib/data/news';
 import { getSiteSeo } from '@/lib/data/siteSeo';
 import { getWards } from '@/lib/data/wards';
 
-
 const siteSeo = await getSiteSeo(Astro);
 
-const seo = siteSeo.find((item) => item.slug === 'home');
+const seo = siteSeo.find(item => item.slug === 'home');
 
 const [goals, wards, news, charityPrograms] = await Promise.all([
-	getGoals(Astro),
-	getWards(Astro),
-	getNews(Astro),
-	getCharityPrograms(Astro)
+  getGoals(Astro),
+  getWards(Astro),
+  getNews(Astro),
+  getCharityPrograms(Astro),
 ]);
 
-const sortedNews = news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
+const sortedNews = news.sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+);
 ---
 
 <RootLayout>
-	<Seo
-		slot={'seo'}
-		title={seo?.name || 'Главная'}
-		description={seo?.description || ''}
-		imageUrls={{fb: seo?.image || ''}}
-	/>
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Главная'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
 
-	<main >
-		<SectHero {wards} news={sortedNews} {charityPrograms}/>
-		<SectDescription />
-		<SectOurMission />
-		<SectCharityPrograms {charityPrograms} />
-		<SectOurPartners />
-		<SectOurStuff />
-		{ goals.map((goal) => <SectOurGoals {goal} client:load />) }
-		<SectPay />
-		<SectDocuments />
-		<SectContacts />
-	</main>
+  <main>
+    <SectHero {wards} news={sortedNews} {charityPrograms} />
+    <SectDescription />
+    <SectOurMission {charityPrograms} />
+    <SectCharityPrograms {charityPrograms} />
+    <SectOurPartners />
+    <SectOurStuff />
+    {goals.map((goal, idx) => <SectOurGoals {goal} {idx} />)}
+    <SectPay />
+    <SectDocuments />
+    <SectContacts />
+  </main>
 </RootLayout>

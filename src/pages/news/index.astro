@@ -2,15 +2,19 @@
 import { RootLayout } from '@/components/layouts/root';
 import { SectNews } from '@/components/sections/news-page';
 import { Seo } from '@/components/seo';
+import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
 import { getSiteSeo } from '@/lib/data/siteSeo';
-import { ViewTransitions } from 'astro:transitions';
 
 const siteSeo = await getSiteSeo(Astro);
 const seo = siteSeo.find(item => item.slug === 'news');
+
+const breadcrumbs = [
+  { name: 'Главная', url: '/' },
+  { name: 'Новости', url: '/news' },
+];
 ---
 
 <RootLayout>
-  <!-- <ViewTransitions slot={'head'} /> -->
   <Seo
     slot={'seo'}
     title={seo?.name || 'Новости'}
@@ -19,6 +23,9 @@ const seo = siteSeo.find(item => item.slug === 'news');
   />
 
   <main>
+    <div class="container">
+      <Breadcrumbs {breadcrumbs} />
+    </div>
     <SectNews />
   </main>
 </RootLayout>

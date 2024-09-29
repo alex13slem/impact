@@ -1,4 +1,6 @@
 ---
+import firmBg from '@/assets/img/bg.webp';
+
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { ViewDocs } from '@/components/view-docs';
 import { getDocs } from '@/lib/data/docs';
@@ -7,7 +9,11 @@ const docs = await getDocs(Astro);
 const viewDocs = docs.filter(doc => doc.showIn === 'landing');
 ---
 
-<section id="documents" class="py-8 md:py-20 overflow-clip bg-dark">
+<section
+  id="documents"
+  class="py-8 md:py-20 overflow-clip bg-cover bg-center xl:bg-fixed [background-image:var(--bg)]"
+  style={`background-image: url(${firmBg.src});`}
+>
   <div
     class="container max-w-screen-lg lg:min-h-svh flex flex-col justify-center"
   >

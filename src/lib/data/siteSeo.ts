@@ -14,6 +14,10 @@ export const fetchSiteSeo = withDataFetching(getWpData)(
 export const getSiteSeo = (astro: AstroGlobal) =>
   axios
     .get<SiteSeo[]>('/api/seo', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getSiteSeo');
+    });

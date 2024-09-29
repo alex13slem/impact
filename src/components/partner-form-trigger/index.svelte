@@ -9,7 +9,11 @@
 
 <div>
   <!-- Рендерим выбранный элемент или компонент с переданными пропсами и слотом -->
-  <Button on:click={() => (dialogOpen = true)} {...$$restProps}>
+  <Button
+    variant="accent"
+    on:click={() => (dialogOpen = true)}
+    {...$$restProps}
+  >
     <slot />
   </Button>
 

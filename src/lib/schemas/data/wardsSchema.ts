@@ -17,6 +17,7 @@ export const wardsSchema = object({
   regionId: number(),
   gallery: wpGallery.array().or(boolean()).optional(),
   status: wardStatusEnum,
+  partnersIds: number().array().or(string().max(0)),
 });
 
 export const wardsArraySchema = wardsSchema.array();

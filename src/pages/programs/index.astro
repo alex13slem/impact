@@ -1,0 +1,39 @@
+---
+import { RootLayout } from '@/components/layouts/root';
+import { SectCharityProgramsDetail } from '@/components/sections/charity-programs-detail';
+import { SectContacts } from '@/components/sections/contacts';
+import { SectHeroDetail } from '@/components/sections/hero-detail';
+import { Seo } from '@/components/seo';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import { getCharityPrograms } from '@/lib/data/charityPrograms';
+
+import { getSiteSeo } from '@/lib/data/siteSeo';
+
+const siteSeo = await getSiteSeo(Astro);
+
+const seo = siteSeo.find(item => item.slug === 'programs');
+const charityPrograms = await getCharityPrograms(Astro);
+---
+
+<RootLayout>
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Наши программы'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
+
+  <main>
+    <SectHeroDetail>
+      <SectHeading
+        level={1}
+        className="text-center text-xl xs:text-2xl sm:text-3xl md:text-5xl xl:text-7xl"
+        >Наши
+        <SectHeadingAccent>программы</SectHeadingAccent>
+      </SectHeading>
+    </SectHeroDetail>
+    <SectCharityProgramsDetail {charityPrograms} />
+    <SectContacts />
+  </main>
+</RootLayout>

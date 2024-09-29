@@ -2,9 +2,7 @@
   //@ts-ignore
   import bg from '@/assets/img/bg.webp';
   //@ts-ignore
-  import line420 from '@/assets/img/line-420.svg';
   //@ts-ignore
-  import line460 from '@/assets/img/line-460.svg';
   import {
     loading,
     mapVisible,
@@ -79,33 +77,33 @@
           transformOrigin: 'center center',
           filter: 'blur(10px)',
         }),
-        gsap.to('#loading-section img.h-line.top', {
-          translateX: '-100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-        }),
-        gsap.to('#loading-section img.h-line.bottom', {
-          translateX: '100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-          delay: 0.1,
-        }),
-        gsap.to('#loading-section img.v-line.left', {
-          translateY: '100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-          delay: 0.2,
-        }),
-        gsap.to('#loading-section img.v-line.right', {
-          translateY: '-100%',
-          duration: 1,
-          ease: 'back.out',
-          opacity: 0,
-          delay: 0.3,
-        }),
+        // gsap.to('#loading-section img.h-line.top', {
+        //   translateX: '-100%',
+        //   duration: 1,
+        //   ease: 'back.out',
+        //   opacity: 0,
+        // }),
+        // gsap.to('#loading-section img.h-line.bottom', {
+        //   translateX: '100%',
+        //   duration: 1,
+        //   ease: 'back.out',
+        //   opacity: 0,
+        //   delay: 0.1,
+        // }),
+        // gsap.to('#loading-section img.v-line.left', {
+        //   translateY: '100%',
+        //   duration: 1,
+        //   ease: 'back.out',
+        //   opacity: 0,
+        //   delay: 0.2,
+        // }),
+        // gsap.to('#loading-section img.v-line.right', {
+        //   translateY: '-100%',
+        //   duration: 1,
+        //   ease: 'back.out',
+        //   opacity: 0,
+        //   delay: 0.3,
+        // }),
         gsap.to('#loading-section .impact .letter', {
           opacity: 1,
           stagger: 0.1,
@@ -167,9 +165,9 @@
         gsap.to('#loading-section .map', {
           transformOrigin: 'center',
           ease: 'power2.inOut',
-          duration: 0.5,
+          duration: 1,
           opacity: 0,
-          scale: 1.2,
+          scale: 2,
           delay: 5,
         }),
       ]);
@@ -185,12 +183,12 @@
     } else {
       animateMap();
     }
+
     // animateMap();
   });
 </script>
 
 <svelte:head>
-  <!-- {#if $loading && showOnPage} -->
   {#if $loading && showOnPage && !introIsSeen}
     <!-- {#if true} -->
     <style>
@@ -207,58 +205,51 @@
     bind:this={root}
     transition:blur={{ duration: 1000 }}
     id="loading-section"
-    class={cn(
-      'h-svh bg-cover fixed inset-0 z-50 pt-[76px] md:pt-[112px] lg:pt-[121px] overflow-clip',
-      {
-        // 'opacity-0': !showOnPage,
-        'opacity-0': !showOnPage || introIsSeen,
-      },
-    )}
+    class={cn('bg-cover fixed inset-0 z-50 overflow-clip', {
+      // 'opacity-0': !showOnPage,
+      'opacity-0': !showOnPage || introIsSeen,
+    })}
     style="background-image: url({bg.src});"
   >
-    <div
-      class="container min-h-[calc(100svh-76px)] md:min-h-[calc(100svh-112px)] lg:min-h-[calc(100svh-121px)] pb-5 md:pb-8 lg:pb-10 px-0 relative z-0 grid place-items-center"
-    >
-      <!-- <div class="contents">
-      </div> -->
+    <div class="container h-svh px-0 relative z-0 grid place-items-center">
       <SvgMap
         className={cn(
           'col-start-1 col-end-1 row-start-1 row-end-1 p-4 map pointer-events-none ',
         )}
       />
-      <img
+      <!-- <img
         class={cn(
-          ' absolute v-line left left-[calc(50%-55px)] md:left-[calc(50%-76px)] top-[calc(50%-230px)] md:top-[calc(50%-230px)]',
+          ' absolute v-line left left-[calc(50%-55px)] md:left-[calc(50%-78px)] top-[calc(50%-210px)]',
         )}
         src={line420.src}
         alt=""
       />
       <img
         class={cn(
-          ' absolute v-line right left-[calc(50%+53px)] md:left-[calc(50%+76px)] top-[calc(50%-230px)] md:top-[calc(50%-230px)]',
+          ' absolute v-line right left-[calc(50%+53px)] md:left-[calc(50%+75px)] top-[calc(50%-210px)]',
         )}
         src={line420.src}
         alt=""
       />
       <img
         class={cn(
-          ' absolute h-line top top-[calc(50%-107px)] md:top-[calc(50%-152px)] lg:top-[calc(50%-157px)]',
+          ' absolute h-line top top-[calc(50%-97px)] md:top-[calc(50%-136px)]',
         )}
         src={line460.src}
         alt=""
       />
       <img
         class={cn(
-          'absolute h-line bottom top-[calc(50%+86px)] md:top-[calc(50%+119px)] lg:top-[calc(50%+114px)]',
+          'absolute h-line bottom top-[calc(50%+96px)] md:top-[calc(50%+135px)]',
         )}
         src={line460.src}
         alt=""
-      />
+      /> -->
 
       <svg
-        class="logo relative col-start-1 col-end-1 row-start-1 row-end-1"
-        width="152"
-        height="271"
+        class="logo relative col-start-1 col-end-1 row-start-1 row-end-1 text-[12rem] md:text-[271px]"
+        width="1em"
+        height="1em"
         viewBox="0 0 152 271"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

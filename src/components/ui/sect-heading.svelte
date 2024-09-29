@@ -10,7 +10,7 @@
 <svelte:element
   this={Tag}
   class={cn(
-    'text-xl sm:text-2xl md:text-5xl font-sov-mod uppercase leading-none mb-5 md:mb-12',
+    'heading text-xl xs:text-2xl sm:text-3xl md:text-5xl font-sov-mod uppercase leading-none mb-5 md:mb-12',
     className,
   )}
 >

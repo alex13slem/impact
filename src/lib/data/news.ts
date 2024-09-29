@@ -45,7 +45,7 @@ export const getLastNews = (news: NewsItem[], num = 5) => news.slice(0, num);
 export const getNews = async (astro: AstroGlobal, showDraft = false) =>
   axios
     .get<NewsItemWithRelated[]>('/api/news', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
       headers: {
         Accept: 'application/json',
       },
@@ -53,17 +53,25 @@ export const getNews = async (astro: AstroGlobal, showDraft = false) =>
         'show-draft': showDraft ? 'true' : undefined,
       },
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getNews');
+    });
 
 export const getNewsItemBySlug = async (astro: AstroGlobal, slug: string) =>
   axios
     .get<NewsItemWithRelated>(`/api/news/${slug}`, {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
       headers: {
         Accept: 'application/json',
       },
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getNewsItemBySlug');
+    });
 
 export type NewsItemWithRelated = Awaited<
   ReturnType<typeof fetchNewsWithRelatedById>

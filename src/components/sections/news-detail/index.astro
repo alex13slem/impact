@@ -1,10 +1,9 @@
 ---
 import { GallerySlider } from '@/components/gallery-slider';
-import ButtonBack from '@/components/ui/button-back.svelte';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import type { NewsItemWithRelated } from '@/lib/data/news';
 import type { WpGallery } from '@/lib/schemas/wpGallery';
-import { cn } from '@/lib/utils';
 
 interface Props {
   item: NewsItemWithRelated;
@@ -17,55 +16,14 @@ const gallery: WpGallery[] = [
 ];
 ---
 
-<section class="py-8 md:py-20">
+<section class="pb-8 md:pb-20 overflow-clip">
   <div class="container relative z-0">
     <SectHeading className="" level={1}>
-      {item.title}
+      <SectHeadingAccent>{item.title}</SectHeadingAccent>
     </SectHeading>
-    <div class={'xl:flex gap-8 xl:gap-10 justify-center'}>
-      <div class={'flex flex-col flex-1 self-start  mb-8'}>
-        <div class="relative w-fit mx-auto">
-          <div
-            class="absolute inset-y-5 -inset-x-7 bg-white/20 -z-10 rounded-3xl"
-          >
-          </div>
-          <GallerySlider {gallery} client:load />
-          {
-            ['prev', 'next'].map(dir => (
-              <button
-                class={cn(
-                  {
-                    'prev-btn left-0 -translate-x-1/2 rotate-180':
-                      dir === 'prev',
-                    'next-btn right-0 translate-x-1/2 ': dir === 'next',
-                  },
-                  'bg-dark absolute top-1/2 -translate-y-1/2 z-20  rounded-full  p-3 disabled:opacity-30 hover:bg-dark/80 transition-colors',
-                )}
-                slot="container-end"
-              >
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 12.6865 9.69238"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <path
-                    d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
-                    stroke="currentColor"
-                    stroke-opacity="1"
-                    stroke-width="1"
-                  />
-                </svg>
-              </button>
-            ))
-          }
-        </div>
-
-        <div class="flex gap-4 mt-5">
-          <ButtonBack client:load />
-        </div>
+    <div class={'flex flex-col xl:flex-row gap-10 xl:gap-20'}>
+      <div class={''}>
+        <GallerySlider {gallery} client:load />
       </div>
 
       <div class={'xl:max-w-3xl w-full prose'} set:html={item.body} />

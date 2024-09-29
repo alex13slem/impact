@@ -1,7 +1,6 @@
 <script lang="ts">
   import { filterCharityProgram } from '@/lib/stores/charityProgramsStore';
   import { cn } from '@/lib/utils';
-  import { handleFilterCharityProgram } from '@/lib/utils/eventHandlers';
   import IconHeartHands from '../ui/icons/icon-heart-hands.svelte';
   import IconPrayerHands from '../ui/icons/icon-prayer-hands.svelte';
   import IconSocialUp from '../ui/icons/icon-social-up.svelte';
@@ -9,19 +8,24 @@
   import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 
   export let charityPrograms: CharityProgram[] = [];
+  export let className: string = '';
 </script>
 
-<nav class="flex flex-col items-start gap-2 w-fit sticky left-0 pl-5 md:pl-6">
+<nav class={cn('flex flex-col items-start gap-2 w-fit ', className)}>
   {#each charityPrograms as c}
     <button
-      on:click={handleFilterCharityProgram}
+      on:click={() =>
+        $filterCharityProgram === c.slug
+          ? ($filterCharityProgram = null)
+          : ($filterCharityProgram = c.slug)}
       class={cn(
+        // on:click={handleFilterCharityProgram}
         {
           'text-accent': c.slug === $filterCharityProgram,
         },
-        'relative group lg:hover:text-accent transition-colors',
+        'relative group xl:hover:text-accent transition-colors',
+        // data-charity-program={c.slug}
       )}
-      data-charity-program={c.slug}
     >
       {#if c.slug === 'nezhnie-ruki'}
         <IconHeartHands
@@ -42,7 +46,7 @@
 
       <span
         class={cn(
-          'max-w-20 md:max-w-none leading-none text-xs md:text-base absolute pointer-events-none left-full top-1/2 -translate-y-1/2 opacity-0 lg:group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
+          'max-w-20 md:max-w-none leading-none text-xs md:text-base absolute pointer-events-none left-full top-1/2 -translate-y-1/2 opacity-0 xl:group-hover:opacity-100 transition-opacity w-max translate-x-2 ',
           {
             'opacity-100': c.slug === $filterCharityProgram,
           },

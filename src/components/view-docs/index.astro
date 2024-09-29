@@ -1,29 +1,35 @@
 ---
-import docImg from "@/assets/img/doc.png";
-import type { Docs } from "@/lib/schemas/data/docsSchema";
-import { cn } from "@/lib/utils";
-import type { HTMLAttributes } from "astro/types";
-
+import docImg from '@/assets/img/icon-pdf.svg';
+import type { Docs } from '@/lib/schemas/data/docsSchema';
+import { cn } from '@/lib/utils';
+import type { HTMLAttributes } from 'astro/types';
 
 interface Props extends HTMLAttributes<'div'> {
-  docs: Docs[]
+  docs: Docs[];
 }
 
-const { docs, class: className, ...props } = Astro.props
+const { docs, class: className, ...props } = Astro.props;
 ---
 
-<div class={cn("flex flex-col lg:flex-row gap-4", className)} {...props}>
+<div
+  class={cn('grid md:grid-cols-2 xl:grid-cols-4 gap-4', className)}
+  {...props}
+>
   {
-    docs.sort((a, b) => (a.order||0) - (b.order || 0)).map((doc) => (
-      <article class="flex-1 relative pr-20 p-6 md:pr-24  md:p-8 lg:pr-8  flex gap-5 items-center lg:items-stretch lg:gap-24 lg:flex-col lg:justify-between border border-white rounded-3xl lg:aspect-square">
-        <a href={doc.link} target="_blank" class="absolute inset-0"/>
-        <svg class="absolute top-1/2 -translate-y-1/2 lg:translate-y-0 lg:top-8 right-6 md:right-8 text-4xl -z-10" width="1em" height="1em" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="19.2259" cy="19.2745" r="18.3581" stroke="currentColor" stroke-width="1.42903"/>
-          <path d="M20.0926 10.6052L27.895 18.4076M27.895 18.4076L20.0926 26.2101M27.895 18.4076L8.82244 18.4076" stroke="currentColor" stroke-width="1.42903"/>
-        </svg>
-        <img width="76" class="aspect-[3/4] object-cover object-center w-9 md:w-16" loading="lazy" src={typeof doc.image === 'string' ? doc.image : docImg.src} alt={doc.name}>
-        <h3 class="text-lg md:text-xl lg:min-h-20">{doc.name}</h3>
-      </article>
-    ))
+    docs
+      .sort((a, b) => (a.order || 0) - (b.order || 0))
+      .map(doc => (
+        <article class="flex-grow relative p-8 xl:pt-14  flex gap-5 items-center lg:items-stretch lg:gap-20 lg:flex-col lg:justify-between border border-white rounded-3xl lg:aspect-square">
+          <a href={doc.link} target="_blank" class="absolute inset-0" />
+
+          <img
+            class="object-center w-9 md:w-16 lg:w-28 lg:mx-auto aspect-[3/4]"
+            loading="lazy"
+            src={typeof doc.image === 'string' ? doc.image : docImg.src}
+            alt={doc.name}
+          />
+          <h3 class="text-lg md:text-xl lg:min-h-20">{doc.name}</h3>
+        </article>
+      ))
   }
 </div>

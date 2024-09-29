@@ -9,13 +9,23 @@
   export let point: PointWithCoordinates;
 
   const photo = typeof point.image === 'string' ? point.image : phPhoto.src;
+
+  let link;
+  if (point.charityProgramSlug === 'pomozj-detyam') {
+    link = point.link;
+  } else {
+    const query = new URLSearchParams();
+    query.set('category', point.charityProgramSlug);
+    query.set('region', point.region.slug);
+    link = '/news?' + query.toString();
+  }
 </script>
 
 <article
   transition:fade={{ duration: 100 }}
   class={cn(
     className,
-    'p-4 lg:p-6 backdrop-blur rounded-3xl max-w-[320px] md:max-w-[400px] border border-white border-opacity-80',
+    'p-4 lg:p-6 backdrop-blur rounded-3xl max-w-[320px] md:max-w-[400px] border bg-dark/40 border-white border-opacity-80',
   )}
 >
   <Popover.Close
@@ -48,8 +58,13 @@
   <button
     class="flex justify-center items-center gap-2 relative text-lg leading-none w-full text-dark bg-white bg-opacity-80 rounded-2xl p-3 lg:p-4 lg:hover:bg-opacity-90 transition-all"
   >
-    <a href={point.link} class="absolute inset-0 opacity-0">.</a>
-    Узнать подробнее
+    <a href={link} class="absolute inset-0 opacity-0">.</a>
+    {#if point.charityProgramSlug === 'pomozj-detyam'}
+      Узнать подробнее
+    {:else}
+      Новости региона
+    {/if}
+
     <svg
       width="12.686523"
       height="9.692383"

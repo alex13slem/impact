@@ -49,9 +49,13 @@ export const fetchPartnerWithRelatedById = async (id: number) => {
 export const getPartners = async (astro: AstroGlobal) =>
   axios
     .get<PartnerWithRelations[]>('/api/partners', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getPartners');
+    });
 
 export type PartnerWithRelatedData = Awaited<
   ReturnType<typeof fetchPartnersWithRelatedData>

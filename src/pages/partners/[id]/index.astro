@@ -1,11 +1,11 @@
 ---
-import ogImage from "@/assets/img/og.webp";
-import { RootLayout } from "@/components/layouts/root";
-import { SectPartner } from "@/components/sections/partner-page";
-import { Seo } from "@/components/seo";
-import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
-import type { GetStaticPaths } from "astro";
-import { ViewTransitions } from 'astro:transitions';
+import ogImage from '@/assets/img/og.webp';
+import { RootLayout } from '@/components/layouts/root';
+import { SectPartner } from '@/components/sections/partner-page';
+import { Seo } from '@/components/seo';
+import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
+import { fetchPartnersWithRelatedData } from '@/lib/data/partners';
+import type { GetStaticPaths } from 'astro';
 
 // const { id: paramsId } = Astro.params;
 // const id = Number(paramsId);
@@ -14,37 +14,52 @@ import { ViewTransitions } from 'astro:transitions';
 // const partner = partners.filter(p => !!p.events?.length).find(p => p.id === id);
 // if (!partner) return Astro.redirect("/404");
 
-export const getStaticPaths = ( async () => {
-	const partners = (await fetchPartnersWithRelatedData()).filter(p => !!p.events.length);
+export const getStaticPaths = (async () => {
+  const partners = (await fetchPartnersWithRelatedData()).filter(
+    p => !!p.events.length,
+  );
 
   const paths = partners
     .filter(p => !!p.events.length)
-    .map( (partner) => {
-    return {
-      params: {
-        id: partner.id
-      },
-      props: {
-        partner
-      }
-    }
-  });
+    .map(partner => {
+      return {
+        params: {
+          id: partner.id,
+        },
+        props: {
+          partner,
+        },
+      };
+    });
   return paths;
 }) satisfies GetStaticPaths;
-const { partner } = Astro.props
+const { partner } = Astro.props;
 
+const breadcrumbs = [
+  {
+    name: 'Главная',
+    url: '/',
+  },
 
-
+  {
+    name: partner.name,
+    url: `/partners/${partner.id}`,
+  },
+];
 ---
+
 <RootLayout>
-	<!-- <ViewTransitions  slot={'head'} /> -->
-	<Seo
-		slot={'seo'}
-		title={partner.name}
-		description={partner.description}
-		imageUrls={{fb: partner.image ? partner.image.toString() : ogImage.src}}
-	/>
-	<main>
+  <!-- <ViewTransitions  slot={'head'} /> -->
+  <Seo
+    slot={'seo'}
+    title={partner.name}
+    description={partner.description}
+    imageUrls={{ fb: partner.image ? partner.image.toString() : ogImage.src }}
+  />
+  <main>
+    <div class="container">
+      <Breadcrumbs {breadcrumbs} />
+    </div>
     <SectPartner {partner} />
-	</main>
+  </main>
 </RootLayout>

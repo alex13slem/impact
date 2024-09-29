@@ -14,7 +14,7 @@ export const navLinks: NavLink[] = [
   // },
   {
     name: 'Программы',
-    link: '/#social-programs',
+    link: '/programs',
   },
   {
     name: 'Партнёры',
@@ -31,6 +31,14 @@ export const navLinks: NavLink[] = [
   {
     name: 'Документы',
     link: '/#documents',
+  },
+  {
+    name: 'Отчёты',
+    link: '/reports',
+  },
+  {
+    name: 'Благодарности',
+    link: '/thanks',
   },
   {
     name: 'Контакты',

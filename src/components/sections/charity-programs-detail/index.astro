@@ -1,0 +1,15 @@
+---
+import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
+import { Slider } from './slider';
+interface Props {
+  charityPrograms: CharityProgram[];
+}
+
+const { charityPrograms } = Astro.props;
+---
+
+<section class="programs py-8 md:py-20 overflow-clip">
+  <div class="container">
+    <Slider {charityPrograms} client:load />
+  </div>
+</section>

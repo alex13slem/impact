@@ -3,18 +3,21 @@
 
   export let className: string = '';
   export let href: string = '';
-  export let variant: 'light' | 'dark' = 'light';
+  export let variant: 'light' | 'dark' | 'accent' | 'outline' = 'light';
   export let external: boolean = false;
 </script>
 
 <button
   on:click
   class={cn(
-    'text-sm md:text-base rounded-xl md:rounded-2xl py-3 md:py-4 px-5 md:px-7 leading-none relative',
+    'flex items-center justify-center gap-3 text-sm md:text-base rounded-xl md:rounded-2xl py-3 md:py-4 px-5 md:px-7 leading-none relative',
     className,
     {
       'bg-white text-dark': variant === 'light',
       'bg-dark text-white': variant === 'dark',
+      'bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-dark':
+        variant === 'accent',
+      'border border-accent': variant === 'outline',
     },
   )}
 >

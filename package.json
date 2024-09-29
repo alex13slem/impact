@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview --host 0.0.0.0",
-    "astro": "astro"
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
@@ -44,6 +44,7 @@
     "@types/html-to-text": "^9.0.4",
     "@types/nodemailer": "^6.4.15",
     "@yandex/ymaps3-types": "^0.0.27",
+    "cheerio": "^1.0.0",
     "prettier": "^3.3.3"
   }
 }

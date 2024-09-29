@@ -1,34 +1,102 @@
 ---
+import image1 from '@/assets/img/command/1.jpg';
+import image2 from '@/assets/img/command/2.jpg';
+import image3 from '@/assets/img/command/3.jpg';
+import image4 from '@/assets/img/command/4.jpg';
+import image5 from '@/assets/img/command/5.jpg';
+import Button from '@/components/ui/button.svelte';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-
-import { getStaffs } from '@/lib/data/staffs';
-import { getStaffsPositions } from '@/lib/data/staffsPositions';
-import Tabs from './tabs.svelte';
-
-const staffs = await getStaffs(Astro);
-const staffsPositions = await getStaffsPositions(Astro);
+import { Image } from 'astro:assets';
 ---
 
-<section class="our-stuff bg-white text-dark pt-8 lg:py-20 overflow-clip">
-  <div class="lg:container p-0 lg:px-4">
-    <div class="bg-dark bg-opacity-5 py-9 px-4 md:p-16 lg:rounded-3xl">
-      <SectHeading className="text-center">Команда</SectHeading>
-      <div
-        class="text-balance prose hidden-block dir-bottom text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto mb-8 md:mb-10 lg:mb-16"
-      >
-        <p>
+<section class="our-stuff relative z-10 overflow-clip">
+  <div class="container relative min-h-svh pt-8 flex flex-col justify-center">
+    <div class="absolute inset-0 -z-10">
+      <Image
+        src={image1}
+        alt="image"
+        class="absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[226px] md:h-[277px] object-cover object-center opacity-20 top-0 left-[14%]"
+        width={226}
+        height={277}
+      />
+      <Image
+        src={image2}
+        alt="image"
+        class="absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[247px] md:h-[330px] object-cover object-center opacity-20 top-[3%] right-[0]"
+        width={247}
+        height={330}
+      />
+      <Image
+        src={image3}
+        alt="image"
+        class="absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[195px] md:h-[260px] object-cover object-center opacity-20 top-[55%] right-[-5%] md:right-0"
+        width={195}
+        height={260}
+      />
+      <Image
+        src={image4}
+        alt="image"
+        class="absolute w-[32%] aspect-[3/4] md:aspect-auto md:w-[203px] md:h-[261px] object-cover object-center opacity-20 bottom-[-2%] left-1/2 -translate-x-1/2"
+        width={203}
+        height={261}
+      />
+      <Image
+        src={image5}
+        alt="image"
+        class="absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[281px] md:h-[345px] object-cover object-center opacity-20 top-1/2 left-[-5%] md:left-0"
+        width={281}
+        height={345}
+      />
+    </div>
+
+    <SectHeading className="text-center">
+      <SectHeadingAccent>Команда</SectHeadingAccent>
+    </SectHeading>
+    <div
+      class="text-balance prose hidden-block dir-bottom text-center max-w-2xl mx-auto"
+    >
+      <p>
+        <b>
           В нашей команде объединены люди, чьи опыт, знания, возможности и
           искренняя вера в добро позволяют не просто оказать необходимую помощь
           подопечным, а создать и внедрить современную и эффективную программу
           социальной адаптации, не имеющей аналогов в нашей стране.
-        </p>
-        <p>
-          В рамках сотрудничества с крупнейшими медицинскими учреждениями России
-          способствовать повышению скорости и результативности оказания
-          высокотехнологичной медицинской помощи.
-        </p>
-      </div>
-      <Tabs client:load {staffs} {staffsPositions} />
+        </b>
+      </p>
+      <p>
+        В рамках сотрудничества с крупнейшими медицинскими учреждениями России
+        способствовать повышению скорости и результативности оказания
+        высокотехнологичной медицинской помощи.
+      </p>
     </div>
+    <Button
+      href="/team"
+      className="self-center mt-10 hidden-block dir-bottom hidden xl:inline-block"
+      >Подробнее о команде</Button
+    >
+    <p class="mt-5 mx-auto xl:hidden">
+      <a
+        href="/team"
+        class="border-b border-white flex justify-center gap-2 items-center w-fit"
+      >
+        О команде
+        <svg
+          class="text-[12px]"
+          width="1em"
+          height="1em"
+          viewBox="0 0 12.6865 9.69238"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
+            stroke="currentColor"
+            stroke-opacity="1"
+            stroke-width="1"></path>
+        </svg>
+      </a>
+    </p>
   </div>
 </section>

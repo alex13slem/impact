@@ -1,0 +1,52 @@
+---
+import { RootLayout } from '@/components/layouts/root';
+import { SectContacts } from '@/components/sections/contacts';
+import { SectHeroDetail } from '@/components/sections/hero-detail';
+import { SectOurStuffDetail } from '@/components/sections/our-staff-detail';
+import { Seo } from '@/components/seo';
+import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+
+import { getSiteSeo } from '@/lib/data/siteSeo';
+
+const siteSeo = await getSiteSeo(Astro);
+
+const seo = siteSeo.find(item => item.slug === 'staff');
+const breadcrumbs = [
+  {
+    name: 'Главная',
+    url: '/',
+  },
+
+  {
+    name: 'Наша команда',
+    url: `/team`,
+  },
+];
+---
+
+<RootLayout>
+  <Seo
+    slot={'seo'}
+    title={seo?.name || 'Наша команда'}
+    description={seo?.description || ''}
+    imageUrls={{ fb: seo?.image || '' }}
+  />
+
+  <main>
+    <SectHeroDetail>
+      <SectHeading
+        level={1}
+        className="text-center text-xl xs:text-2xl sm:text-3xl md:text-5xl xl:text-7xl"
+        >Наша
+        <SectHeadingAccent>команда</SectHeadingAccent>
+      </SectHeading>
+    </SectHeroDetail>
+    <div class="container pt-8">
+      <Breadcrumbs {breadcrumbs} />
+    </div>
+    <SectOurStuffDetail />
+    <SectContacts />
+  </main>
+</RootLayout>

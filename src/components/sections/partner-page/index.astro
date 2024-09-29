@@ -1,32 +1,36 @@
 ---
-import SectHeading from '@/components/ui/sect-heading.svelte'
-import type { PartnerWithRelatedData } from '@/lib/data/partners'
-import InteractiveBlock from './interactive-block/index.svelte'
+import bg from '@/assets/img/bg.webp';
+import SectHeading from '@/components/ui/sect-heading.svelte';
+import type { PartnerWithRelatedData } from '@/lib/data/partners';
+import InteractiveBlock from './interactive-block/index.svelte';
 
 interface Props {
-  partner: PartnerWithRelatedData
+  partner: PartnerWithRelatedData;
 }
 
-const { partner } = Astro.props
+const { partner } = Astro.props;
 ---
 
-<section class="py-8 xl:py-20">
+<section class="pb-8 xl:pb-20">
   <div class="container">
-    <SectHeading className=' mb-4 md:mb-4' level={1}>
+    <SectHeading className=" mb-4 md:mb-4 text-accent" level={1}>
       {partner.name}
     </SectHeading>
-    <div class="mt-4 max-w-3xl prose" set:html={partner.description}></div>
+    <div class="mt-4 max-w-3xl prose" set:html={partner.description} />
     <div
-      class={'xl:hidden bg-white bg-opacity-60 aspect-video rounded-3xl overflow-clip my-5 p-5'}
+      style={`--bg: url(${bg.src});`}
+      class={'xl:hidden [background-image:var(--bg)] bg-cover aspect-video rounded-3xl overflow-clip my-5 p-5'}
     >
-    {partner.image && (
-      <img
-        src={partner.image.toString()}
-        class="w-full h-full object-contain object-center "
-        alt={partner.name}
-      />
-    )}
+      {
+        partner.image && (
+          <img
+            src={partner.image.toString()}
+            class="w-full h-full object-contain object-center "
+            alt={partner.name}
+          />
+        )
+      }
     </div>
-    <InteractiveBlock className='mt-8' client:load {partner} />
+    <InteractiveBlock className="mt-8" client:load {partner} />
   </div>
 </section>

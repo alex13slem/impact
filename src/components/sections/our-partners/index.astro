@@ -1,4 +1,5 @@
 ---
+import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { getPartners } from '@/lib/data/partners';
 import Slider from './slider.svelte';
@@ -6,14 +7,13 @@ import Slider from './slider.svelte';
 const partners = await getPartners(Astro);
 ---
 
-<section
-  id="our-partners"
-  class="our-partners bg-white text-dark py-8 lg:py-20 overflow-clip"
->
+<section id="our-partners" class="our-partners py-8 lg:py-20 overflow-clip">
   <div class="container">
-    <SectHeading className="text-center">Наши партнеры</SectHeading>
+    <SectHeading className="text-center"
+      >Наши <SectHeadingAccent>партнеры</SectHeadingAccent></SectHeading
+    >
     <p
-      class="hidden-block dir-bottom text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto mb-8 md:mb-10 lg:mb-16"
+      class="hidden-block dir-bottom prose text-center max-w-2xl mx-auto mb-8 md:mb-10 lg:mb-16"
     >
       Мы сотрудничаем с медицинскими организациями, учебными и детскими
       учреждениями, а также российскими компаниями, которые разделяют наши цели

@@ -38,9 +38,13 @@ export const fetchWardWithRelatedById = async (id: number) => {
 export const getWards = (astro: AstroGlobal) =>
   axios
     .get<WardWithRelatedData[]>('/api/wards', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getWards');
+    });
 
 export const getWardsWithRelatedDataByCharity = async (
   astro: AstroGlobal,
@@ -48,10 +52,14 @@ export const getWardsWithRelatedDataByCharity = async (
 ) => {
   return axios
     .get<WardWithRelatedData[]>('/api/wards', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
       params: { 'charity-program': slug },
     })
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e.message);
+      throw new Error('Failed to fetch data in getWards');
+    });
 };
 
 export type WardWithRelatedData = Awaited<
