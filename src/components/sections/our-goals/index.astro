@@ -1,5 +1,4 @@
 ---
-import firmBg from '@/assets/img/bg.webp';
 import cursorFragment from '@/assets/img/cursor-fragment.svg';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import type { Goal } from '@/lib/schemas/data/goalsSchema';
@@ -25,7 +24,7 @@ const { image, description, counter } = goal;
   ]}
   {...props}
 >
-  {
+  <!-- {
     [2].includes(idx) && (
       <div
         style={`--bg: url(${firmBg.src});`}
@@ -33,7 +32,7 @@ const { image, description, counter } = goal;
         class:list={[{ '-top-1/3 ': idx === 0, '-bottom-1/3  ': idx === 2 }]}
       />
     )
-  }
+  } -->
   <div
     class="absolute inset-0 xl:inset-0 xl:rounded-none -z-10 overflow-clip"
     class:list={[
