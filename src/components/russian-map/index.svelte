@@ -6,7 +6,7 @@
   import { loading } from '@/lib/stores/pageLoadingStore';
   import { cn } from '@/lib/utils';
   import { fade } from 'svelte/transition';
-  import Point from './point v.1.svelte';
+  import Point from './point-v.1.svelte';
   import SvgMap from './svg-map.svelte';
 
   export let className: string = '';

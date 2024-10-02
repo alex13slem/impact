@@ -116,12 +116,7 @@
       </defs>
     {/if} -->
 
-  <g
-    role="button"
-    tabindex="0"
-    bind:this={content}
-    use:zoomPan={{ mapNews, regionsPaths }}
-  >
+  <g role="button" tabindex="0" bind:this={content} use:zoomPan>
     {#each regionsPaths as path, i (path.d)}
       <path
         style="animation-delay: {i * 50}ms;"
