@@ -3,6 +3,7 @@ import { SectCharityPrograms } from '@/components/sections/charity-programs';
 import { SectContacts } from '@/components/sections/contacts';
 import { SectDescription } from '@/components/sections/description';
 import { SectDocuments } from '@/components/sections/documents';
+import { SectHero } from '@/components/sections/hero';
 import { SectOurMission } from '@/components/sections/our-mission';
 import { SectOurPartners } from '@/components/sections/our-partners';
 import { SectOurStuff } from '@/components/sections/our-staff';
@@ -42,11 +43,11 @@ const sortedNews = news.sort(
   />
 
   <main>
-    <!-- <SectHero
+    <SectHero
       wards={wards}
       news={sortedNews}
       charityPrograms={charityPrograms}
-    /> -->
+    />
     <SectDescription />
     <SectOurMission {charityPrograms} />
     <SectCharityPrograms {charityPrograms} />
