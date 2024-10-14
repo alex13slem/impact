@@ -46,9 +46,6 @@ export const getNews = async (astro: AstroGlobal, showDraft = false) =>
   axios
     .get<NewsItemWithRelated[]>('/api/news', {
       baseURL: astro.site!.origin,
-      headers: {
-        Accept: 'application/json',
-      },
       params: {
         'show-draft': showDraft ? 'true' : undefined,
       },
