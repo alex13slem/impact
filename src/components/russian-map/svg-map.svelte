@@ -16,7 +16,6 @@
   import { cn } from '@/lib/utils';
   import { breakpointsTw } from '@/lib/utils/tailwind';
   import { breakpoints } from '@sveu/browser';
-  import { navigate } from 'astro:transitions/client';
   import { onMount, tick } from 'svelte';
 
   // const { platform, brands } = useragent();
@@ -120,12 +119,12 @@
     {#each regionsPaths as path, i (path.d)}
       <path
         style="animation-delay: {i * 50}ms;"
-        data-region={path.name || 'region' + i + 1}
+        data-region={path.name}
         class={cn(
           {
             'highlight-anim': $loading && $mapVisible,
           },
-          ' stroke-accent stroke-[0.3px] transition-all duration-500 outline-none ease-in-out  hover:stroke-[1.5px] hover:drop-shadow-2xl hover:fill-accent ',
+          ' stroke-accent stroke-[0.3px] transition-all duration-500 outline-none ease-in-out hover:stroke-[1.5px] hover:drop-shadow-2xl hover:fill-accent ',
         )}
         d={path.d}
         fill={'#164264'}
@@ -133,20 +132,7 @@
         on:mouseout={handleMouseOut}
         on:focus={handleMouseOver}
         on:blur={handleMouseOut}
-        on:click={() => {
-          if (path.name.startsWith('path')) return;
-          navigate('/news?region=' + path.name);
-        }}
-        on:keypress={event => {
-          if (path.name.startsWith('path')) return;
-          if (event.key === 'Enter') {
-            navigate('/news?region=' + path.name);
-          }
-        }}
-        on:pointerdown={() => {
-          if (path.name.startsWith('path')) return;
-          navigate('/news?region=' + path.name);
-        }}
+        on:pointerenter={handleMouseOver}
         role="button"
         tabindex="0"
       />

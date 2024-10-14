@@ -8,17 +8,24 @@
   export let className: string = '';
   export let point: PointWithCoordinates;
 
-  const photo = typeof point.image === 'string' ? point.image : phPhoto.src;
+  const mapDescription = point.region.mapDescription[0];
+
+  const photo =
+    typeof mapDescription.charityProgram.image === 'string'
+      ? mapDescription.charityProgram.image
+      : phPhoto.src;
 
   let link;
-  if (point.charityProgramSlug === 'pomozj-detyam') {
-    link = point.link;
-  } else {
-    const query = new URLSearchParams();
-    query.set('category', point.charityProgramSlug);
-    query.set('region', point.region.slug);
-    link = '/news?' + query.toString();
-  }
+
+  const query = new URLSearchParams();
+  query.set('program', mapDescription.charityProgram.slug);
+  query.set('region', point.region.slug);
+  ['nezhnie-ruki', 'pomozj-detyam'].includes(
+    mapDescription.charityProgram.slug,
+  ) && query.set('hasWard', 'true');
+  mapDescription.charityProgram.slug === 'socialnye-lifty' &&
+    query.set('hasPartner', 'true');
+  link = '/news?' + query.toString();
 </script>
 
 <article
@@ -48,22 +55,25 @@
       height="68"
       class="rounded-full text-3xl aspect-square object-cover object-center"
       src={photo}
-      alt={point.title}
+      alt={mapDescription.charityProgram.name}
     />
-    <h3 class="lg:text-xl text-lg font-bold">{point.title}</h3>
+    <h3 class="">
+      <span class="text-sm">Благотворительная программа</span>
+      <br />
+      <span
+        class="font-sov-mod text-xl bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-transparent bg-clip-text uppercase font-medium"
+        >«{mapDescription.charityProgram.name}»</span
+      >
+    </h3>
   </div>
-  <p class="mb-4 hidden lg:block">{@html point.description}</p>
+  <p class="mb-4 hidden lg:block">{@html mapDescription.text}</p>
   <hr class="my-5 border-white border-opacity-90 hidden lg:block" />
   <p class="mb-4 leading-none">{point.region.name}</p>
   <button
     class="flex justify-center items-center gap-2 relative text-lg leading-none w-full text-dark bg-white bg-opacity-80 rounded-2xl p-3 lg:p-4 lg:hover:bg-opacity-90 transition-all"
   >
     <a href={link} class="absolute inset-0 opacity-0">.</a>
-    {#if point.charityProgramSlug === 'pomozj-detyam'}
-      Узнать подробнее
-    {:else}
-      Новости региона
-    {/if}
+    Новости региона
 
     <svg
       width="12.686523"

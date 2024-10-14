@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cn } from '@/lib/utils';
 
-  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
+  import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import { onMount, tick } from 'svelte';
   import type { SwiperContainer } from 'swiper/element';
   import { register } from 'swiper/element';
@@ -33,12 +33,10 @@
   } as SwiperOptions;
 
   export let className: string = '';
-  export let partners: PartnerWithRelations[] = [];
+  export let partners: PartnerWithRelatedData[] = [];
   let swiperEl: SwiperContainer;
 
-  const partnersWithLogos = partners
-    .filter(p => p.image)
-    .map(p => ({ ...p, image: String(p.image) }));
+  const partnersWithLogos = partners.filter(p => p.image);
 
   onMount(async () => {
     Object.assign(swiperEl, options);

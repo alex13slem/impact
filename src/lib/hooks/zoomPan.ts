@@ -192,14 +192,14 @@ export function zoomPan(content: SVGGElement) {
     setNewTransform(content);
   };
 
-  content.addEventListener('wheel', handleWheel);
-  content.addEventListener('mousedown', handleMouseDown);
-  content.addEventListener('mousemove', handleMouseMove);
-  content.addEventListener('mouseup', handleMouseUp);
-  content.addEventListener('touchstart', handleTouchStart);
-  content.addEventListener('touchmove', handleTouchMove);
-  content.addEventListener('touchend', handleTouchEnd);
-  content.addEventListener('dblclick', handleDoubleClick);
+  content.addEventListener('wheel', handleWheel, { passive: false });
+  content.addEventListener('mousedown', handleMouseDown, { passive: true });
+  content.addEventListener('mousemove', handleMouseMove, { passive: true });
+  content.addEventListener('mouseup', handleMouseUp, { passive: true });
+  content.addEventListener('touchstart', handleTouchStart, { passive: false });
+  content.addEventListener('touchmove', handleTouchMove, { passive: false });
+  content.addEventListener('touchend', handleTouchEnd, { passive: false });
+  content.addEventListener('dblclick', handleDoubleClick, { passive: true });
 
   onDestroy(() => {
     content.removeEventListener('wheel', handleWheel);

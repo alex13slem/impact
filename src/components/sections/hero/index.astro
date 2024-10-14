@@ -20,8 +20,8 @@ interface Props {
 
 const { wards, news, charityPrograms } = Astro.props;
 const landingNews = getLastNews(news, 5);
-const mapNews = getMapNews(news, wards);
 const regions = await getRegions(Astro);
+const mapNews = getMapNews(news, wards, regions);
 ---
 
 <section

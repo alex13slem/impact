@@ -11,7 +11,7 @@ export const fetchGoals = withDataFetching(getWpData)(
 export const getGoals = async (astro: AstroGlobal) =>
   axios
     .get<Goal[]>('/api/goals', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {

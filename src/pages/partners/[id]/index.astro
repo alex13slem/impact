@@ -15,23 +15,22 @@ import type { GetStaticPaths } from 'astro';
 // if (!partner) return Astro.redirect("/404");
 
 export const getStaticPaths = (async () => {
-  const partners = (await fetchPartnersWithRelatedData()).filter(
-    p => !!p.events.length,
-  );
+  const partners = await fetchPartnersWithRelatedData();
 
-  const paths = partners
-    .filter(p => !!p.events.length)
-    .map(partner => {
-      return {
-        params: {
-          id: partner.id,
-        },
-        props: {
-          partner,
-        },
-      };
-    });
-  return paths;
+  return (
+    partners
+      // .filter(p => !!p.events.length)
+      .map(partner => {
+        return {
+          params: {
+            id: partner.id,
+          },
+          props: {
+            partner,
+          },
+        };
+      })
+  );
 }) satisfies GetStaticPaths;
 const { partner } = Astro.props;
 

@@ -43,7 +43,11 @@ const sortedNews = news.sort(
   />
 
   <main>
-    <SectHero {wards} news={sortedNews} {charityPrograms} />
+    <SectHero
+      wards={wards}
+      news={sortedNews}
+      charityPrograms={charityPrograms}
+    />
     <SectDescription />
     <SectOurMission {charityPrograms} />
     <SectCharityPrograms {charityPrograms} />

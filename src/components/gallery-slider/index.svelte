@@ -76,7 +76,7 @@
       className,
     )}
   >
-    {#each gallery as { src, alt }}
+    {#each gallery as { src, alt } (src)}
       <swiper-slide
         class="rounded-3xl overflow-clip aspect-[3/4] md:aspect-[4/3]"
       >

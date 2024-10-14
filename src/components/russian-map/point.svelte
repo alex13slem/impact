@@ -29,15 +29,13 @@
     // updateGradientColors(el, svg, { from: '#164264', to: '#033455' });
   }
 
-  let link;
-  if (point.charityProgramSlug === 'pomozj-detyam') {
-    link = point.link;
-  } else {
-    const query = new URLSearchParams();
-    query.set('category', point.charityProgramSlug);
-    query.set('region', point.region.slug);
-    link = '/news?' + query.toString();
-  }
+  const mapDescription = point.region.mapDescription[0];
+
+  const query = new URLSearchParams();
+  query.set('program', mapDescription.charityProgram.slug);
+  query.set('region', point.region.slug);
+
+  const link = '/news?' + query.toString();
 </script>
 
 <div
@@ -65,11 +63,11 @@
     )}
     {...$$restProps}
   >
-    {#if point.charityProgramSlug === 'nezhnie-ruki'}
+    {#if mapDescription.charityProgram.slug === 'nezhnie-ruki'}
       <IconHeartHands variant="ghost" />
-    {:else if point.charityProgramSlug === 'pomozj-detyam'}
+    {:else if mapDescription.charityProgram.slug === 'pomozj-detyam'}
       <IconPrayerHands variant="ghost" />
-    {:else if point.charityProgramSlug === 'socialnye-lifty'}
+    {:else if mapDescription.charityProgram.slug === 'socialnye-lifty'}
       <IconSocialUp variant="ghost" />
     {/if}
   </button>

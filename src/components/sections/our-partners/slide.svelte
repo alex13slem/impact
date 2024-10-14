@@ -2,19 +2,19 @@
   import IconHeartHands from '@/components/ui/icons/icon-heart-hands.svelte';
   import IconPrayerHands from '@/components/ui/icons/icon-prayer-hands.svelte';
   import IconSocialUp from '@/components/ui/icons/icon-social-up.svelte';
-  import type { PartnerWithRelations } from '@/lib/schemas/data/partnersSchema';
+  import type { PartnerWithRelatedData } from '@/lib/data/partners';
 
-  export let p: PartnerWithRelations;
+  export let p: PartnerWithRelatedData;
 
-  const charityProgramsWithEvents = Object.entries({
-    nezhnieRuki: p.events?.some(e => e.charityProgram.slug === 'nezhnie-ruki'),
-    socialnyeLifty: p.events?.some(
-      e => e.charityProgram.slug === 'socialnye-lifty',
-    ),
-    pomozjDetyam: p.events?.some(
-      e => e.charityProgram.slug === 'pomozj-detyam',
-    ),
-  }).filter(([key, value]) => value);
+  // const charityProgramsWithEvents = Object.entries({
+  //   nezhnieRuki: p.events?.some(e => e.charityProgram.slug === 'nezhnie-ruki'),
+  //   socialnyeLifty: p.events?.some(
+  //     e => e.charityProgram.slug === 'socialnye-lifty',
+  //   ),
+  //   pomozjDetyam: p.events?.some(
+  //     e => e.charityProgram.slug === 'pomozj-detyam',
+  //   ),
+  // }).filter(([key, value]) => value);
 
   const charityPrograms = Object.entries({
     nezhnieRuki: p.charityProgram.slug === 'nezhnie-ruki',
@@ -25,11 +25,9 @@
 
 <swiper-slide class="flex items-end min-h-0 w-fit mx-5 md:mx-8 xl:mx-16 py-8">
   <button class=" relative rounded-3xl z-0 cursor-default">
-    {#if charityProgramsWithEvents.length > 0}
-      <a href={'/partners/' + p.id} class="absolute inset-0 opacity-0 z-10"
-        >{p.id}</a
-      >
-    {/if}
+    <a href={'/partners/' + p.id} class="absolute inset-0 opacity-0 z-10"
+      >{p.id}</a
+    >
     <div
       class="absolute inset-0 bottom-auto -top-5 -right-5 flex flex-row-reverse"
     >
@@ -67,9 +65,3 @@
     />
   </button>
 </swiper-slide>
-
-<!-- <style>
-  img.logo {
-    filter: grayscale(1) sepia(20%) saturate(300%) hue-rotate(208deg);
-  }
-</style> -->

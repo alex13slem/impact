@@ -42,7 +42,7 @@
         on:outclick={handleClose}
         class={cn(' flex flex-col gap-7', className)}
       >
-        {#each navLinks as item, idx}
+        {#each navLinks as item, idx (item.name)}
           <a
             href={item.link}
             on:click={handleClose}

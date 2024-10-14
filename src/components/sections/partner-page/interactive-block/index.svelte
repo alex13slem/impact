@@ -8,7 +8,7 @@
   export let className: string = '';
 </script>
 
-<div class={cn(className, 'flex gap-8 xl:gap-10 justify-center items-start')}>
-  <Preview {partner} />
-  <List {partner} />
+<div class={cn(className, 'flex gap-8 xl:gap-10 justify-between')}>
+  <Preview className="max-w-lg hidden xl:block sticky top-32" {partner} />
+  <List className="xl:max-w-3xl" {partner} />
 </div>

@@ -21,7 +21,7 @@ export const fetchCharityProgramById = (id: number) =>
 export const getCharityPrograms = async (astro: AstroGlobal) =>
   await axios
     .get<CharityProgram[]>('/api/charity-programs', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {
@@ -35,7 +35,7 @@ export const getCharityProgramBySlug = async (
 ) =>
   await axios
     .get<CharityProgram>(`/api/charity-programs/${slug}`, {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
       headers: {
         Accept: 'application/json',
       },

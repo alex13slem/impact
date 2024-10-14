@@ -1,3 +1,7 @@
+:root {
+  scrollbar-gutter: stable;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: theme(colors.accent) theme(colors.dark);

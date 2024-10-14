@@ -12,7 +12,7 @@
 </script>
 
 <nav class={cn('flex flex-col items-start gap-2 w-fit ', className)}>
-  {#each charityPrograms as c}
+  {#each charityPrograms as c (c.id)}
     <button
       on:click={() =>
         $filterCharityProgram === c.slug

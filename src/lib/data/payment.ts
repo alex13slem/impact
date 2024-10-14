@@ -11,7 +11,7 @@ export const fetchPaymentData = withDataFetching(getWpSingularData)(
 export const getPayment = async (astro: AstroGlobal) =>
   axios
     .get<Payment>('/api/payment', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {

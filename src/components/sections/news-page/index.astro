@@ -2,16 +2,19 @@
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { getCharityPrograms } from '@/lib/data/charityPrograms';
 import { getNews } from '@/lib/data/news';
+import { getPartners } from '@/lib/data/partners';
 import { getRegions } from '@/lib/data/regions';
-import CategorySelect from './interactive-block/category-select.svelte';
+import { getWards } from '@/lib/data/wards';
 import InteractiveNews from './interactive-block/index.svelte';
-import RegionSelect from './interactive-block/region-select.svelte';
+import Selectors from './interactive-block/selectors.svelte';
 
 const news = (await getNews(Astro)).sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 const charityPrograms = await getCharityPrograms(Astro);
 const regions = await getRegions(Astro);
+const partners = await getPartners(Astro);
+const wards = await getWards(Astro);
 ---
 
 <section class="pb-6 xl:pb-20">
@@ -19,11 +22,20 @@ const regions = await getRegions(Astro);
     <SectHeading className="text-center hidden xl:block" level={1}
       >Новости</SectHeading
     >
-    <div class="w-full sticky top-20 md:top-28 xl:hidden mb-8 z-10 flex gap-2">
-      <CategorySelect {charityPrograms} client:load className="flex-1" />
-      <RegionSelect client:load {regions} className="flex-1" />
-    </div>
+    <Selectors
+      class="w-full sticky top-20 md:top-28 xl:hidden mb-8 z-10"
+      client:load
+      {charityPrograms}
+      {regions}
+    />
 
-    <InteractiveNews {charityPrograms} {news} {regions} client:load />
+    <InteractiveNews
+      {partners}
+      {charityPrograms}
+      {news}
+      {regions}
+      {wards}
+      client:load
+    />
   </div>
 </section>

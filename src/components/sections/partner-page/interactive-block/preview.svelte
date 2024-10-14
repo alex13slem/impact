@@ -14,7 +14,7 @@
 <div
   style="background-image: url({bg.src});"
   class={cn(
-    '[background-image:var(--bg)] bg-cover flex-1 hidden xl:block aspect-video rounded-3xl overflow-clip mb-5 sticky top-28 transition-all',
+    'w-full h-fit [background-image:var(--bg)] bg-cover aspect-[4/3] rounded-3xl overflow-clip transition-all',
     {
       'p-5': !event,
     },
@@ -29,9 +29,9 @@
     />
   {:else if partner.image}
     <img
-      src={partner.image.toString()}
+      src={String(partner.image)}
       class="w-full h-full object-contain object-center"
-      alt=""
+      alt={partner.name}
     />
   {/if}
 </div>

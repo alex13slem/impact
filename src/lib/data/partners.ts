@@ -4,14 +4,18 @@ import {
   partnersArraySchema,
   partnersSchema,
   type Partner,
-  type PartnerWithRelations,
 } from '../schemas/data/partnersSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 import { fetchCharityProgramById } from './charityPrograms';
 import { fetchNewsByIds } from './news';
+import { fetchWardsByIds } from './wards';
 
 const getEventsByIds = async (ids: number[] | string) => {
   return Array.isArray(ids) ? await fetchNewsByIds(ids) : [];
+};
+
+const getWardsByIds = async (ids: number[] | string) => {
+  return Array.isArray(ids) ? await fetchWardsByIds(ids) : [];
 };
 
 export const fetchPartners = withDataFetching(getWpData)(
@@ -31,6 +35,7 @@ async function getPartnerWithRelatedData(partner: Partner) {
     ...partner,
     events: await getEventsByIds(partner.eventsIds),
     charityProgram: await fetchCharityProgramById(partner.charityProgramId)(),
+    wards: await getWardsByIds(partner.wardsIds),
   };
 }
 
@@ -48,8 +53,8 @@ export const fetchPartnerWithRelatedById = async (id: number) => {
 
 export const getPartners = async (astro: AstroGlobal) =>
   axios
-    .get<PartnerWithRelations[]>('/api/partners', {
-      baseURL: astro.url!.origin,
+    .get<PartnerWithRelatedData[]>('/api/partners', {
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {

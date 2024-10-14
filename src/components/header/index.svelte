@@ -64,7 +64,7 @@
     </a>
 
     <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[6px]">
-      {#each navLinks.filter(item => !item.link.includes('pay')) as item}
+      {#each navLinks.filter(item => !item.link.includes('pay')) as item (item.name)}
         <a
           href={item.link}
           class=" hover:text-accent transition-colors text-white/90 uppercase font-road-radio text-xs xl:text-base"

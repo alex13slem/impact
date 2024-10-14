@@ -1,7 +1,5 @@
-import type { NewsItemWithRelated } from '@/lib/data/news';
 import { array, number, object, string, z } from 'zod';
 import { wpImageOptional } from '../wpImageOptional';
-import type { CharityProgram } from './charityProgramsSchema';
 
 export const partnersSchema = object({
   id: number(),
@@ -16,8 +14,3 @@ export const partnersSchema = object({
 export const partnersArraySchema = partnersSchema.array();
 
 export type Partner = z.infer<typeof partnersSchema>;
-
-export type PartnerWithRelations = Partner & {
-  events: NewsItemWithRelated[] | undefined;
-  charityProgram: CharityProgram;
-};

@@ -35,10 +35,13 @@ export const fetchWardWithRelatedById = async (id: number) => {
   return fetchRelatedDataForWard({ ...ward, id });
 };
 
+export const fetchWardsByIds = async (ids: number[]) =>
+  await Promise.all(ids.map(fetchWardWithRelatedById));
+
 export const getWards = (astro: AstroGlobal) =>
   axios
     .get<WardWithRelatedData[]>('/api/wards', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {
@@ -52,7 +55,7 @@ export const getWardsWithRelatedDataByCharity = async (
 ) => {
   return axios
     .get<WardWithRelatedData[]>('/api/wards', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
       params: { 'charity-program': slug },
     })
     .then(res => res.data)

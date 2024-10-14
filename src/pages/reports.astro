@@ -1,4 +1,5 @@
 ---
+import logo from '@/assets/img/logo.svg';
 import { RootLayout } from '@/components/layouts/root';
 import { Seo } from '@/components/seo';
 import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
@@ -6,6 +7,7 @@ import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { ViewDocs } from '@/components/view-docs';
 import { getDocs } from '@/lib/data/docs';
+import { Image } from 'astro:assets';
 
 const docs = await getDocs(Astro);
 const viewDocs = docs.filter(doc => doc.showIn === 'reports');
@@ -32,7 +34,20 @@ const breadcrumbs = [
           <SectHeadingAccent>Отчёты</SectHeadingAccent>
         </SectHeading>
 
-        <ViewDocs docs={viewDocs} />
+        {
+          !!viewDocs.length ? (
+            <ViewDocs docs={viewDocs} />
+          ) : (
+            <div class="flex flex-col items-center gap-4 mt-20">
+              <div class="p-8 rounded-full border border-accent inline-flex justify-center items-center aspect-square">
+                <Image class={'aspect-square h-32'} src={logo} alt={'Impact'} />
+              </div>
+              <p class="max-w-60 text-center text-3xl mt-5">
+                Нет актуальных отчетов
+              </p>
+            </div>
+          )
+        }
       </div>
     </section>
   </main>

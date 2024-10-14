@@ -11,7 +11,7 @@ export const fetchStaffs = withDataFetching(getWpData)(
 export const getStaffs = (astro: AstroGlobal) =>
   axios
     .get<Staff[]>('/api/staffs', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {

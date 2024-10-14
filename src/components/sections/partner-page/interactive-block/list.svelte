@@ -1,21 +1,22 @@
 <script lang="ts">
   import IconAngleDown from '@/components/ui/icon-angle-down.svelte';
+  import { WardsSlider } from '@/components/wards-slider';
   import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import { targetEventSlug } from '@/lib/stores/partnerInteractiveStore';
   import { cn } from '@/lib/utils';
   import { onMount } from 'svelte';
-  import { slide } from 'svelte/transition';
+  import { fade, slide } from 'svelte/transition';
 
   export let className: string = '';
 
   export let partner: PartnerWithRelatedData;
 
-  const events = partner.events || [];
   let locationHref: string;
   onMount(() => {
     locationHref = encodeURIComponent(window.location.href);
   });
   let showEvents = true;
+  let showWards = true;
 </script>
 
 <div class={cn(className, 'xl:max-w-3xl w-full')}>
@@ -29,7 +30,12 @@
   </button>
   {#if showEvents}
     <div transition:slide class="">
-      {#each events as event, idx}
+      {#if partner.events.length === 0}
+        <div class="text-center prose border border-white/90 rounded-3xl p-6">
+          <p>У партнера еще нет мероприятий.</p>
+        </div>
+      {/if}
+      {#each partner.events as event, idx (event.id)}
         <article
           on:mouseenter={() => targetEventSlug.set(event.slug)}
           on:mouseleave={() => targetEventSlug.set(null)}
@@ -64,10 +70,29 @@
           </svg>
         </article>
 
-        {#if idx < events.length - 1}
+        {#if idx < partner.events.length - 1}
           <hr class="my-7 border-white border-opacity-15" />
         {/if}
       {/each}
+    </div>
+  {/if}
+
+  <button
+    class="md:text-3xl mt-8 border-b pb-2 mb-8 w-full flex justify-between items-center text-left outline-none"
+    on:click={() => (showWards = !showWards)}
+    >Подопечные партнера
+    <IconAngleDown
+      class={cn({ 'rotate-180': showWards }, 'transition-transform')}
+    />
+  </button>
+  {#if showWards}
+    <div transition:fade class="w-full overflow-clip">
+      {#if partner.wards.length === 0}
+        <div class="text-center prose border border-white/90 rounded-3xl p-6">
+          <p>У партнера еще нет подопечных.</p>
+        </div>
+      {/if}
+      <WardsSlider className="w-full" wards={partner.wards} />
     </div>
   {/if}
 </div>

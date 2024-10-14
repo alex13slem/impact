@@ -53,7 +53,7 @@ const { image, description, counter } = goal;
     НАШИ <span class="text-accent">ЦЕЛИ</span>
   </SectHeading>
   <div class="flex justify-center flex-wrap xl:flex-nowrap items-center">
-    <Counter client:load {counter} />
+    <Counter client:visible {counter} />
     <div class="pl-16 lg:pb-10 pt-10 w-fit relative z-0">
       <article
         class="max-w-xl p-4 md:px-16 md:py-5 bg-gradient-to-tl from-gr-start via-gr-middle to-gr-end text-dark text-base md:text-2xl rounded-3xl"

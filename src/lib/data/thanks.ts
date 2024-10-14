@@ -11,7 +11,7 @@ export const fetchThanks = withDataFetching(getWpData)(
 export const getThanks = async (astro: AstroGlobal) =>
   await axios
     .get<Thanks[]>('/api/thanks', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {

@@ -3,7 +3,6 @@ import axios from 'axios';
 import {
   regionsArraySchema,
   regionsSchema,
-  type Region,
 } from '../schemas/data/regionsSchema';
 import { getWpData, withDataFetching } from '../utils/wp';
 import { fetchCharityProgramById } from './charityPrograms';
@@ -40,8 +39,8 @@ export const fetchRegionById = (id: number) =>
 
 export const getRegions = async (astro: AstroGlobal) =>
   axios
-    .get<Region[]>('/api/regions', {
-      baseURL: astro.url!.origin,
+    .get<RegionWithRelations[]>('/api/regions', {
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {

@@ -16,6 +16,18 @@
   export let point: PointWithCoordinates;
   export let className: string = '';
   export let style = '';
+
+  function handleMouseEnter(event: MouseEvent | FocusEvent) {
+    const el = event.target as SVGElement;
+    $hoveredRegion = el.getAttribute('data-region');
+  }
+
+  function handleMouseOut(event: MouseEvent | FocusEvent) {
+    const el = event.target as SVGElement;
+    $hoveredRegion = null;
+  }
+
+  const mapDescription = point.region.mapDescription[0];
 </script>
 
 <div
@@ -39,6 +51,11 @@
       <button
         use:builder.action
         {...builder}
+        data-region={point.region.slug}
+        on:mouseenter={handleMouseEnter}
+        on:mouseleave={handleMouseOut}
+        on:focus={handleMouseEnter}
+        on:blur={handleMouseOut}
         style={`font-size: ${100 + ($zoomLevel - 10) * 8.89}px;`}
         class={cn(
           'text-white animate-pulse [animation-delay:calc(var(--i)*.1s)] transition-opacity',
@@ -49,11 +66,11 @@
         )}
         {...$$restProps}
       >
-        {#if point.charityProgramSlug === 'nezhnie-ruki'}
+        {#if mapDescription.charityProgram.slug === 'nezhnie-ruki'}
           <IconHeartHands variant="ghost" />
-        {:else if point.charityProgramSlug === 'pomozj-detyam'}
+        {:else if mapDescription.charityProgram.slug === 'pomozj-detyam'}
           <IconPrayerHands variant="ghost" />
-        {:else if point.charityProgramSlug === 'socialnye-lifty'}
+        {:else if mapDescription.charityProgram.slug === 'socialnye-lifty'}
           <IconSocialUp variant="ghost" />
         {/if}
       </button>

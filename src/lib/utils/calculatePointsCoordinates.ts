@@ -15,7 +15,8 @@ function getUniqueNewsByRegion(newsPoints: NewsPoint[]): NewsPoint[] {
       const hasSameProgram = acc.some(
         item =>
           item.region.name === current.region.name &&
-          item.charityProgramSlug === current.charityProgramSlug,
+          item.region.mapDescription[0].charityProgram.slug ===
+            current.region.mapDescription[0].charityProgram.slug,
       );
 
       // Если нет такого charityProgramSlug, добавляем текущий объект

@@ -11,7 +11,7 @@ export const fetchContacts = withDataFetching(getWpSingularData)(
 export const getContacts = async (astro: AstroGlobal) =>
   axios
     .get<Contacts>('/api/contacts', {
-      baseURL: astro.url!.origin,
+      baseURL: astro.site!.origin,
     })
     .then(res => res.data)
     .catch(e => {
