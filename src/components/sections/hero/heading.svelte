@@ -14,7 +14,7 @@
   class={cn(
     'font-sov-mod text-3xl md:text-5xl uppercase relative px-5 md:px-6 flex flex-col [text-shadow:0_0_2rem_hsl(209,50%,15%)] transition-opacity duration-500',
     {
-      'opacity-0': $zoomLevel > 1,
+      'opacity-0 !pointer-events-none': $zoomLevel > 1,
     },
     className,
   )}

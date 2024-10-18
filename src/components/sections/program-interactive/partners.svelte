@@ -6,6 +6,7 @@
   import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
   import { cn } from '@/lib/utils';
+  import { fade } from 'svelte/transition';
 
   export let program: CharityProgram;
   export let partners: PartnerWithRelatedData[] = [];
@@ -17,7 +18,9 @@
 >
 {#if !!partners.length}
   {#each partners.slice(0, showMore ? partners.length : 2) as partner (partner.id)}
-    <PartnerEventsItem {partner} />
+    <div in:fade class="mt-10 first-of-type:mt-20">
+      <PartnerEventsItem {partner} />
+    </div>
   {/each}
   <button
     on:click={() => (showMore = !showMore)}

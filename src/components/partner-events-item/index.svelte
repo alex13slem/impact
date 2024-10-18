@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PartnerWithRelatedData } from '@/lib/data/partners';
   import { onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
+
   import SectHeadingAccent from '../ui/sect-heading-accent.svelte';
   import SectHeading from '../ui/sect-heading.svelte';
 
@@ -14,8 +14,7 @@
 </script>
 
 <article
-  transition:fade
-  class="grid grid-cols-1 md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5 mt-10 first-of-type:mt-20"
+  class="grid grid-cols-1 md:grid-cols-[auto,1fr,1fr] grid-rows-[auto,auto,auto] gap-5"
 >
   <div
     class="bg-white/10 w-40 h-40 row-span-3 rounded-full md:sticky md:top-24 lg:top-28 overflow-clip p-3 relative z-0"
