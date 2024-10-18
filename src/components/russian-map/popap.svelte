@@ -20,11 +20,11 @@
   const query = new URLSearchParams();
   query.set('program', mapDescription.charityProgram.slug);
   query.set('region', point.region.slug);
-  ['nezhnie-ruki', 'pomozj-detyam'].includes(
-    mapDescription.charityProgram.slug,
-  ) && query.set('hasWard', 'true');
-  mapDescription.charityProgram.slug === 'socialnye-lifty' &&
-    query.set('hasPartner', 'true');
+  // ['nezhnie-ruki', 'pomozj-detyam'].includes(
+  //   mapDescription.charityProgram.slug,
+  // ) && query.set('hasWard', 'true');
+  // mapDescription.charityProgram.slug === 'socialnye-lifty' &&
+  //   query.set('hasPartner', 'true');
   link = '/news?' + query.toString();
 </script>
 
