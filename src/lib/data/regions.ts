@@ -40,7 +40,7 @@ export const fetchRegionById = (id: number) =>
 export const getRegions = async (astro: AstroGlobal) =>
   axios
     .get<RegionWithRelations[]>('/api/regions', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
     })
     .then(res => res.data)
     .catch(e => {

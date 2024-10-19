@@ -12,21 +12,26 @@ import { RootLayout } from '../components/layouts/root';
 import { Seo } from '../components/seo';
 
 import { SectOurGoals } from '@/components/sections/our-goals';
-import { getCharityPrograms } from '@/lib/data/charityPrograms';
-import { getGoals } from '@/lib/data/goals';
-import { getNews } from '@/lib/data/news';
-import { getSiteSeo } from '@/lib/data/siteSeo';
-import { getWards } from '@/lib/data/wards';
+import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
+import { fetchGoals } from '@/lib/data/goals';
+import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
+import { fetchSiteSeo } from '@/lib/data/siteSeo';
+import { fetchWardsWithRelatedData } from '@/lib/data/wards';
 
-const siteSeo = await getSiteSeo(Astro);
+const siteSeo = await fetchSiteSeo();
 
 const seo = siteSeo.find(item => item.slug === 'home');
 
 const [goals, wards, news, charityPrograms] = await Promise.all([
-  getGoals(Astro),
-  getWards(Astro),
-  getNews(Astro),
-  getCharityPrograms(Astro),
+  fetchGoals(),
+  fetchWardsWithRelatedData(),
+  (async () => {
+    const news = await fetchNews().then(news => {
+      return news.filter(n => !n.draft);
+    });
+    return Promise.all(news.map(fetchRelatedDataForNews));
+  })(),
+  fetchCharityPrograms(),
 ]);
 
 const sortedNews = news.sort(
@@ -53,7 +58,11 @@ const sortedNews = news.sort(
     <SectCharityPrograms {charityPrograms} />
     <SectOurPartners />
     <SectOurStuff />
-    {goals.map((goal, idx) => <SectOurGoals {goal} {idx} />)}
+    {
+      goals
+        .sort((a, b) => a.order - b.order)
+        .map((goal, idx) => <SectOurGoals {goal} {idx} />)
+    }
     <SectPay />
     <SectDocuments />
     <SectContacts />

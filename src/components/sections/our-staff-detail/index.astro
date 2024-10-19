@@ -1,10 +1,12 @@
 ---
-import { getStaffs } from '@/lib/data/staffs';
-import { getStaffsPositions } from '@/lib/data/staffsPositions';
+import { fetchStaffs } from '@/lib/data/staffs';
+import { fetchStaffsPositions } from '@/lib/data/staffsPositions';
 import Tabs from './tabs.svelte';
 
-const staffs = await getStaffs(Astro);
-const staffsPositions = await getStaffsPositions(Astro);
+const staffs = await fetchStaffs();
+const staffsPositions = (await fetchStaffsPositions()).sort(
+  (a, b) => a.order - b.order,
+);
 ---
 
 <section class="our-stuff overflow-clip">

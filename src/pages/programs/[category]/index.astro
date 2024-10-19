@@ -13,13 +13,13 @@ import IconDocs from '@/components/ui/icons/icon-docs.svelte';
 import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { WardsSlider } from '@/components/wards-slider';
-import { getCharityPrograms } from '@/lib/data/charityPrograms';
-import { getDocs } from '@/lib/data/docs';
-import { getNews } from '@/lib/data/news';
-import { getPartners } from '@/lib/data/partners';
-import { getSiteSeo } from '@/lib/data/siteSeo';
-import { getWards } from '@/lib/data/wards';
-import type { AstroGlobal, GetStaticPaths } from 'astro';
+import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
+import { fetchDocs } from '@/lib/data/docs';
+import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
+import { fetchPartnersWithRelatedData } from '@/lib/data/partners';
+import { fetchSiteSeo } from '@/lib/data/siteSeo';
+import { fetchWardsWithRelatedData } from '@/lib/data/wards';
+import type { GetStaticPaths } from 'astro';
 
 const PROGRAMS = {
   'помощь детям': 'pomozj-detyam',
@@ -28,11 +28,14 @@ const PROGRAMS = {
 } as const;
 
 export const getStaticPaths = (async () => {
-  const programs = await getCharityPrograms(Astro);
-  const partners = await getPartners(Astro);
-  const wards = await getWards(Astro);
-  const news = await getNews(Astro);
-  const docs = await getDocs(Astro);
+  const programs = await fetchCharityPrograms();
+  const partners = await fetchPartnersWithRelatedData();
+  const wards = await fetchWardsWithRelatedData();
+  const newsWORelations = await fetchNews().then(news => {
+    return news.filter(n => !n.draft);
+  });
+  const news = await Promise.all(newsWORelations.map(fetchRelatedDataForNews));
+  const docs = await fetchDocs();
 
   return programs.map(program => {
     const programWards = wards.filter(
@@ -61,7 +64,7 @@ export const getStaticPaths = (async () => {
 
 const { program, partners, wards, news, hasDocs } = Astro.props;
 
-const siteSeo = await getSiteSeo(Astro as AstroGlobal);
+const siteSeo = await fetchSiteSeo();
 const seo = siteSeo.find(item => item.slug === program.slug);
 
 const breadcrumbs = [

@@ -3,9 +3,9 @@ import firmBg from '@/assets/img/bg.webp';
 
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import { ViewDocs } from '@/components/view-docs';
-import { getDocs } from '@/lib/data/docs';
+import { fetchDocs } from '@/lib/data/docs';
 
-const docs = await getDocs(Astro);
+const docs = await fetchDocs();
 const viewDocs = docs.filter(doc => doc.showIn === 'landing');
 ---
 

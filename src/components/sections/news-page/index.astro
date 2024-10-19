@@ -1,20 +1,25 @@
 ---
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getCharityPrograms } from '@/lib/data/charityPrograms';
-import { getNews } from '@/lib/data/news';
-import { getPartners } from '@/lib/data/partners';
-import { getRegions } from '@/lib/data/regions';
-import { getWards } from '@/lib/data/wards';
+import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
+import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
+import { fetchPartnersWithRelatedData } from '@/lib/data/partners';
+import { fetchRegionsWithRelations } from '@/lib/data/regions';
+import { fetchWardsWithRelatedData } from '@/lib/data/wards';
 import InteractiveNews from './interactive-block/index.svelte';
 import Selectors from './interactive-block/selectors.svelte';
 
-const news = (await getNews(Astro)).sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-);
-const charityPrograms = await getCharityPrograms(Astro);
-const regions = await getRegions(Astro);
-const partners = await getPartners(Astro);
-const wards = await getWards(Astro);
+const newsWORelations = await fetchNews().then(news => {
+  return news.filter(n => !n.draft);
+});
+
+const news = (
+  await Promise.all(newsWORelations.map(fetchRelatedDataForNews))
+).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const charityPrograms = await fetchCharityPrograms();
+const regions = await fetchRegionsWithRelations();
+const partners = await fetchPartnersWithRelatedData();
+const wards = await fetchWardsWithRelatedData();
 ---
 
 <section class="pb-6 xl:pb-20">

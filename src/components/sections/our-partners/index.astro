@@ -1,10 +1,10 @@
 ---
 import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getPartners } from '@/lib/data/partners';
+import { fetchPartnersWithRelatedData } from '@/lib/data/partners';
 import Slider from './slider.svelte';
 
-const partners = await getPartners(Astro);
+const partners = await fetchPartnersWithRelatedData();
 ---
 
 <section id="our-partners" class="our-partners py-8 lg:py-20 overflow-clip">

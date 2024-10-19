@@ -45,7 +45,7 @@ export const getLastNews = (news: NewsItem[], num = 5) => news.slice(0, num);
 export const getNews = async (astro: AstroGlobal, showDraft = false) =>
   axios
     .get<NewsItemWithRelated[]>('/api/news', {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
       params: {
         'show-draft': showDraft ? 'true' : undefined,
       },
@@ -59,7 +59,7 @@ export const getNews = async (astro: AstroGlobal, showDraft = false) =>
 export const getNewsItemBySlug = async (astro: AstroGlobal, slug: string) =>
   axios
     .get<NewsItemWithRelated>(`/api/news/${slug}`, {
-      baseURL: astro.site!.origin,
+      baseURL: astro.url!.origin,
       headers: {
         Accept: 'application/json',
       },

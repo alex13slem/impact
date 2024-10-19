@@ -2,9 +2,9 @@
 import Button from '@/components/ui/button.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
 import SvgScan from '@/components/ui/svg-scan.svelte';
-import { getPayment } from '@/lib/data/payment';
+import { fetchPaymentData } from '@/lib/data/payment';
 
-const paymentData = await getPayment(Astro);
+const paymentData = await fetchPaymentData();
 ---
 
 <section id="pay" class="pay relative overflow-clip z-10">

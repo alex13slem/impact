@@ -4,7 +4,7 @@ import { headerOffsets } from '@/components/header';
 import Nav from '@/components/russian-map/nav.svelte';
 import { getMapNews } from '@/lib/data/mapNews';
 import { getLastNews, type NewsItemWithRelated } from '@/lib/data/news';
-import { getRegions } from '@/lib/data/regions';
+import { fetchRegionsWithRelations } from '@/lib/data/regions';
 import type { WardWithRelatedData } from '@/lib/data/wards';
 import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
 import { cn } from '@/lib/utils';
@@ -20,7 +20,7 @@ interface Props {
 
 const { wards, news, charityPrograms } = Astro.props;
 const landingNews = getLastNews(news, 5);
-const regions = await getRegions(Astro);
+const regions = await fetchRegionsWithRelations();
 const mapNews = getMapNews(news, wards, regions);
 ---
 

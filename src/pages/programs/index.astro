@@ -6,14 +6,14 @@ import { SectHeroDetail } from '@/components/sections/hero-detail';
 import { Seo } from '@/components/seo';
 import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getCharityPrograms } from '@/lib/data/charityPrograms';
+import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
 
-import { getSiteSeo } from '@/lib/data/siteSeo';
+import { fetchSiteSeo } from '@/lib/data/siteSeo';
 
-const siteSeo = await getSiteSeo(Astro);
+const siteSeo = await fetchSiteSeo();
 
 const seo = siteSeo.find(item => item.slug === 'programs');
-const charityPrograms = await getCharityPrograms(Astro);
+const charityPrograms = await fetchCharityPrograms();
 ---
 
 <RootLayout>
