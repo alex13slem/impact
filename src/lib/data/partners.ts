@@ -8,6 +8,7 @@ import {
 import { getWpData, withDataFetching } from '../utils/wp';
 import { fetchCharityProgramById } from './charityPrograms';
 import { fetchNewsByIds } from './news';
+import { fetchRegionById } from './regions';
 import { fetchWardsByIds } from './wards';
 
 const getEventsByIds = async (ids: number[] | string) => {
@@ -36,6 +37,7 @@ async function getPartnerWithRelatedData(partner: Partner) {
     events: await getEventsByIds(partner.eventsIds),
     charityProgram: await fetchCharityProgramById(partner.charityProgramId)(),
     wards: await getWardsByIds(partner.wardsIds),
+    region: await fetchRegionById(partner.regionId)(),
   };
 }
 

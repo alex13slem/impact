@@ -123,7 +123,6 @@ export function zoomPan(content: SVGGElement) {
   };
 
   const handleTouchStart = (event: TouchEvent) => {
-    event.preventDefault();
     if (event.touches.length === 2) {
       const [touch1, touch2] = event.touches;
       start.x = (touch1.clientX + touch2.clientX) / 2;
@@ -196,7 +195,7 @@ export function zoomPan(content: SVGGElement) {
   content.addEventListener('mousedown', handleMouseDown, { passive: true });
   content.addEventListener('mousemove', handleMouseMove, { passive: true });
   content.addEventListener('mouseup', handleMouseUp, { passive: true });
-  content.addEventListener('touchstart', handleTouchStart, { passive: false });
+  content.addEventListener('touchstart', handleTouchStart, { passive: true });
   content.addEventListener('touchmove', handleTouchMove, { passive: false });
   content.addEventListener('touchend', handleTouchEnd, { passive: false });
   content.addEventListener('dblclick', handleDoubleClick, { passive: true });

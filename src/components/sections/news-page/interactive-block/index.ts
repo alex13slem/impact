@@ -30,8 +30,11 @@ export function partnersMatchesFilters(
     charityProgram: { slug: program },
   } = partner;
   const matchProgram = query.program ? program === query.program : true;
+  const matchRegion = query.region
+    ? partner.region.slug === query.region
+    : true;
 
-  return matchProgram;
+  return matchProgram && matchRegion;
 }
 
 export function wardsMatchesFilters(

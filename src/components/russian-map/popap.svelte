@@ -57,14 +57,14 @@
       src={photo}
       alt={mapDescription.charityProgram.name}
     />
-    <h3 class="">
-      <span class="text-sm">Благотворительная программа</span>
-      <br />
-      <span
-        class="font-sov-mod text-xl bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-transparent bg-clip-text uppercase font-medium"
-        >«{mapDescription.charityProgram.name}»</span
+    <div class="">
+      <p class="text-sm leading-tight">Благотворительная программа</p>
+      <h3
+        class="mt-2 font-sov-mod !leading-none text-lg md:text-xl bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-transparent bg-clip-text uppercase font-medium"
       >
-    </h3>
+        «{mapDescription.charityProgram.name}»
+      </h3>
+    </div>
   </div>
   <p class="mb-4 hidden lg:block">{@html mapDescription.text}</p>
   <hr class="my-5 border-white border-opacity-90 hidden lg:block" />

@@ -29,6 +29,16 @@ export const fetchRelatedDataForNews = async (news: NewsItem) => {
   };
 };
 
+export const fetchPublishedNews = async () => {
+  const newsItems = await fetchNews();
+  return newsItems.filter(newsItem => !newsItem.draft);
+};
+
+export const fetchNewsWithRelatedData = async () => {
+  const newsItems = await fetchPublishedNews();
+  return Promise.all(newsItems.map(fetchRelatedDataForNews));
+};
+
 export const fetchNewsWithRelatedById = async (id: number) => {
   const news = await withDataFetching(getWpData)(
     `/news/${id}`,

@@ -9,6 +9,7 @@ export const partnersSchema = object({
   eventsIds: array(number()).or(string().max(0)),
   charityProgramId: number(),
   wardsIds: array(number()).or(string().max(0)),
+  regionId: number(),
 });
 
 export const partnersArraySchema = partnersSchema.array();

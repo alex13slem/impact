@@ -14,7 +14,7 @@ import { Seo } from '../components/seo';
 import { SectOurGoals } from '@/components/sections/our-goals';
 import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
 import { fetchGoals } from '@/lib/data/goals';
-import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
+import { fetchNewsWithRelatedData } from '@/lib/data/news';
 import { fetchSiteSeo } from '@/lib/data/siteSeo';
 import { fetchWardsWithRelatedData } from '@/lib/data/wards';
 
@@ -22,17 +22,10 @@ const siteSeo = await fetchSiteSeo();
 
 const seo = siteSeo.find(item => item.slug === 'home');
 
-const [goals, wards, news, charityPrograms] = await Promise.all([
-  fetchGoals(),
-  fetchWardsWithRelatedData(),
-  (async () => {
-    const news = await fetchNews().then(news => {
-      return news.filter(n => !n.draft);
-    });
-    return Promise.all(news.map(fetchRelatedDataForNews));
-  })(),
-  fetchCharityPrograms(),
-]);
+const goals = await fetchGoals();
+const wards = await fetchWardsWithRelatedData();
+const news = await fetchNewsWithRelatedData();
+const charityPrograms = await fetchCharityPrograms();
 
 const sortedNews = news.sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),

@@ -28,6 +28,8 @@
   }
 
   const mapDescription = point.region.mapDescription[0];
+
+  let isOpen = false;
 </script>
 
 <div
@@ -37,6 +39,7 @@
     style}
 >
   <Popover.Root
+    bind:open={isOpen}
     onOpenChange={open => {
       if (open) {
         $targetPopap = point.id;
