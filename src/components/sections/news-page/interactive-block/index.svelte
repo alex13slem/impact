@@ -44,7 +44,7 @@
       </div>
     </div>
     <List className="xl:max-w-3xl">
-      {#each viewedNews as item (item.slug)}
+      {#each viewedNews as item (item.id)}
         <ListItem {item} on:mouseenter={() => ($query.item = item.slug)} />
       {/each}
       {#if viewedNews.length === 0}

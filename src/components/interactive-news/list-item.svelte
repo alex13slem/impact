@@ -49,6 +49,6 @@
     </svg>
   </header>
   <div class="xl:max-w-xl text-sm md:text-base lg:text-lg font-thin">
-    {@html item.description}
+    {item.description}
   </div>
 </article>
