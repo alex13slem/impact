@@ -42,9 +42,18 @@ async function getPartnerWithRelatedData(partner: Partner) {
 }
 
 // Функция для получения всех партнёров с их связанными событиями
+// export const fetchPartnersWithRelatedData = async () => {
+//   const partners = await fetchPartners();
+//   return Promise.all(partners.map(getPartnerWithRelatedData));
+// };
+
 export const fetchPartnersWithRelatedData = async () => {
   const partners = await fetchPartners();
-  return Promise.all(partners.map(getPartnerWithRelatedData));
+  const results = [];
+  for (const partner of partners) {
+    results.push(await getPartnerWithRelatedData(partner));
+  }
+  return results;
 };
 
 // Функция для получения партнёра по ID с его связанными событиями

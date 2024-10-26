@@ -4,7 +4,7 @@ import { SectLastNews } from '@/components/sections/last-news';
 import { SectNewsDetail } from '@/components/sections/news-detail';
 import { Seo } from '@/components/seo';
 import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
+import { fetchNewsWithRelatedData } from '@/lib/data/news';
 import type { GetStaticPaths } from 'astro';
 
 // const { slug } = Astro.params;
@@ -14,10 +14,12 @@ import type { GetStaticPaths } from 'astro';
 // if (!item) return Astro.redirect("/404");
 
 export const getStaticPaths = (async () => {
-  const news = (await fetchNews()).filter(n => !n.draft);
-  const newsWithRelations = await Promise.all(
-    news.map(fetchRelatedDataForNews),
-  );
+  // const news = (await fetchNews()).filter(n => !n.draft);
+  // const newsWithRelations = await Promise.all(
+  //   news.map(fetchRelatedDataForNews),
+  // );
+
+  const newsWithRelations = await fetchNewsWithRelatedData();
   const paths = newsWithRelations.map(item => {
     const currentPartnerNews = newsWithRelations
       .filter(n => n.partnerId === item.partnerId && n.slug !== item.slug)

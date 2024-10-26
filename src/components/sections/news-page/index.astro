@@ -12,9 +12,15 @@ const newsWORelations = await fetchNews().then(news => {
   return news.filter(n => !n.draft);
 });
 
-const news = (
-  await Promise.all(newsWORelations.map(fetchRelatedDataForNews))
-).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+// const news = (
+//   await Promise.all(newsWORelations.map(fetchRelatedDataForNews))
+// ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const news = [];
+for (const newsWO of newsWORelations) {
+  const relatedNews = await fetchRelatedDataForNews(newsWO);
+  news.push(relatedNews);
+}
+news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 const charityPrograms = await fetchCharityPrograms();
 const regions = (await fetchRegionsWithRelations()).filter(

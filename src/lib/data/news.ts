@@ -12,14 +12,30 @@ import { fetchWardById } from './wards';
 
 export const fetchNews = withDataFetching(getWpData)('/news', newsArraySchema);
 
+// export const fetchRelatedDataForNews = async (news: NewsItem) => {
+//   const [charityProgram, region, ward] = await Promise.all([
+//     fetchCharityProgramById(news.charityProgramId)(),
+//     fetchRegionById(news.regionId)(),
+//     typeof news.wardId === 'number' && news.wardId !== 0
+//       ? fetchWardById(news.wardId)()
+//       : undefined,
+//   ]);
+
+//   return {
+//     ...news,
+//     charityProgram,
+//     region,
+//     ward,
+//   };
+// };
+
 export const fetchRelatedDataForNews = async (news: NewsItem) => {
-  const [charityProgram, region, ward] = await Promise.all([
-    fetchCharityProgramById(news.charityProgramId)(),
-    fetchRegionById(news.regionId)(),
+  const charityProgram = await fetchCharityProgramById(news.charityProgramId)();
+  const region = await fetchRegionById(news.regionId)();
+  const ward =
     typeof news.wardId === 'number' && news.wardId !== 0
-      ? fetchWardById(news.wardId)()
-      : undefined,
-  ]);
+      ? await fetchWardById(news.wardId)()
+      : undefined;
 
   return {
     ...news,
@@ -34,9 +50,18 @@ export const fetchPublishedNews = async () => {
   return newsItems.filter(newsItem => !newsItem.draft);
 };
 
+// export const fetchNewsWithRelatedData = async () => {
+//   const newsItems = await fetchPublishedNews();
+//   return Promise.all(newsItems.map(fetchRelatedDataForNews));
+// };
+
 export const fetchNewsWithRelatedData = async () => {
   const newsItems = await fetchPublishedNews();
-  return Promise.all(newsItems.map(fetchRelatedDataForNews));
+  const results = [];
+  for (const newsItem of newsItems) {
+    results.push(await fetchRelatedDataForNews(newsItem));
+  }
+  return results;
 };
 
 export const fetchNewsWithRelatedById = async (id: number) => {
@@ -46,8 +71,16 @@ export const fetchNewsWithRelatedById = async (id: number) => {
   )();
   return fetchRelatedDataForNews({ ...news, id });
 };
+// export const fetchNewsByIds = async (ids: number[]) => {
+//   return await Promise.all(ids.map(fetchNewsWithRelatedById));
+// };
+
 export const fetchNewsByIds = async (ids: number[]) => {
-  return await Promise.all(ids.map(fetchNewsWithRelatedById));
+  const results = [];
+  for (const id of ids) {
+    results.push(await fetchNewsWithRelatedById(id));
+  }
+  return results;
 };
 
 export const getLastNews = (news: NewsItem[], num = 5) => news.slice(0, num);

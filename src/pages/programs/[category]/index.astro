@@ -15,7 +15,7 @@ import SectHeading from '@/components/ui/sect-heading.svelte';
 import { WardsSlider } from '@/components/wards-slider';
 import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
 import { fetchDocs } from '@/lib/data/docs';
-import { fetchNews, fetchRelatedDataForNews } from '@/lib/data/news';
+import { fetchNewsWithRelatedData } from '@/lib/data/news';
 import { fetchPartnersWithRelatedData } from '@/lib/data/partners';
 import { fetchSiteSeo } from '@/lib/data/siteSeo';
 import { fetchWardsWithRelatedData } from '@/lib/data/wards';
@@ -31,10 +31,11 @@ export const getStaticPaths = (async () => {
   const programs = await fetchCharityPrograms();
   const partners = await fetchPartnersWithRelatedData();
   const wards = await fetchWardsWithRelatedData();
-  const newsWORelations = await fetchNews().then(news => {
-    return news.filter(n => !n.draft);
-  });
-  const news = await Promise.all(newsWORelations.map(fetchRelatedDataForNews));
+  // const newsWORelations = await fetchNews().then(news => {
+  //   return news.filter(n => !n.draft);
+  // });
+  // const news = await Promise.all(newsWORelations.map(fetchRelatedDataForNews));
+  const news = await fetchNewsWithRelatedData();
   const docs = await fetchDocs();
 
   return programs.map(program => {

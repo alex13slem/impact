@@ -12,23 +12,39 @@ export const fetchRegions = withDataFetching(getWpData)(
   regionsArraySchema,
 );
 
+// export const fetchRegionsWithRelations = async () => {
+//   const regions = await fetchRegions();
+
+//   return Promise.all(
+//     regions.map(async region => {
+//       const mapDescription = await Promise.all(
+//         region.mapDescription.map(async item => {
+//           // Один вызов функции для получения charityProgram
+//           const charityProgram = await fetchCharityProgramById(
+//             item.charityProgramId,
+//           )();
+//           return { ...item, charityProgram };
+//         }),
+//       );
+//       return { ...region, mapDescription };
+//     }),
+//   );
+// };
+
 export const fetchRegionsWithRelations = async () => {
   const regions = await fetchRegions();
-
-  return Promise.all(
-    regions.map(async region => {
-      const mapDescription = await Promise.all(
-        region.mapDescription.map(async item => {
-          // Один вызов функции для получения charityProgram
-          const charityProgram = await fetchCharityProgramById(
-            item.charityProgramId,
-          )();
-          return { ...item, charityProgram };
-        }),
-      );
-      return { ...region, mapDescription };
-    }),
-  );
+  const results = [];
+  for (const region of regions) {
+    const mapDescription = [];
+    for (const item of region.mapDescription) {
+      const charityProgram = await fetchCharityProgramById(
+        item.charityProgramId,
+      )();
+      mapDescription.push({ ...item, charityProgram });
+    }
+    results.push({ ...region, mapDescription });
+  }
+  return results;
 };
 
 export const fetchRegionById = (id: number) =>

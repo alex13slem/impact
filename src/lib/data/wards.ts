@@ -18,16 +18,23 @@ export const fetchWardById = (id: number) =>
   withDataFetching(getWpData)(`/wards/${id}`, wardsSchema.omit({ id: true }));
 
 const fetchRelatedDataForWard = async (ward: Ward) => {
-  const [charityProgram, region] = await Promise.all([
-    fetchCharityProgramById(ward.charityProgramId)(),
-    fetchRegionById(ward.regionId)(),
-  ]);
+  // const [charityProgram, region] = await Promise.all([
+  //   fetchCharityProgramById(ward.charityProgramId)(),
+  //   fetchRegionById(ward.regionId)(),
+  // ]);
+  const charityProgram = await fetchCharityProgramById(ward.charityProgramId)();
+  const region = await fetchRegionById(ward.regionId)();
   return { ...ward, charityProgram, region };
 };
 
 export const fetchWardsWithRelatedData = async () => {
   const wards = await fetchWards();
-  return Promise.all(wards.map(fetchRelatedDataForWard));
+  // return Promise.all(wards.map(fetchRelatedDataForWard));
+  const results = [];
+  for (const ward of wards) {
+    results.push(await fetchRelatedDataForWard(ward));
+  }
+  return results;
 };
 
 export const fetchWardWithRelatedById = async (id: number) => {
@@ -35,8 +42,14 @@ export const fetchWardWithRelatedById = async (id: number) => {
   return fetchRelatedDataForWard({ ...ward, id });
 };
 
-export const fetchWardsByIds = async (ids: number[]) =>
-  await Promise.all(ids.map(fetchWardWithRelatedById));
+export const fetchWardsByIds = async (ids: number[]) => {
+  const results = [];
+  for (const id of ids) {
+    results.push(await fetchWardWithRelatedById(id));
+  }
+  return results;
+};
+// await Promise.all(ids.map(fetchWardWithRelatedById));
 
 export const getWards = (astro: AstroGlobal) =>
   axios
