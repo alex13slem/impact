@@ -1,11 +1,10 @@
 ---
-import bgSource from '@/assets/img/bg.webp';
-import logo from '@/assets/img/logo.svg';
+import bg from '@/assets/img/our-mission-bg.png';
 import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
 import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getImage, Image } from 'astro:assets';
+import { Image } from 'astro:assets';
 
-const bg = await getImage({ src: bgSource });
+// const bg = await getImage({ src: bgSource });
 
 const articles = [
   `<b class='text-accent'>Объединять людей</b> и компании
@@ -22,32 +21,46 @@ const articles = [
   id="our-mission"
   class="our-mission relative z-0 bg-center bg-cover overflow-x-clip xl:bg-fixed pt-8 md:pt-20"
 >
-  <div class="relative container">
+  <div class="container">
     <SectHeading className="text-center">
       НАША <SectHeadingAccent>МИССИЯ</SectHeadingAccent>
     </SectHeading>
-    <div class="flex flex-col xl:flex-row">
-      <div class="flex-1 pb-8 xl:pb-20">
-        <div class="max-w-md text-pretty">
-          {articles.map(art => <article class="mb-4 prose" set:html={art} />)}
-        </div>
+    <div class="xl:block flex flex-col pb-[60vw] lg:p-0">
+      <div
+        class="lg:max-w-md text-pretty py-8 lg:p-0 lg:h-[37svw] flex flex-col justify-center"
+      >
+        {articles.map(art => <article class="mb-4 prose" set:html={art} />)}
       </div>
 
       <div
-        class="flex-1 flex items-center justify-center relative py-[min(135px,20%)] max-w-[80%] w-full xl:max-w-none self-end"
+        class="absolute bottom-[-20vw] lg:bottom-[-13vw] right-0 lg:right-auto lg:left-1/2 w-[80svw] lg:w-[50svw]"
       >
-        <div
+        <!-- <div
           class="absolute top-0 left-0 w-[150%] h-[150%] -z-10 bg-cover rounded-3xl xl:bg-fixed"
           style={`background-image: url(${bg.src});`}
         >
-        </div>
+        </div> -->
+
+        <Image class="w-full" src={bg} alt="" />
+        <!-- <Image
+          src={bgSource}
+          alt={''}
+          class={'w-full h-[120%] lg:h-full object-cover absolute top-0 left-0'}
+        />
         <Image
+          class="w-[124px] h-[124px] md:w-[214px] md:h-[214px] absolute top-1/2 -translate-y-1/2 lg:top-[12.5vmax] left-1/2 -translate-x-1/2"
+          height="214"
+          width="214"
+          src={logo}
+          alt="logo"
+        /> -->
+        <!-- <Image
           class="w-[124px] h-[124px] md:w-[214px] md:h-[214px]"
           height="214"
           width="214"
           src={logo}
           alt="logo"
-        />
+        /> -->
       </div>
     </div>
   </div>
