@@ -28,38 +28,18 @@ const { charityPrograms } = Astro.props;
           </article>
         ))
       }
-      <p>
-        <a
-          href="/programs"
-          class="border-b border-dark flex gap-2 items-center w-fit"
-        >
-          Подробнее
-          <svg
-            class="text-[12px]"
-            width="1em"
-            height="1em"
-            viewBox="0 0 12.6865 9.69238"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <path
-              d="M7.48 0.35L11.97 4.84L7.48 9.33M11.97 4.84L0 4.84"
-              stroke="currentColor"
-              stroke-opacity="1"
-              stroke-width="1"></path>
-          </svg>
-        </a>
+      <p class="mt-8">
+        <Button variant="ghost" href="/programs">Узнать подробнее</Button>
       </p>
     </div>
-    <div class="flex gap-28 xl:pr-24 flex-col-reverse xl:flex-row">
-      <div class="flex-1">
+    <div class="flex gap-16 xl:pr-8 flex-col-reverse xl:flex-row">
+      <div class="flex-1 max-w-md md:max-w-full w-full mx-auto">
         {
           charityPrograms.map(c => (
             <img
               src={c.image}
               alt={c.name}
-              class="relative [&:not(:first-child)]:-mt-8 md:[&:not(:first-child)]:-mt-16 aspect-video object-cover object-center [&:nth-child(1n)]:w-[270px] [&:nth-child(2n)]:w-[210px] [&:nth-child(3n)]:w-[190px] md:[&:nth-child(1n)]:w-[580px] md:[&:nth-child(2n)]:w-[465px] md:[&:nth-child(3n)]:w-[423px] [&:nth-child(2n)]:ml-auto [&:nth-child(2n)]:z-10 "
+              class="relative [&:not(:first-child)]:-mt-8 md:[&:not(:first-child)]:-mt-16 aspect-video object-cover object-center [&:nth-child(1n)]:w-[270px] [&:nth-child(2n)]:w-[210px] [&:nth-child(3n)]:w-[190px] md:[&:nth-child(1n)]:w-[580px] md:[&:nth-child(2n)]:w-[465px] md:[&:nth-child(3n)]:w-[423px] [&:nth-child(2n)]:ml-auto [&:nth-child(2n)]:z-10 last:ml-[10%]"
             />
           ))
         }
