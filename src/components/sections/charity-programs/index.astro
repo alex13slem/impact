@@ -59,7 +59,7 @@ const { charityPrograms } = Astro.props;
             <img
               src={c.image}
               alt={c.name}
-              class="relative [&:not(:first-child)]:-mt-8 md:[&:not(:first-child)]:-mt-16 aspect-video object-cover object-center rounded-xl md:rounded-3xl [&:nth-child(1n)]:w-[270px] [&:nth-child(2n)]:w-[210px] [&:nth-child(3n)]:w-[190px] md:[&:nth-child(1n)]:w-[580px] md:[&:nth-child(2n)]:w-[465px] md:[&:nth-child(3n)]:w-[423px] [&:nth-child(2n)]:ml-auto [&:nth-child(2n)]:z-10 "
+              class="relative [&:not(:first-child)]:-mt-8 md:[&:not(:first-child)]:-mt-16 aspect-video object-cover object-center [&:nth-child(1n)]:w-[270px] [&:nth-child(2n)]:w-[210px] [&:nth-child(3n)]:w-[190px] md:[&:nth-child(1n)]:w-[580px] md:[&:nth-child(2n)]:w-[465px] md:[&:nth-child(3n)]:w-[423px] [&:nth-child(2n)]:ml-auto [&:nth-child(2n)]:z-10 "
             />
           ))
         }
@@ -78,7 +78,7 @@ const { charityPrograms } = Astro.props;
           ))
         }
         <div class="">
-          <Button variant="dark" href="/programs">Узнать подробнее</Button>
+          <Button variant="ghost" href="/programs">Узнать подробнее</Button>
         </div>
       </div>
     </div>
