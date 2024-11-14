@@ -28,21 +28,31 @@ const breadcrumbs = [
         <SectHeading className="text-center" level={1}>
           <SectHeadingAccent>Благодарности</SectHeadingAccent>
         </SectHeading>
-        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div class="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
           {
             thanks.map(thank => (
-              <article class="border border-white/90 hover:border-accent transition-colors p-6 pb-11 rounded-3xl">
+              <article class="relative border border-white/90 hover:border-accent transition-colors p-6 rounded-3xl flex items-start gap-4 md:gap-5 ">
+                <a
+                  class="absolute inset-0 opacity-0 z-10"
+                  href={thank.image}
+                  data-fancybox
+                  data-caption={thank.title}
+                />
                 <div class="bg-white/90 rounded-2xl overflow-clip">
                   <img
-                    class="aspect-[4/3] w-full object-cover object-center"
+                    class="aspect-[3/4] w-full object-cover object-center"
                     src={thank.image}
                     alt={thank.title}
                   />
                 </div>
-                <h2 class="p-3 rounded-full bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-dark mt-10 max-w-64 w-full text-center uppercase ">
-                  {thank.title}
-                </h2>
-                <p class="text-sm mt-5">{thank.description}</p>
+                <div>
+                  <h2 class="p-3 rounded-2xl bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-dark  w-full text-center uppercase text-sm md:text-base">
+                    {thank.title}
+                  </h2>
+                  <p class="text-xs md:text-sm mt-2 md:mt-5">
+                    {thank.description}
+                  </p>
+                </div>
               </article>
             ))
           }
@@ -51,3 +61,9 @@ const breadcrumbs = [
     </section>
   </main>
 </RootLayout>
+
+<script>
+  import { Fancybox } from '@fancyapps/ui';
+  import '@fancyapps/ui/dist/fancybox/fancybox.css';
+  Fancybox.bind('[data-fancybox]', {});
+</script>
