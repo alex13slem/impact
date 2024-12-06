@@ -1,26 +1,26 @@
 ---
-import { SectCharityPrograms } from '@/components/sections/charity-programs';
-import { SectContacts } from '@/components/sections/contacts';
-import { SectDescription } from '@/components/sections/description';
-import { SectDocuments } from '@/components/sections/documents';
-import { SectHero } from '@/components/sections/hero';
-import { SectOurMission } from '@/components/sections/our-mission';
-import { SectOurPartners } from '@/components/sections/our-partners';
-import { SectOurStuff } from '@/components/sections/our-staff';
-import { SectPay } from '@/components/sections/pay';
-import { RootLayout } from '../components/layouts/root';
-import { Seo } from '../components/seo';
+import { SectCharityPrograms } from "@/components/sections/charity-programs";
+import { SectContacts } from "@/components/sections/contacts";
+import { SectDescription } from "@/components/sections/description";
+import { SectDocuments } from "@/components/sections/documents";
+import { SectHero } from "@/components/sections/hero";
+import { SectOurMission } from "@/components/sections/our-mission";
+import { SectOurPartners } from "@/components/sections/our-partners";
+import { SectOurStuff } from "@/components/sections/our-staff";
+import { SectPay } from "@/components/sections/pay";
+import { RootLayout } from "../components/layouts/root";
+import { Seo } from "../components/seo";
 
-import { SectOurGoals } from '@/components/sections/our-goals';
-import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
-import { fetchGoals } from '@/lib/data/goals';
-import { fetchNewsWithRelatedData } from '@/lib/data/news';
-import { fetchSiteSeo } from '@/lib/data/siteSeo';
-import { fetchWardsWithRelatedData } from '@/lib/data/wards';
+import { SectOurGoals } from "@/components/sections/our-goals";
+import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
+import { fetchGoals } from "@/lib/data/goals";
+import { fetchNewsWithRelatedData } from "@/lib/data/news";
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
+import { fetchWardsWithRelatedData } from "@/lib/data/wards";
 
 const siteSeo = await fetchSiteSeo();
 
-const seo = siteSeo.find(item => item.slug === 'home');
+const seo = siteSeo.find((item) => item.slug === "home");
 
 const goals = await fetchGoals();
 const wards = await fetchWardsWithRelatedData();
@@ -28,16 +28,22 @@ const news = await fetchNewsWithRelatedData();
 const charityPrograms = await fetchCharityPrograms();
 
 const sortedNews = news.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 );
 ---
 
+<script>
+  import { register } from "swiper/element";
+
+  register();
+</script>
+
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={seo?.name || 'Главная'}
-    description={seo?.description || ''}
-    imageUrls={{ fb: seo?.image || '' }}
+    slot={"seo"}
+    title={seo?.name || "Главная"}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
   />
 
   <main>

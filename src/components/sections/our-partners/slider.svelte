@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { cn } from '@/lib/utils';
+  import { cn } from "@/lib/utils";
 
-  import type { PartnerWithRelatedData } from '@/lib/data/partners';
-  import { onMount, tick } from 'svelte';
-  import type { SwiperContainer } from 'swiper/element';
-  import { register } from 'swiper/element';
-  import { Autoplay } from 'swiper/modules';
-  import type { SwiperOptions } from 'swiper/types';
-  import Slide from './slide.svelte';
+  import type { PartnerWithRelatedData } from "@/lib/data/partners";
+  import { onMount, tick } from "svelte";
+  import type { SwiperContainer } from "swiper/element";
+  import { register } from "swiper/element";
+  import { Autoplay } from "swiper/modules";
+  import type { SwiperOptions } from "swiper/types";
+  import Slide from "./slide.svelte";
 
   const options = {
     modules: [Autoplay],
     loop: true,
-    slidesPerView: 'auto',
+    slidesPerView: "auto",
     // slidesPerGroup: 5,
     freeMode: true,
     speed: 3000,
@@ -32,11 +32,11 @@
     ],
   } as SwiperOptions;
 
-  export let className: string = '';
+  export let className: string = "";
   export let partners: PartnerWithRelatedData[] = [];
   let swiperEl: SwiperContainer;
 
-  const partnersWithLogos = partners.filter(p => p.image);
+  const partnersWithLogos = partners.filter((p) => p.image);
 
   onMount(async () => {
     Object.assign(swiperEl, options);
@@ -47,10 +47,19 @@
   });
 </script>
 
+<svelte:window
+  on:pageshow={(e) => {
+    if (swiperEl && e.persisted) {
+      register();
+      swiperEl.initialize();
+    }
+  }}
+/>
+
 <swiper-container
   init="false"
   bind:this={swiperEl}
-  class={cn('transform-none ', className)}
+  class={cn("transform-none ", className)}
 >
   {#each [...partnersWithLogos, ...partnersWithLogos, ...partnersWithLogos] as p}
     <Slide {p} />

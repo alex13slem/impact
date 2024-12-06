@@ -1,15 +1,17 @@
 <script lang="ts">
-  import { partnerFormSchema } from '@/lib/schemas/partnerFormSchema';
+  import {
+    partnerFormSchema,
+    type PartnerFormSchema,
+  } from '@/lib/schemas/partnerFormSchema';
   import { validator } from '@felte/validator-zod';
   import axios from 'axios';
   import { Dialog } from 'bits-ui';
   import { createForm } from 'felte';
   import { toast } from 'svelte-sonner';
-  import type { PartnerForm } from '.';
 
   export let onSubmit: () => void;
 
-  const { form, errors } = createForm<PartnerForm>({
+  const { form, errors } = createForm<PartnerFormSchema>({
     extend: [validator({ schema: partnerFormSchema })],
     onSubmit: async data => {
       try {

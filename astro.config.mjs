@@ -1,16 +1,15 @@
-import node from '@astrojs/node';
-import svelte from '@astrojs/svelte';
-import tailwind from '@astrojs/tailwind';
-import { defineConfig } from 'astro/config';
+import node from "@astrojs/node";
+import svelte from "@astrojs/svelte";
+import tailwind from "@astrojs/tailwind";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), svelte()],
-  output: 'hybrid',
-  site: 'https://impactfoundation.ru',
+  site: "https://impactfoundation.ru",
   // site: 'http://localhost:4000',
   adapter: node({
-    mode: 'standalone',
+    mode: "standalone",
   }),
   server: {
     port: 4000,
@@ -24,8 +23,5 @@ export default defineConfig({
       port: 4000,
       host: true,
     },
-  },
-  experimental: {
-    globalRoutePriority: true,
-  },
+  }
 });

@@ -1,11 +1,11 @@
 ---
-import { RootLayout } from '@/components/layouts/root';
-import { SectLastNews } from '@/components/sections/last-news';
-import { SectNewsDetail } from '@/components/sections/news-detail';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import { fetchNewsWithRelatedData } from '@/lib/data/news';
-import type { GetStaticPaths } from 'astro';
+import { RootLayout } from "@/components/layouts/root";
+import { SectLastNews } from "@/components/sections/last-news";
+import { SectNewsDetail } from "@/components/sections/news-detail";
+import { Seo } from "@/components/seo";
+import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
+import { fetchNewsWithRelatedData } from "@/lib/data/news";
+import type { GetStaticPaths } from "astro";
 
 // const { slug } = Astro.params;
 // const news = await getNews(Astro);
@@ -20,9 +20,9 @@ export const getStaticPaths = (async () => {
   // );
 
   const newsWithRelations = await fetchNewsWithRelatedData();
-  const paths = newsWithRelations.map(item => {
+  const paths = newsWithRelations.map((item) => {
     const currentPartnerNews = newsWithRelations
-      .filter(n => n.partnerId === item.partnerId && n.slug !== item.slug)
+      .filter((n) => n.partnerId === item.partnerId && n.slug !== item.slug)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return {
       params: { slug: item.slug },
@@ -36,19 +36,18 @@ export const getStaticPaths = (async () => {
 const { item, news } = Astro.props;
 
 const breadcrumbs = [
-  { name: 'Главная', url: '/' },
-  { name: 'Новости', url: '/news' },
+  { name: "Главная", url: "/" },
+  { name: "Новости", url: "/news" },
   { name: item.title, url: `/news/${item.slug}` },
 ];
 ---
 
 <RootLayout>
-  <!-- <ViewTransitions slot={'head'} /> -->
   <Seo
-    slot={'seo'}
+    slot={"seo"}
     title={item.title}
     description={item.description}
-    imageUrls={{ fb: item.image || '' }}
+    imageUrls={{ fb: item.image || "" }}
   />
   <main>
     <div class="container">

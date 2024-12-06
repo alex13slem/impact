@@ -1,20 +1,20 @@
 ---
-import phPhoto from '@/assets/img/ph-photo.webp';
-import { GallerySlider } from '@/components/gallery-slider';
-import { RootLayout } from '@/components/layouts/root';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { fetchWardsWithRelatedData } from '@/lib/data/wards';
-import type { WpGallery } from '@/lib/schemas/wpGallery';
-import type { GetStaticPaths } from 'astro';
+import phPhoto from "@/assets/img/ph-photo.webp";
+import { GallerySlider } from "@/components/gallery-slider";
+import { RootLayout } from "@/components/layouts/root";
+import { Seo } from "@/components/seo";
+import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { fetchWardsWithRelatedData } from "@/lib/data/wards";
+import type { WpGallery } from "@/lib/schemas/wpGallery";
+import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {
   const wards = await fetchWardsWithRelatedData();
-  const paths = wards.map(item => {
+  const paths = wards.map((item) => {
     const sameCategoryWards = wards.filter(
-      ward => ward.charityProgram.slug === item.charityProgram.slug,
+      (ward) => ward.charityProgram.slug === item.charityProgram.slug
     );
     const currentIndex = sameCategoryWards.indexOf(item);
     const prevWard =
@@ -46,7 +46,7 @@ const { ward, nextWard, prevWard } = Astro.props;
 // const prevLink = `/programs/${prevItem.charityProgram.slug}/ward/${prevItem.id}`;
 // const nextLink = `/programs/${nextItem.charityProgram.slug}/ward/${nextItem.id}`;
 
-const photo = typeof ward.image === 'string' ? ward.image : phPhoto.src;
+const photo = typeof ward.image === "string" ? ward.image : phPhoto.src;
 const gallery: WpGallery[] = [
   { src: photo, alt: ward.name },
   ...(Array.isArray(ward.gallery) ? ward.gallery : []),
@@ -54,8 +54,8 @@ const gallery: WpGallery[] = [
 
 const breadcrumbs = [
   {
-    name: 'Главная',
-    url: '/',
+    name: "Главная",
+    url: "/",
   },
   {
     name: ward.charityProgram.name,
@@ -69,9 +69,8 @@ const breadcrumbs = [
 ---
 
 <RootLayout>
-  <!-- <ViewTransitions  slot={'head'}/> -->
   <Seo
-    slot={'seo'}
+    slot={"seo"}
     title={ward.name}
     description={ward.description}
     imageUrls={{ fb: photo }}
@@ -108,12 +107,12 @@ const breadcrumbs = [
                 [prevWard, nextWard].map((ward, index) => (
                   <div
                     class="flex-1 flex flex-col gap-2"
-                    class:list={[{ 'items-end text-right': index === 0 }]}
+                    class:list={[{ "items-end text-right": index === 0 }]}
                   >
                     {/* <p class="text-xs max-w-20">{ward.name}</p> */}
                     <button
                       class={
-                        'relative bg-gradient-to-br from-gr-start via-gr-middle to-gr-end transition-colors text-dark w-12 h-12 flex items-center justify-center rounded-full'
+                        "relative bg-gradient-to-br from-gr-start via-gr-middle to-gr-end transition-colors text-dark w-12 h-12 flex items-center justify-center rounded-full"
                       }
                     >
                       <a
@@ -123,7 +122,7 @@ const breadcrumbs = [
                       <svg
                         class:list={[
                           {
-                            'rotate-180': index === 0,
+                            "rotate-180": index === 0,
                           },
                         ]}
                         width="1em"
