@@ -38,23 +38,17 @@
 
   const partnersWithLogos = partners.filter((p) => p.image);
 
-  onMount(async () => {
+  async function swiperInit() {
     Object.assign(swiperEl, options);
-
     await tick();
     register();
     swiperEl.initialize();
+  }
+
+  onMount(() => {
+    void swiperInit();
   });
 </script>
-
-<svelte:window
-  on:pageshow={(e) => {
-    if (swiperEl && e.persisted) {
-      register();
-      swiperEl.initialize();
-    }
-  }}
-/>
 
 <swiper-container
   init="false"

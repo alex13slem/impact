@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview --host 0.0.0.0",
-    "check": "astro check"
+    "check": "astro check",
+    "push:gitflic": "git push gitflic main"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

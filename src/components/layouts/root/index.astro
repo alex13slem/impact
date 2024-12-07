@@ -27,6 +27,11 @@ const contacts = await fetchContacts();
 
 <script>
   import "@/lib/plugins/hiddenBlocks";
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) {
+      window.location.reload();
+    }
+  });
 </script>
 
 <html
