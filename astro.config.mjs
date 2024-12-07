@@ -5,7 +5,12 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), svelte()],
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    svelte(),
+  ],
   site: "https://impactfoundation.ru",
   // site: 'http://localhost:4000',
   adapter: node({
@@ -23,5 +28,5 @@ export default defineConfig({
       port: 4000,
       host: true,
     },
-  }
+  },
 });

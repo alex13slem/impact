@@ -45,7 +45,14 @@
     "@types/html-to-text": "^9.0.4",
     "@types/nodemailer": "^6.4.15",
     "@yandex/ymaps3-types": "^0.0.27",
+    "autoprefixer": "^10.4.20",
     "cheerio": "^1.0.0",
+    "postcss": "^8.4.49",
     "prettier": "^3.3.3"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not dead"
+  ]
 }
