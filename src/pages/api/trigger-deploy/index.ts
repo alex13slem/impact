@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-import axios from "axios";
 import "dotenv/config";
 
 export const prerender = false;
@@ -7,19 +6,21 @@ export const prerender = false;
 export const GET: APIRoute = async () => {
   const data = { applicationId: process.env.DOKPLOY_APP_ID };
   try {
-    const response = await axios.post(
-      "/api/application.deploy",
-      JSON.stringify(data),
-      {
-        baseURL: process.env.DOKPLOY_URL,
-        headers: {
-          Authorization: "Bearer " + process.env.DOKPLOY_AUTH_TOKEN,
-        },
-      }
-    );
-    return new Response(JSON.stringify(response.data), { status: 200 });
+    await fetch(process.env.DOKPLOY_URL! + "/api/application.deploy", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + process.env.DOKPLOY_AUTH_TOKEN,
+      },
+      body: JSON.stringify(data),
+    });
+
+    return new Response("OK", { status: 200 });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify(error), { status: 500 });
+    let message = "Something went wrong";
+    if (error instanceof Error) message = error.message;
+    return new Response(message, { status: 500 });
   }
 };
