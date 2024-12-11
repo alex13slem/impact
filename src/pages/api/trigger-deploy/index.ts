@@ -24,3 +24,13 @@ export const POST: APIRoute = async () => {
     return new Response(message, { status: 500 });
   }
 };
+
+export async function OPTIONS() {
+  const headers = new Headers({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  });
+
+  return new Response(null, { status: 204, headers });
+}
