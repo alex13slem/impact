@@ -3,7 +3,7 @@ import "dotenv/config";
 
 export const prerender = false;
 
-export const GET: APIRoute = async () => {
+export const POST: APIRoute = async () => {
   const data = { applicationId: process.env.DOKPLOY_APP_ID };
   try {
     await fetch(process.env.DOKPLOY_URL! + "/api/application.deploy", {
