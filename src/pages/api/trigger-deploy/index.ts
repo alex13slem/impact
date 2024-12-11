@@ -3,19 +3,17 @@ import axios from "axios";
 import "dotenv/config";
 
 export const prerender = false;
+const ALLOWED_ORIGIN = "https://api.bnbhost.ru";
 
 export const POST: APIRoute = async ({ request }) => {
   const origin = request.headers.get("origin");
-  const allowedOrigins = process.env
-    .ALLOWED_ORIGINS!.split(",")
-    .map((s) => s.trim());
 
-  if (origin && !allowedOrigins.includes(origin)) {
+  if (origin !== ALLOWED_ORIGIN) {
     return new Response(null, { status: 403 });
   }
 
   const headers = new Headers({
-    "Access-Control-Allow-Origin": origin ?? "*",
+    "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   });
@@ -40,13 +38,9 @@ export const POST: APIRoute = async ({ request }) => {
 
 export const OPTIONS: APIRoute = async ({ request }) => {
   const origin = request.headers.get("origin");
-  const allowedOrigins = process.env
-    .ALLOWED_ORIGINS!.split(",")
-    .map((s) => s.trim());
 
   const headers = new Headers({
-    "Access-Control-Allow-Origin":
-      origin && allowedOrigins.includes(origin) ? origin : "",
+    "Access-Control-Allow-Origin": origin === ALLOWED_ORIGIN ? origin : "",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   });
