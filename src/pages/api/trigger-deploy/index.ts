@@ -3,7 +3,12 @@ import "dotenv/config";
 
 export const prerender = false;
 
-export const POST: APIRoute = async () => {
+export const GET: APIRoute = async ({ url }) => {
+  const { searchParams } = url;
+  const secret = searchParams.get("secret");
+  if (secret != "alex13slem") {
+    return new Response("Unauthorized", { status: 401 });
+  }
   const data = { applicationId: process.env.DOKPLOY_APP_ID };
   try {
     await fetch(process.env.DOKPLOY_URL! + "/api/application.deploy", {
@@ -24,13 +29,3 @@ export const POST: APIRoute = async () => {
     return new Response(message, { status: 500 });
   }
 };
-
-export async function OPTIONS() {
-  const headers = new Headers({
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  });
-
-  return new Response(null, { status: 204, headers });
-}
