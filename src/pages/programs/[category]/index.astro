@@ -1,30 +1,30 @@
 ---
-import { RootLayout } from '@/components/layouts/root';
-import { PartnerFormTrigger } from '@/components/partner-form-trigger';
+import { RootLayout } from "@/components/layouts/root";
+import { PartnerFormTrigger } from "@/components/partner-form-trigger";
 import {
   ProgramInteractiveNews,
   ProgramInteractivePartners,
-} from '@/components/sections/program-interactive';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import Button from '@/components/ui/button.svelte';
-import IconDownload from '@/components/ui/icon-download.svelte';
-import IconDocs from '@/components/ui/icons/icon-docs.svelte';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { WardsSlider } from '@/components/wards-slider';
-import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
-import { fetchDocs } from '@/lib/data/docs';
-import { fetchNewsWithRelatedData } from '@/lib/data/news';
-import { fetchPartnersWithRelatedData } from '@/lib/data/partners';
-import { fetchSiteSeo } from '@/lib/data/siteSeo';
-import { fetchWardsWithRelatedData } from '@/lib/data/wards';
-import type { GetStaticPaths } from 'astro';
+} from "@/components/sections/program-interactive";
+import { Seo } from "@/components/seo";
+import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
+import Button from "@/components/ui/button.svelte";
+import IconDownload from "@/components/ui/icon-download.svelte";
+import IconDocs from "@/components/ui/icons/icon-docs.svelte";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { WardsSlider } from "@/components/wards-slider";
+import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
+import { fetchDocs } from "@/lib/data/docs";
+import { fetchNewsWithRelatedData } from "@/lib/data/news";
+import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
+import { fetchWardsWithRelatedData } from "@/lib/data/wards";
+import type { GetStaticPaths } from "astro";
 
 const PROGRAMS = {
-  'помощь детям': 'pomozj-detyam',
-  'нежные руки': 'nezhnie-ruki',
-  'социальные лифты': 'socialnye-lifty',
+  "помощь детям": "pomozj-detyam",
+  "нежные руки": "nezhnie-ruki",
+  "социальные лифты": "socialnye-lifty",
 } as const;
 
 export const getStaticPaths = (async () => {
@@ -38,17 +38,17 @@ export const getStaticPaths = (async () => {
   const news = await fetchNewsWithRelatedData();
   const docs = await fetchDocs();
 
-  return programs.map(program => {
+  return programs.map((program) => {
     const programWards = wards.filter(
-      ward => ward.charityProgramId === program.id,
+      (ward) => ward.charityProgramId === program.id
     );
     const programPartners = partners.filter(
-      partner => partner.charityProgramId === program.id,
+      (partner) => partner.charityProgramId === program.id
     );
-    const programNews = news.filter(
-      newsItem => newsItem.charityProgramId === program.id,
+    const programNews = [...news].filter(
+      (newsItem) => newsItem.charityProgramId === program.id
     );
-    const hasDocs = docs.some(doc => doc.showIn === program.slug);
+    const hasDocs = docs.some((doc) => doc.showIn === program.slug);
 
     return {
       params: { category: program.slug },
@@ -66,16 +66,16 @@ export const getStaticPaths = (async () => {
 const { program, partners, wards, news, hasDocs } = Astro.props;
 
 const siteSeo = await fetchSiteSeo();
-const seo = siteSeo.find(item => item.slug === program.slug);
+const seo = siteSeo.find((item) => item.slug === program.slug);
 
 const breadcrumbs = [
   {
-    url: '/',
-    name: 'Главная',
+    url: "/",
+    name: "Главная",
   },
   {
-    url: '/programs',
-    name: 'Программы',
+    url: "/programs",
+    name: "Программы",
   },
   {
     url: `/programs/${program.slug}`,
@@ -86,10 +86,10 @@ const breadcrumbs = [
 
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={seo?.name || 'Программа фонда'}
-    description={seo?.description || ''}
-    imageUrls={{ fb: seo?.image || '' }}
+    slot={"seo"}
+    title={seo?.name || "Программа фонда"}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
   />
 
   <main>
@@ -108,7 +108,7 @@ const breadcrumbs = [
               class="flex flex-col gap-4 xl:order-none order-1 mt-4 xl:mt-0 w-full lg:w-auto max-w-96"
             >
               {
-                program.slug === PROGRAMS['социальные лифты'] && (
+                program.slug === PROGRAMS["социальные лифты"] && (
                   <PartnerFormTrigger className="w-full" client:load>
                     Стать партнёром
                   </PartnerFormTrigger>

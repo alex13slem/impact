@@ -1,0 +1,72 @@
+---
+import { RootLayout } from "@/components/layouts/root";
+import { Seo } from "@/components/seo";
+import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { ViewDocs } from "@/components/view-docs";
+import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
+import { fetchDocs } from "@/lib/data/docs";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const docs = await fetchDocs();
+  const programs = await fetchCharityPrograms();
+  const programsWithDocs = programs.filter((program) =>
+    docs.some((doc) => doc.showIn === program.slug)
+  );
+  return programsWithDocs.map((p) => {
+    const programDocs = docs.filter((doc) => doc.showIn === p.slug);
+    return {
+      params: {
+        category: p.slug,
+      },
+      props: {
+        docs: programDocs,
+        program: p,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { docs, program } = Astro.props;
+
+const breadcrumbs = [
+  {
+    url: "/",
+    name: "Главная",
+  },
+  {
+    url: `/programs/${program.slug}`,
+    name: program.name,
+  },
+  {
+    url: `/programs/${program.slug}/docs`,
+    name: "Документы",
+  },
+];
+---
+
+<RootLayout>
+  <Seo
+    slot={"seo"}
+    title={"Документы"}
+    description={"Документы программы " + program.name}
+    imageUrls={{ fb: program.image }}
+  />
+
+  <main>
+    <section>
+      <div class="container">
+        <Breadcrumbs {breadcrumbs} />
+        <SectHeading className="text-center" level={1}>
+          Документы программы
+          <br />
+          <SectHeadingAccent>{program.name}</SectHeadingAccent>
+        </SectHeading>
+
+        <ViewDocs {docs} />
+      </div>
+    </section>
+  </main>
+</RootLayout>
