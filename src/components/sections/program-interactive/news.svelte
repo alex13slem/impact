@@ -13,11 +13,6 @@
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
-  sortedNews.forEach((newsItem) => {
-    console.log(newsItem.date);
-    console.log(new Date(newsItem.date).getTime());
-  });
-
   $: viewItem = news.find((item) => item.slug === $query.item);
 </script>
 

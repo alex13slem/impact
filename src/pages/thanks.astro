@@ -1,24 +1,24 @@
 ---
-import { RootLayout } from '@/components/layouts/root';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { fetchThanks } from '@/lib/data/thanks';
+import { RootLayout } from "@/components/layouts/root";
+import { Seo } from "@/components/seo";
+import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { fetchThanks } from "@/lib/data/thanks";
 
 const thanks = await fetchThanks();
 const breadcrumbs = [
-  { name: 'Главная', url: '/' },
-  { name: 'Благодарности', url: '/thanks' },
+  { name: "Главная", url: "/" },
+  { name: "Благодарности", url: "/thanks" },
 ];
 ---
 
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={'Благодарности'}
-    description={'Благодарности благотворительному фонда Impact'}
-    imageUrls={{ fb: '' }}
+    slot={"seo"}
+    title={"Благодарности"}
+    description={"Благодарности благотворительному фонда Impact"}
+    imageUrls={{ fb: "" }}
   />
 
   <main>
@@ -30,7 +30,7 @@ const breadcrumbs = [
         </SectHeading>
         <div class="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
           {
-            thanks.map(thank => (
+            thanks.map((thank) => (
               <article class="relative border border-white/90 hover:border-accent transition-colors p-6 rounded-3xl flex items-start gap-4 md:gap-5 ">
                 <a
                   class="absolute inset-0 opacity-0 z-10"
@@ -38,14 +38,14 @@ const breadcrumbs = [
                   data-fancybox
                   data-caption={thank.title}
                 />
-                <div class="bg-white/90 rounded-2xl overflow-clip">
+                <div class="flex-0 bg-white/90 rounded-2xl overflow-clip">
                   <img
-                    class="aspect-[3/4] w-full object-cover object-center"
+                    class="aspect-[3/4] w-28 md:w-36 object-cover object-center"
                     src={thank.image}
                     alt={thank.title}
                   />
                 </div>
-                <div>
+                <div class="flex-1">
                   <h2 class="p-3 rounded-2xl bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-dark  w-full text-center uppercase text-sm md:text-base">
                     {thank.title}
                   </h2>
@@ -63,7 +63,7 @@ const breadcrumbs = [
 </RootLayout>
 
 <script>
-  import { Fancybox } from '@fancyapps/ui';
-  import '@fancyapps/ui/dist/fancybox/fancybox.css';
-  Fancybox.bind('[data-fancybox]', {});
+  import { Fancybox } from "@fancyapps/ui";
+  import "@fancyapps/ui/dist/fancybox/fancybox.css";
+  Fancybox.bind("[data-fancybox]", {});
 </script>
