@@ -1,12 +1,15 @@
 ---
-import { fetchStaffs } from '@/lib/data/staffs';
-import { fetchStaffsPositions } from '@/lib/data/staffsPositions';
-import Tabs from './tabs.svelte';
+import { fetchStaffs } from "@/lib/data/staffs";
+import { fetchStaffsPositions } from "@/lib/data/staffsPositions";
+import Tabs from "./tabs.svelte";
 
 const staffs = await fetchStaffs();
-const staffsPositions = (await fetchStaffsPositions()).sort(
-  (a, b) => a.order - b.order,
-);
+const staffsPositions = (await fetchStaffsPositions())
+  .sort((a, b) => a.order - b.order)
+  .filter(
+    (pos) =>
+      pos.name !== "Управляющий совет" && pos.name !== "Попечительский совет"
+  );
 ---
 
 <section class="our-stuff overflow-clip">
