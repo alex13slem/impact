@@ -146,19 +146,14 @@ const breadcrumbs = [
           />
         </div>
 
-        <SectHeading className="!text-4xl !mt-16 !mb-8 "
-          >Наши <SectHeadingAccent>подопечные</SectHeadingAccent></SectHeading
-        >
         {
-          !!wards.length ? (
-            <WardsSlider {wards} client:load />
-          ) : (
-            <div class="text-center prose border border-white/90 rounded-3xl p-6">
-              <p>
-                В рамках программы «{program.name}» скоро появятся наши первые
-                подопечные
-              </p>
-            </div>
+          !!wards.length && (
+            <>
+              <SectHeading className="!text-4xl !mt-16 !mb-8 ">
+                Наши <SectHeadingAccent>подопечные</SectHeadingAccent>
+              </SectHeading>
+              <WardsSlider {wards} client:load />
+            </>
           )
         }
 

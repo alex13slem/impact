@@ -1,21 +1,21 @@
 <script lang="ts">
   //@ts-ignore
-  import siteLogo from '@/assets/img/site-logo.png';
-  import { navLinks } from '@/lib/data/navLinks';
-  import { scrollHidden } from '@/lib/hooks/scrollHidden';
-  import type { Contacts } from '@/lib/schemas/data/contactsSchema';
-  import { mobileMenuMounted } from '@/lib/stores/mobileMenuStore';
-  import { cn } from '@/lib/utils';
-  import { breakpointsTw } from '@/lib/utils/tailwind';
-  import { breakpoints } from '@sveu/browser';
-  import { onMount } from 'svelte';
-  import { MobileMenu, MobileMenuTrigger } from '../mobile-menu';
-  import IconTg from '../ui/icons/icon-tg.svelte';
-  import IconVk from '../ui/icons/icon-vk.svelte';
-  import LogoSmall from '../ui/icons/logo-small.svelte';
+  import { navLinks } from "@/lib/data/navLinks";
+  import { scrollHidden } from "@/lib/hooks/scrollHidden";
+  import type { Contacts } from "@/lib/schemas/data/contactsSchema";
+  import { mobileMenuMounted } from "@/lib/stores/mobileMenuStore";
+  import { cn } from "@/lib/utils";
+  import { breakpointsTw } from "@/lib/utils/tailwind";
+  import { breakpoints } from "@sveu/browser";
+  import { onMount } from "svelte";
+  import { MobileMenu, MobileMenuTrigger } from "../mobile-menu";
+  import IconTg from "../ui/icons/icon-tg.svelte";
+  import IconVk from "../ui/icons/icon-vk.svelte";
+  import SiteLogoSmall from "../ui/icons/site-logo-sm.svelte";
+  import SiteLogo from "../ui/icons/site-logo.svelte";
 
   const { gte } = breakpoints(breakpointsTw);
-  const isDesktopPlus = gte('lg');
+  const isDesktopPlus = gte("lg");
 
   export let contacts: Contacts;
 
@@ -23,7 +23,7 @@
   let root: HTMLElement;
 
   onMount(() => {
-    isHomePage = window.location.pathname === '/';
+    isHomePage = window.location.pathname === "/";
   });
 
   let isTop = true;
@@ -47,24 +47,20 @@
   bind:this={root}
   data-target="site-header"
   class={cn(
-    'mix-blend-difference lg:mix-blend-normal py-5 md:py-8 lg:border-b lg:border-white lg:border-opacity-0 sticky top-0 z-40 transition-[background,border,filter, inset] duration-700',
+    "mix-blend-difference lg:mix-blend-normal py-5 md:py-8 lg:border-b lg:border-white lg:border-opacity-0 sticky top-0 z-40 transition-[background,border,filter, inset] duration-700",
     {
-      'lg:bg-dark/30 lg:border-opacity-5 lg:backdrop-blur': !isTop,
-    },
+      "lg:bg-dark/30 lg:border-opacity-5 lg:backdrop-blur": !isTop,
+    }
   )}
 >
   <div class="container flex justify-between items-end">
-    <a href="/">
-      <img
-        class={'hidden lg:inline-block h-10 xl:h-14 object-contain object-left w-fit'}
-        src={siteLogo.src}
-        alt="Impact"
-      />
-      <LogoSmall class="text-3xl md:text-5xl text-accent lg:hidden" />
+    <a href="/" class="outline-none">
+      <SiteLogo class={"hidden lg:inline-block h-10 xl:h-14 "} />
+      <SiteLogoSmall class="text-3xl md:text-5xl text-accent lg:hidden" />
     </a>
 
-    <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[6px]">
-      {#each navLinks.filter(item => !item.link.includes('pay')) as item (item.name)}
+    <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[2px]">
+      {#each navLinks.filter((item) => !item.link.includes("pay")) as item (item.name)}
         <a
           href={item.link}
           class=" hover:text-accent transition-colors text-white/90 uppercase font-road-radio text-xs xl:text-base"
