@@ -54,7 +54,7 @@ const breadcrumbs = [
   <Seo
     slot={"seo"}
     title={item.title}
-    description={item.description}
+    description={item.description ? item.description : undefined}
     imageUrls={{ fb: item.image || "" }}
   />
   <main>

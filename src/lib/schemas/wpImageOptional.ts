@@ -1,3 +1,3 @@
-import { boolean, string } from 'zod';
+import { literal, string } from "zod";
 
-export const wpImageOptional = string().url().or(boolean());
+export const wpImageOptional = string().url().or(literal(false));
