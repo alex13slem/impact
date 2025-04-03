@@ -1,23 +1,21 @@
 <script lang="ts">
-  import { PartnerEventsItem } from '@/components/partner-events-item';
-  import IconAngleDown from '@/components/ui/icon-angle-down.svelte';
-  import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-  import SectHeading from '@/components/ui/sect-heading.svelte';
-  import type { PartnerWithRelatedData } from '@/lib/data/partners';
-  import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
-  import { cn } from '@/lib/utils';
-  import { fade } from 'svelte/transition';
+  import { PartnersSlider } from "@/components/partners-slider";
+  import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+  import SectHeading from "@/components/ui/sect-heading.svelte";
+  import type { PartnerWithRelatedData } from "@/lib/data/partners";
+  import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
 
   export let program: CharityProgram;
   export let partners: PartnerWithRelatedData[] = [];
-  let showMore = false;
+  // let showMore = false;
 </script>
 
 <SectHeading className="!text-4xl !mt-16 !mb-8 "
   >Наши <SectHeadingAccent>партнёры</SectHeadingAccent></SectHeading
 >
 {#if !!partners.length}
-  {#each partners.slice(0, showMore ? partners.length : 2) as partner (partner.id)}
+  <PartnersSlider {partners} />
+  <!-- {#each partners.slice(0, showMore ? partners.length : 2) as partner (partner.id)}
     <div in:fade class="mt-10 first-of-type:mt-20">
       <PartnerEventsItem {partner} />
     </div>
@@ -34,7 +32,7 @@
     <IconAngleDown
       class="{cn({ 'rotate-180': showMore }, 'transition-transform')}}"
     />
-  </button>
+  </button> -->
 {:else}
   <div class="text-center prose border border-white/90 rounded-3xl p-6">
     <p>

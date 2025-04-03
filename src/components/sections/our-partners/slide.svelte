@@ -1,8 +1,9 @@
 <script lang="ts">
-  import IconHeartHands from '@/components/ui/icons/icon-heart-hands.svelte';
-  import IconPrayerHands from '@/components/ui/icons/icon-prayer-hands.svelte';
-  import IconSocialUp from '@/components/ui/icons/icon-social-up.svelte';
-  import type { PartnerWithRelatedData } from '@/lib/data/partners';
+  import IconHeartHands from "@/components/ui/icons/icon-heart-hands.svelte";
+  import IconPrayerHands from "@/components/ui/icons/icon-prayer-hands.svelte";
+  import IconRunner from "@/components/ui/icons/icon-runner.svelte";
+  import IconSocialUp from "@/components/ui/icons/icon-social-up.svelte";
+  import type { PartnerWithRelatedData } from "@/lib/data/partners";
 
   export let p: PartnerWithRelatedData;
 
@@ -17,15 +18,16 @@
   // }).filter(([key, value]) => value);
 
   const charityPrograms = Object.entries({
-    nezhnieRuki: p.charityProgram.slug === 'nezhnie-ruki',
-    socialnyeLifty: p.charityProgram.slug === 'socialnye-lifty',
-    pomozjDetyam: p.charityProgram.slug === 'pomozj-detyam',
+    nezhnieRuki: p.charityProgram.slug === "nezhnie-ruki",
+    socialnyeLifty: p.charityProgram.slug === "socialnye-lifty",
+    pomozjDetyam: p.charityProgram.slug === "pomozj-detyam",
+    ogonZhizni: p.charityProgram.slug === "ogon-zhizni",
   }).filter(([key, value]) => value);
 </script>
 
 <swiper-slide class="flex items-end min-h-0 w-fit mx-5 md:mx-8 xl:mx-16 py-8">
   <button class=" relative rounded-3xl z-0 cursor-default">
-    <a href={'/partners/' + p.id} class="absolute inset-0 opacity-0 z-10"
+    <a href={"/partners/" + p.id} class="absolute inset-0 opacity-0 z-10"
       >{p.id}</a
     >
     <div
@@ -47,19 +49,21 @@
           style="--right-offset: {i}"
           class={`relative -right-[calc(var(--right-offset)*0.5rem)] xl:-right-[calc(var(--right-offset)*1rem)] w-6 h-6 md:w-8 md:h-8 xl:w-14 xl:h-14 bg-gradient-to-br from-gr-start via-gr-middle to-gr-end rounded-full flex justify-center items-center text-white text-xl md:text-2xl xl:text-5xl`}
         >
-          {#if key === 'nezhnieRuki'}
+          {#if key === "nezhnieRuki"}
             <IconHeartHands variant="ghost" className="text-dark" />
-          {:else if key === 'socialnyeLifty'}
+          {:else if key === "socialnyeLifty"}
             <IconSocialUp variant="ghost" className="text-dark" />
-          {:else if key === 'pomozjDetyam'}
+          {:else if key === "pomozjDetyam"}
             <IconPrayerHands variant="ghost" className="text-dark" />
+          {:else if key === "ogonZhizni"}
+            <IconRunner variant="ghost" className="text-dark" />
           {/if}
         </div>
       {/each}
     </div>
     <img
       loading="lazy"
-      src={p.image ? String(p.image) : ''}
+      src={p.image ? String(p.image) : ""}
       alt={p.name}
       class="logo w-[90px] h-[72px] md:w-[120px] md:h-[96px] xl:w-[192px] xl:h-[168px] object-contain"
     />

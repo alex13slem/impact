@@ -24,11 +24,11 @@ const seo = siteSeo.find((item) => item.slug === "home");
 
 const goals = await fetchGoals();
 const wards = await fetchWardsWithRelatedData();
-const news = await fetchNewsWithRelatedData();
-const charityPrograms = await fetchCharityPrograms();
-
-const sortedNews = news.sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+const news = [...(await fetchNewsWithRelatedData())]
+  .filter((n) => !n.draft && !!n.body)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const charityPrograms = [...(await fetchCharityPrograms())].sort(
+  (a, b) => a.order - b.order
 );
 ---
 
@@ -47,11 +47,7 @@ const sortedNews = news.sort(
   />
 
   <main>
-    <SectHero
-      wards={wards}
-      news={sortedNews}
-      charityPrograms={charityPrograms}
-    />
+    <SectHero wards={wards} news={news} charityPrograms={charityPrograms} />
     <SectDescription />
     <SectOurMission {charityPrograms} />
     <SectCharityPrograms {charityPrograms} />

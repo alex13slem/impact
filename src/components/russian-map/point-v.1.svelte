@@ -1,25 +1,26 @@
 <script lang="ts">
-  import type { PointWithCoordinates } from '@/lib/data/mapNews';
+  import type { PointWithCoordinates } from "@/lib/data/mapNews";
   import {
     hoveredRegion,
     targetPopap,
     zoomLevel,
-  } from '@/lib/stores/hoveredRegionStore';
-  import { cn } from '@/lib/utils';
-  import { Popover } from 'bits-ui';
-  import { fade } from 'svelte/transition';
-  import IconHeartHands from '../ui/icons/icon-heart-hands.svelte';
-  import IconPrayerHands from '../ui/icons/icon-prayer-hands.svelte';
-  import IconSocialUp from '../ui/icons/icon-social-up.svelte';
-  import Popap from './popap.svelte';
+  } from "@/lib/stores/hoveredRegionStore";
+  import { cn } from "@/lib/utils";
+  import { Popover } from "bits-ui";
+  import { fade } from "svelte/transition";
+  import IconHeartHands from "../ui/icons/icon-heart-hands.svelte";
+  import IconPrayerHands from "../ui/icons/icon-prayer-hands.svelte";
+  import IconRunner from "../ui/icons/icon-runner.svelte";
+  import IconSocialUp from "../ui/icons/icon-social-up.svelte";
+  import Popap from "./popap.svelte";
 
   export let point: PointWithCoordinates;
-  export let className: string = '';
-  export let style = '';
+  export let className: string = "";
+  export let style = "";
 
   function handleMouseEnter(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
-    $hoveredRegion = el.getAttribute('data-region');
+    $hoveredRegion = el.getAttribute("data-region");
   }
 
   function handleMouseOut(event: MouseEvent | FocusEvent) {
@@ -40,7 +41,7 @@
 >
   <Popover.Root
     bind:open={isOpen}
-    onOpenChange={open => {
+    onOpenChange={(open) => {
       if (open) {
         $targetPopap = point.id;
         $hoveredRegion = point.region.slug;
@@ -61,20 +62,22 @@
         on:blur={handleMouseOut}
         style={`font-size: ${100 + ($zoomLevel - 10) * 8.89}px;`}
         class={cn(
-          'text-white animate-pulse [animation-delay:calc(var(--i)*.1s)] transition-opacity',
+          "text-white animate-pulse [animation-delay:calc(var(--i)*.1s)] transition-opacity",
           className,
           {
-            'text-accent  animate-none': $targetPopap === point.id,
-          },
+            "text-accent  animate-none": $targetPopap === point.id,
+          }
         )}
         {...$$restProps}
       >
-        {#if mapDescription.charityProgram.slug === 'nezhnie-ruki'}
+        {#if mapDescription.charityProgram.slug === "nezhnie-ruki"}
           <IconHeartHands variant="ghost" />
-        {:else if mapDescription.charityProgram.slug === 'pomozj-detyam'}
+        {:else if mapDescription.charityProgram.slug === "pomozj-detyam"}
           <IconPrayerHands variant="ghost" />
-        {:else if mapDescription.charityProgram.slug === 'socialnye-lifty'}
+        {:else if mapDescription.charityProgram.slug === "socialnye-lifty"}
           <IconSocialUp variant="ghost" />
+        {:else if mapDescription.charityProgram.slug === "ogon-zhizni"}
+          <IconRunner variant="ghost" />
         {/if}
       </button>
     </Popover.Trigger>

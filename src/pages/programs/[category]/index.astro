@@ -25,16 +25,16 @@ const PROGRAMS = {
   "помощь детям": "pomozj-detyam",
   "нежные руки": "nezhnie-ruki",
   "социальные лифты": "socialnye-lifty",
+  "огонь жизни": "ogon-zhizni",
 } as const;
 
 export const getStaticPaths = (async () => {
-  const programs = await fetchCharityPrograms();
+  const programs = [...(await fetchCharityPrograms())].sort(
+    (a, b) => a.order - b.order
+  );
   const partners = await fetchPartnersWithRelatedData();
   const wards = await fetchWardsWithRelatedData();
-  // const newsWORelations = await fetchNews().then(news => {
-  //   return news.filter(n => !n.draft);
-  // });
-  // const news = await Promise.all(newsWORelations.map(fetchRelatedDataForNews));
+
   const news = await fetchNewsWithRelatedData();
   const docs = await fetchDocs();
 
@@ -87,7 +87,7 @@ const breadcrumbs = [
 <RootLayout>
   <Seo
     slot={"seo"}
-    title={seo?.name || "Программа фонда"}
+    title={seo?.name || `Программа фонда «${program.name}»`}
     description={seo?.description || ""}
     imageUrls={{ fb: seo?.image || "" }}
   />
@@ -96,7 +96,7 @@ const breadcrumbs = [
     <section class="py-8 xl:pb-20 xl:pt-5">
       <div class="container">
         <Breadcrumbs {breadcrumbs} />
-        <div class="flex justify-between items-start flex-wrap gap-4">
+        <div class="flex justify-between items-start flex-wrap md:gap-4">
           <SectHeading
             className="max-w-xl mb-4 md:mb-4 text-balance flex-grow"
             level={1}
@@ -147,6 +147,104 @@ const breadcrumbs = [
         </div>
 
         {
+          program.slug === PROGRAMS["огонь жизни"] && (
+            <div class="flex mt-14 flex-col lg:flex-row gap-10 lg:gap-20 xl:gap-40">
+              <div class="flex-1">
+                <img
+                  src={program.image}
+                  alt={program.name}
+                  class="w-full aspect-[4/3] object-cover object-center rounded-3xl"
+                />
+              </div>
+              <div class="flex-1 grid gap-3 lg:gap-5 content-start text-base lg:text-xl">
+                <h3 class="text-xl md:text-2xl font-bold">
+                  Мы стремимся изменить отношение общества к донорству костного
+                  мозга
+                </h3>
+                <p class="max-w-[500px] ">
+                  <>
+                    <b>• Привлечь внимание</b>
+                    <br />
+                  </>
+                  Мы хотим, чтобы каждый задумался о важности донорства костного
+                  мозга.
+                </p>
+                <p class="max-w-[500px] ">
+                  <>
+                    <b>• Повышение осведомленности</b>
+                    <br />
+                  </>
+                  Наша задача - развеять мифы и предоставить достоверную
+                  информацию о донорстве костного мозга.
+                </p>
+                <p class="max-w-[500px] ">
+                  <>
+                    <b>• Объединение людей</b>
+                    <br />
+                  </>
+                  Мы создаем сообщество неравнодушных людей, готовых помогать
+                  другим.
+                </p>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          program.slug === PROGRAMS["огонь жизни"] && news.length && (
+            <div class="mt-14 grid lg:grid-cols-2">
+              {news
+                .filter(
+                  (n) =>
+                    !n.draft &&
+                    new Date(n.date).getDate() >= new Date().getDate()
+                )
+                .slice(0, 10)
+                .reverse()
+                .map((item) => {
+                  const time =
+                    item.description &&
+                    item.description
+                      ?.split("Время начала: ")
+                      .at(1)
+                      ?.slice(0, 5);
+                  return (
+                    <article class="relative border-s border-white/90 py-4 px-5 md:px-10 lg:pr-24">
+                      {item.body && (
+                        <a
+                          href={`/news/${item.slug}`}
+                          class="absolute inset-0"
+                        />
+                      )}
+                      <header class="pb-2 flex items-center justify-between border-b border-white/15">
+                        <time
+                          datetime={new Date(item.date).toISOString()}
+                          class="text-4xl font-sov-mod uppercase"
+                        >
+                          <SectHeadingAccent>
+                            {new Date(item.date).toLocaleDateString("ru-RU", {
+                              month: "numeric",
+                              day: "numeric",
+                            })}
+                          </SectHeadingAccent>
+                        </time>
+
+                        {time && <time datetime={time}>{time}</time>}
+                      </header>
+                      <h3 class="mt-2 text-2xl">{item.title}</h3>
+                      {item.description && (
+                        <p class="mt-2 line-clamp-3 text-ellipsis">
+                          {item.description}
+                        </p>
+                      )}
+                    </article>
+                  );
+                })}
+            </div>
+          )
+        }
+
+        {
           !!wards.length && (
             <>
               <SectHeading className="!text-4xl !mt-16 !mb-8 ">
@@ -157,9 +255,22 @@ const breadcrumbs = [
           )
         }
 
-        <ProgramInteractivePartners {partners} {program} client:load />
+        {
+          program.slug !== PROGRAMS["огонь жизни"] && (
+            <ProgramInteractivePartners {partners} {program} client:load />
+          )
+        }
 
-        <ProgramInteractiveNews className="mt-28" {news} client:load />
+        {
+          program.slug !== PROGRAMS["огонь жизни"] && (
+            <ProgramInteractiveNews
+              className="mt-28"
+              {news}
+              program={program.slug}
+              client:load
+            />
+          )
+        }
       </div>
     </section>
   </main>

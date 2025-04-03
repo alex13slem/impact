@@ -1,46 +1,57 @@
 ---
-import Button from '@/components/ui/button.svelte'
-import IconHeartHands from '@/components/ui/icons/icon-heart-hands.svelte'
-import IconPrayerHands from '@/components/ui/icons/icon-prayer-hands.svelte'
-import IconSocialUp from '@/components/ui/icons/icon-social-up.svelte'
-import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema'
-import type { HTMLAttributes } from 'astro/types'
+import Button from "@/components/ui/button.svelte";
+import IconHeartHands from "@/components/ui/icons/icon-heart-hands.svelte";
+import IconPrayerHands from "@/components/ui/icons/icon-prayer-hands.svelte";
+import IconRunner from "@/components/ui/icons/icon-runner.svelte";
+import IconSocialUp from "@/components/ui/icons/icon-social-up.svelte";
+import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<'article'> {
-  program: CharityProgram
+interface Props extends HTMLAttributes<"article"> {
+  program: CharityProgram;
 }
 
-const { program, ...props } = Astro.props
+const { program, ...props } = Astro.props;
 
-const cnIcon = 'bg-white rounded-2xl text-dark flex justify-center items-center absolute w-16 h-16 text-5xl right-3 bottom-3'
+const cnIcon =
+  "bg-white rounded-2xl text-dark flex justify-center items-center absolute w-16 h-16 text-5xl right-3 bottom-3";
 ---
 
 <article {...props}>
   <div class="mb-6 rounded-3xl overflow-clip relative aspect-square">
-    <img loading="lazy" src={program.image} alt={program.name} class="w-full h-full object-cover object-center">
+    <img
+      loading="lazy"
+      src={program.image}
+      alt={program.name}
+      class="w-full h-full object-cover object-center"
+    />
     <div class={cnIcon}>
       {
-        program.slug === 'nezhnie-ruki' &&  (
-            <IconHeartHands variant='ghost' />
-          ) ||
-          program.slug === 'socialnye-lifty' && (
-            <IconSocialUp variant='ghost' />
-          ) ||
-          program.slug === 'pomozj-detyam' && (
-            <IconPrayerHands variant='ghost' />
-        ) || ''
+        (program.slug === "nezhnie-ruki" && (
+          <IconHeartHands variant="ghost" />
+        )) ||
+          (program.slug === "socialnye-lifty" && (
+            <IconSocialUp variant="ghost" />
+          )) ||
+          (program.slug === "pomozj-detyam" && (
+            <IconPrayerHands variant="ghost" />
+          )) ||
+          (program.slug === "ogon-zhizni" && <IconRunner variant="ghost" />)
       }
     </div>
   </div>
 
-  <h3 class="text-3xl font-medium mb-5 h-28 xl:h-20 2xl:h-auto">{program.name}</h3>
+  <h3 class="text-3xl font-medium mb-5 h-28 xl:h-20 2xl:h-auto">
+    {program.name}
+  </h3>
 
-  <div class="lg:text-lg font-light mb-14 lg:leading-snug  h-56 xl:h-44 2xl:h-40 overflow-clip" >
+  <div
+    class="lg:text-lg font-light mb-14 lg:leading-snug h-56 xl:h-44 2xl:h-40 overflow-clip"
+  >
     <Fragment set:html={program.description} />
   </div>
 
-  <Button variant='dark' href={'/programs/' + program.slug}>
+  <Button variant="dark" href={"/programs/" + program.slug}>
     Узнать подробнее
   </Button>
-
 </article>

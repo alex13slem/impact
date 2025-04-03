@@ -8,12 +8,14 @@
 
   export let className: string = "";
   export let news: NewsItem[];
+  export let program: string;
 
   const sortedNews = [...news].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
   $: viewItem = news.find((item) => item.slug === $query.item);
+  let showMore = false;
 </script>
 
 <div class={cn(className, "flex gap-8 xl:gap-10 justify-between")}>
@@ -23,8 +25,28 @@
     </div>
   </div>
   <List className="xl:max-w-3xl">
-    {#each sortedNews as item (item.id)}
+    {#each sortedNews.slice(0, showMore ? sortedNews.length : 4) as item (item.id)}
       <ListItem {item} on:mouseenter={() => ($query.item = item.slug)} />
     {/each}
+    <a
+      aria-label="Все новости"
+      href="/news?program={program}"
+      class="mt-14 flex gap-10 items-center transition-colors hover:text-accent text-white/90"
+    >
+      <span>Все новости</span>
+      <svg
+        class="self-baseline text-3xl mt-1 group-hover:text-accent transition-colors hidden xl:block"
+        width="1em"
+        height="0.5em"
+        viewBox="0 0 35 17"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M26.1364 1L33.5 8.5M33.5 8.5L26.1364 16M33.5 8.5L-3.27835e-07 8.5"
+          stroke="currentColor"
+        />
+      </svg>
+    </a>
   </List>
 </div>

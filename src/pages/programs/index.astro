@@ -1,27 +1,29 @@
 ---
-import { RootLayout } from '@/components/layouts/root';
-import { SectCharityProgramsDetail } from '@/components/sections/charity-programs-detail';
-import { SectContacts } from '@/components/sections/contacts';
-import { SectHeroDetail } from '@/components/sections/hero-detail';
-import { Seo } from '@/components/seo';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { fetchCharityPrograms } from '@/lib/data/charityPrograms';
+import { RootLayout } from "@/components/layouts/root";
+import { SectCharityProgramsDetail } from "@/components/sections/charity-programs-detail";
+import { SectContacts } from "@/components/sections/contacts";
+import { SectHeroDetail } from "@/components/sections/hero-detail";
+import { Seo } from "@/components/seo";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
 
-import { fetchSiteSeo } from '@/lib/data/siteSeo';
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
 
 const siteSeo = await fetchSiteSeo();
 
-const seo = siteSeo.find(item => item.slug === 'programs');
-const charityPrograms = await fetchCharityPrograms();
+const seo = siteSeo.find((item) => item.slug === "programs");
+const charityPrograms = [...(await fetchCharityPrograms())].sort(
+  (a, b) => a.order - b.order
+);
 ---
 
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={seo?.name || 'Наши программы'}
-    description={seo?.description || ''}
-    imageUrls={{ fb: seo?.image || '' }}
+    slot={"seo"}
+    title={seo?.name || "Наши программы"}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
   />
 
   <main>

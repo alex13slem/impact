@@ -1,7 +1,7 @@
 ---
-import Button from '@/components/ui/button.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
+import Button from "@/components/ui/button.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
 interface Props {
   charityPrograms: CharityProgram[];
 }
@@ -21,12 +21,14 @@ const { charityPrograms } = Astro.props;
 
     <div class="xl:hidden mb-10">
       {
-        charityPrograms.map(c => (
-          <article class="mb-4 last:mb-5 relative group">
-            <a href={'/programs/' + c.slug} class="absolute inset-0" />
-            <h3 class="text-lg mb-5 border-b border-dark/15">{c.name}</h3>
-          </article>
-        ))
+        charityPrograms
+          .sort((a, b) => a.order - b.order)
+          .map((c) => (
+            <article class="mb-4 last:mb-5 relative group">
+              <a href={"/programs/" + c.slug} class="absolute inset-0" />
+              <h3 class="text-lg mb-5 border-b border-dark/15">{c.name}</h3>
+            </article>
+          ))
       }
       <p class="mt-8">
         <Button variant="ghost" href="/programs">Узнать подробнее</Button>
@@ -35,7 +37,7 @@ const { charityPrograms } = Astro.props;
     <div class="flex gap-16 xl:pr-8 flex-col-reverse xl:flex-row">
       <div class="flex-1 max-w-md md:max-w-full w-full mx-auto">
         {
-          charityPrograms.map(c => (
+          charityPrograms.map((c) => (
             <img
               src={c.image}
               alt={c.name}
@@ -46,9 +48,9 @@ const { charityPrograms } = Astro.props;
       </div>
       <div class="max-w-lg flex-shrink-0 hidden xl:block">
         {
-          charityPrograms.map(c => (
+          charityPrograms.map((c) => (
             <article class="mb-8 last:mb-12 relative group">
-              <a href={'/programs/' + c.slug} class="absolute inset-0" />
+              <a href={"/programs/" + c.slug} class="absolute inset-0" />
 
               <h3 class="text-2xl font-medium mb-5 group-hover:underline underline-offset-8">
                 {c.name}

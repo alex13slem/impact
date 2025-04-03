@@ -1,8 +1,8 @@
-import { boolean, number, object, string, z } from 'zod';
-import { wpGallery } from '../wpGallery';
-import { wpImageOptional } from '../wpImageOptional';
+import { number, object, string, z } from "zod";
+import { wpGallery } from "../wpGallery";
+import { wpImageOptional } from "../wpImageOptional";
 
-export const wardStatusEnum = z.enum(['active', 'inactive']);
+export const wardStatusEnum = z.enum(["active", "inactive"]);
 
 export const wardsSchema = object({
   id: number(),
@@ -15,7 +15,7 @@ export const wardsSchema = object({
   diagnosis: string(),
   charityProgramId: number(),
   regionId: number(),
-  gallery: wpGallery.array().or(boolean()).optional(),
+  gallery: wpGallery.array().or(z.literal(false)).optional(),
   status: wardStatusEnum,
   partnersIds: number().array().or(string().max(0)),
 });

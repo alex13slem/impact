@@ -19,10 +19,18 @@ export const getStaticPaths = (async () => {
   //   news.map(fetchRelatedDataForNews),
   // );
 
-  const newsWithRelations = await fetchNewsWithRelatedData();
+  const newsWithRelations = (await fetchNewsWithRelatedData()).filter(
+    (n) => !n.draft && !!n.body
+  );
   const paths = newsWithRelations.map((item) => {
     const currentPartnerNews = newsWithRelations
-      .filter((n) => n.partnerId === item.partnerId && n.slug !== item.slug)
+      .filter(
+        (n) =>
+          n.partnerId === item.partnerId &&
+          n.slug !== item.slug &&
+          !n.draft &&
+          !!n.body
+      )
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return {
       params: { slug: item.slug },

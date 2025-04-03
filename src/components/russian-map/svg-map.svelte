@@ -1,22 +1,22 @@
 <script lang="ts">
-  import type { NewsPoint } from '@/lib/data/mapNews';
-  import { regionsPaths } from '@/lib/data/regionsPaths';
+  import type { NewsPoint } from "@/lib/data/mapNews";
+  import { regionsPaths } from "@/lib/data/regionsPaths";
   import {
     setNewTransform,
     updateCoordinates,
     zoomPan,
-  } from '@/lib/hooks/zoomPan';
+  } from "@/lib/hooks/zoomPan";
   import {
     hoveredRegion,
     isPanning,
     offset,
     zoomLevel,
-  } from '@/lib/stores/hoveredRegionStore';
-  import { loading, mapVisible } from '@/lib/stores/pageLoadingStore';
-  import { cn } from '@/lib/utils';
-  import { breakpointsTw } from '@/lib/utils/tailwind';
-  import { breakpoints } from '@sveu/browser';
-  import { onMount, tick } from 'svelte';
+  } from "@/lib/stores/hoveredRegionStore";
+  import { loading, mapVisible } from "@/lib/stores/pageLoadingStore";
+  import { cn } from "@/lib/utils";
+  import { breakpointsTw } from "@/lib/utils/tailwind";
+  import { breakpoints } from "@sveu/browser";
+  import { onMount, tick } from "svelte";
 
   // const { platform, brands } = useragent();
   // const { gte } = breakpoints(breakpointsTw);
@@ -39,7 +39,7 @@
   //   }
   // }
 
-  export let className: string = '';
+  export let className: string = "";
   export let mapNews: NewsPoint[] = [];
 
   let svg: SVGSVGElement;
@@ -47,7 +47,7 @@
 
   function handleMouseOver(event: MouseEvent | FocusEvent) {
     const el = event.target as SVGElement;
-    $hoveredRegion = el.getAttribute('data-region');
+    $hoveredRegion = el.getAttribute("data-region");
     // updateGradientColors(el, svg, { from: '#c3963c', to: '#fadb9e' });
   }
 
@@ -61,8 +61,8 @@
   }
 
   const { gte } = breakpoints(breakpointsTw);
-  const isDesktopPlus = gte('lg');
-  const isTabletPlus = gte('md');
+  const isDesktopPlus = gte("lg");
+  const isTabletPlus = gte("md");
 
   onMount(() => {
     if ($loading) return;
@@ -93,11 +93,11 @@
 <svelte:window on:resize={handleUpdateCoordinates} />
 <svg
   class={cn(
-    'transition-opacity duration-1000 cursor-default outline-none block w-full h-full',
+    "transition-opacity duration-1000 cursor-default outline-none block w-full h-full",
     className,
     {
-      'opacity-0': $loading && !$mapVisible,
-    },
+      "opacity-0": $loading && !$mapVisible,
+    }
   )}
   bind:this={svg}
   viewBox="0 0 1192 730"
@@ -122,17 +122,18 @@
         data-region={path.name}
         class={cn(
           {
-            'highlight-anim': $loading && $mapVisible,
+            "highlight-anim": $loading && $mapVisible,
           },
-          ' stroke-accent stroke-[0.3px] transition-all duration-500 outline-none ease-in-out hover:stroke-[1.5px] hover:drop-shadow-2xl hover:fill-accent ',
+          " stroke-accent stroke-[0.3px] transition-all duration-500 outline-none ease-in-out hover:stroke-[1.5px] hover:drop-shadow-2xl hover:fill-accent "
         )}
         d={path.d}
-        fill={'#164264'}
+        fill={"#164264"}
         on:mouseover={handleMouseOver}
         on:mouseout={handleMouseOut}
         on:focus={handleMouseOver}
         on:blur={handleMouseOut}
         on:pointerenter={handleMouseOver}
+        on:pointerleave={handleMouseOut}
         role="button"
         tabindex="0"
       />
@@ -140,7 +141,7 @@
   </g>
 </svg>
 
-<style lang="postcss">
+<style>
   .highlight-anim {
     fill: #033455;
     animation: highlight 1s ease-in-out infinite alternate;

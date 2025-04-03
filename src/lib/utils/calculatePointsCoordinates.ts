@@ -1,22 +1,22 @@
-import type { NewsPoint, PointWithCoordinates } from '../data/mapNews';
-import { zoomLevel } from '../stores/hoveredRegionStore';
+import type { NewsPoint, PointWithCoordinates } from "../data/mapNews";
+import { zoomLevel } from "../stores/hoveredRegionStore";
 
 function getUniqueNewsByRegion(newsPoints: NewsPoint[]): NewsPoint[] {
   // Используем reduce, чтобы пройти по каждому элементу массива
   return newsPoints.reduce((acc, current) => {
     // Находим уже существующую запись по региону в аккумуляторе
     const regionExists = acc.find(
-      item => item.region.name === current.region.name,
+      (item) => item.region.name === current.region.name
     );
 
     // Если регион уже добавлен в аккумулятор
     if (regionExists) {
       // Проверяем, есть ли объект с таким же charityProgramSlug в этом регионе
       const hasSameProgram = acc.some(
-        item =>
+        (item) =>
           item.region.name === current.region.name &&
           item.region.mapDescription[0].charityProgram.slug ===
-            current.region.mapDescription[0].charityProgram.slug,
+            current.region.mapDescription[0].charityProgram.slug
       );
 
       // Если нет такого charityProgramSlug, добавляем текущий объект
@@ -35,23 +35,23 @@ function getUniqueNewsByRegion(newsPoints: NewsPoint[]): NewsPoint[] {
 export function calculatePointsCoordinates(
   svg: SVGSVGElement,
   mapNews: NewsPoint[],
-  regionsPaths: { name: string }[],
+  regionsPaths: { name: string }[]
 ) {
   const viewedNews = getUniqueNewsByRegion(mapNews);
 
   const pointsCoordinates: PointWithCoordinates[] = [];
   const iconSize = parseFloat(
-    getComputedStyle(document.documentElement).fontSize,
+    getComputedStyle(document.documentElement).fontSize
   );
 
-  regionsPaths.forEach(path => {
+  regionsPaths.forEach((path) => {
     const pathElement = svg.querySelector(
-      `path[data-region="${path.name}"]`,
+      `path[data-region="${path.name}"]`
     ) as SVGGeometryElement;
 
     if (!pathElement) return;
 
-    const regionNews = viewedNews.filter(n => n.region.slug === path.name);
+    const regionNews = viewedNews.filter((n) => n.region.slug === path.name);
 
     // Получаем ограничивающую рамку path
     const bbox = pathElement.getBBox();
@@ -66,7 +66,7 @@ export function calculatePointsCoordinates(
 
     // Применяем локальные трансформации (CTM), если они есть
     const transformedCenter = center.matrixTransform(
-      ctm || svg.createSVGMatrix(),
+      ctm || svg.createSVGMatrix()
     );
 
     // Получаем количество новостей в регионе
@@ -75,7 +75,7 @@ export function calculatePointsCoordinates(
 
     // Получаем текущий уровень зума
     let curZoomLevel = 1;
-    zoomLevel.subscribe(value => (curZoomLevel = value));
+    zoomLevel.subscribe((value) => (curZoomLevel = value));
 
     regionNews.forEach((ward, index) => {
       // Рассчитываем радиус смещения с учётом зума

@@ -11,7 +11,9 @@ import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {
   const docs = await fetchDocs();
-  const programs = await fetchCharityPrograms();
+  const programs = [...(await fetchCharityPrograms())].sort(
+    (a, b) => a.order - b.order
+  );
   const programsWithDocs = programs.filter((program) =>
     docs.some((doc) => doc.showIn === program.slug)
   );

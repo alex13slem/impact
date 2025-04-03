@@ -3,16 +3,17 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 export function counter(node: HTMLElement, { counter }: { counter: number }) {
   if (!node) return;
-  gsap.registerPlugin(ScrollTrigger);
 
   const section = node.closest("section");
   if (!section) return;
 
+  gsap.registerPlugin(ScrollTrigger);
+
   const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: "top 100%", // Начать анимацию до попадания элемента в центр экрана
-      end: "top 50%", // Завершить, когда элемент в центре экрана
+      start: "top bottom",
+      end: "top center",
       scrub: 1,
       invalidateOnRefresh: true,
       refreshPriority: 1,
@@ -23,17 +24,17 @@ export function counter(node: HTMLElement, { counter }: { counter: number }) {
   timeline.fromTo(
     node,
     {
-      innerText: "0",
+      textContent: "0",
       opacity: 0,
       translateY: 50,
     },
     {
       translateY: 0,
       opacity: 1,
-      innerText: counter,
+      textContent: String(counter),
       duration: 0.5,
       ease: "power1.out",
-      snap: { innerText: 1 },
+      snap: { textContent: 1 },
       immediateRender: false,
     }
   );

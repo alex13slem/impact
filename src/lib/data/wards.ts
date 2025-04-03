@@ -1,17 +1,17 @@
-import type { AstroGlobal } from 'astro';
-import axios from 'axios';
+import type { AstroGlobal } from "astro";
+import axios from "axios";
 import {
   wardsArraySchema,
   wardsSchema,
   type Ward,
-} from '../schemas/data/wardsSchema';
-import { getWpData, withDataFetching } from '../utils/wp';
-import { fetchCharityProgramById } from './charityPrograms';
-import { fetchRegionById } from './regions';
+} from "../schemas/data/wardsSchema";
+import { getWpData, withDataFetching } from "../utils/wp";
+import { fetchCharityProgramById } from "./charityPrograms";
+import { fetchRegionById } from "./regions";
 
 export const fetchWards = withDataFetching(getWpData)(
-  '/wards',
-  wardsArraySchema,
+  "/wards",
+  wardsArraySchema
 );
 
 export const fetchWardById = (id: number) =>
@@ -53,28 +53,28 @@ export const fetchWardsByIds = async (ids: number[]) => {
 
 export const getWards = (astro: AstroGlobal) =>
   axios
-    .get<WardWithRelatedData[]>('/api/wards', {
+    .get<WardWithRelatedData[]>("/api/wards", {
       baseURL: astro.url!.origin,
     })
-    .then(res => res.data)
-    .catch(e => {
+    .then((res) => res.data)
+    .catch((e) => {
       console.error(e.message);
-      throw new Error('Failed to fetch data in getWards');
+      throw new Error("Failed to fetch data in getWards");
     });
 
 export const getWardsWithRelatedDataByCharity = async (
   astro: AstroGlobal,
-  slug: 'socialnye-lifty' | 'nezhnie-ruki' | 'pomozj-detyam',
+  slug: "socialnye-lifty" | "nezhnie-ruki" | "pomozj-detyam" | "ogon-zhizni"
 ) => {
   return axios
-    .get<WardWithRelatedData[]>('/api/wards', {
+    .get<WardWithRelatedData[]>("/api/wards", {
       baseURL: astro.url!.origin,
-      params: { 'charity-program': slug },
+      params: { "charity-program": slug },
     })
-    .then(res => res.data)
-    .catch(e => {
+    .then((res) => res.data)
+    .catch((e) => {
       console.error(e.message);
-      throw new Error('Failed to fetch data in getWards');
+      throw new Error("Failed to fetch data in getWards");
     });
 };
 

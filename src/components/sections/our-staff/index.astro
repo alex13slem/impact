@@ -16,35 +16,35 @@ import { Image } from "astro:assets";
       <Image
         src={image1}
         alt="image"
-        class="grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[226px] md:h-[277px] object-cover object-center opacity-20 top-0 left-[14%]"
+        class="img-blink grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[226px] md:h-[277px] object-cover object-center opacity-20 top-0 left-[14%]"
         width={226}
         height={277}
       />
       <Image
         src={image2}
         alt="image"
-        class="grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[247px] md:h-[330px] object-cover object-center opacity-20 top-[3%] right-[0]"
+        class="img-blink grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[247px] md:h-[330px] object-cover object-center opacity-20 top-[3%] right-[0]"
         width={247}
         height={330}
       />
       <Image
         src={image3}
         alt="image"
-        class="grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[195px] md:h-[260px] object-cover object-center opacity-20 top-[55%] right-[-5%] md:right-0"
+        class="img-blink grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[195px] md:h-[260px] object-cover object-center opacity-20 top-[55%] right-[-5%] md:right-0"
         width={195}
         height={260}
       />
       <Image
         src={image4}
         alt="image"
-        class="grayscale absolute w-[32%] aspect-[3/4] md:aspect-auto md:w-[203px] md:h-[261px] object-cover object-center opacity-20 bottom-[-2%] left-1/2 -translate-x-1/2"
+        class="img-blink grayscale absolute w-[32%] aspect-[3/4] md:aspect-auto md:w-[203px] md:h-[261px] object-cover object-center opacity-20 bottom-[-2%] left-1/2 -translate-x-1/2"
         width={203}
         height={261}
       />
       <Image
         src={image5}
         alt="image"
-        class="grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[281px] md:h-[345px] object-cover object-center opacity-20 top-1/2 left-[-5%] md:left-0"
+        class="img-blink grayscale absolute w-[35%] aspect-[3/4] md:aspect-auto md:w-[281px] md:h-[345px] object-cover object-center opacity-20 top-1/2 left-[-5%] md:left-0"
         width={281}
         height={345}
       />
@@ -75,3 +75,38 @@ import { Image } from "astro:assets";
     >
   </div>
 </section>
+
+<style>
+  @keyframes blink {
+    from {
+      opacity: 0.2;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  const imgs = document.querySelectorAll(
+    ".img-blink"
+  ) as NodeListOf<HTMLImageElement>;
+
+  function startBlinking(imgs: NodeListOf<HTMLImageElement>, delay: number) {
+    const sequence = [0, 3, 1, 5, 2];
+    sequence.forEach((index, i) => {
+      setTimeout(function blink() {
+        const img = imgs[index];
+        if (!img) return; // Защита от ошибок, если индекса нет
+
+        img.style.animation = "none"; // Отключаем анимацию
+        void img.offsetWidth; // Хак для перезапуска анимации
+        img.style.animation = "blink 0.5s ease-in-out 2 alternate"; // Запускаем анимацию
+
+        setTimeout(blink, sequence.length * delay); // Перезапуск через полный цикл
+      }, i * delay);
+    });
+  }
+
+  startBlinking(imgs, 5000);
+</script>

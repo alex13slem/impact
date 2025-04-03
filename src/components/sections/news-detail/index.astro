@@ -1,19 +1,19 @@
 ---
-import { GallerySlider } from '@/components/gallery-slider';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import type { NewsItemWithRelated } from '@/lib/data/news';
-import type { WpGallery } from '@/lib/schemas/wpGallery';
+import ph from "@/assets/img/og.webp";
+import { GallerySlider } from "@/components/gallery-slider";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import type { NewsItemWithRelated } from "@/lib/data/news";
+import type { WpGallery } from "@/lib/schemas/wpGallery";
 
 interface Props {
   item: NewsItemWithRelated;
 }
 
 const { item } = Astro.props;
-const gallery: WpGallery[] = [
-  { src: item.image, alt: item.title },
-  ...(Array.isArray(item.gallery) ? item.gallery : []),
-];
+const gallery: WpGallery[] = Array.isArray(item.gallery) ? item.gallery : [];
+if (item.image) gallery.unshift({ src: item.image, alt: item.title });
+else gallery.unshift({ src: ph.src, alt: item.title });
 ---
 
 <section class="pb-8 md:pb-20 overflow-clip">
@@ -21,12 +21,12 @@ const gallery: WpGallery[] = [
     <SectHeading className="" level={1}>
       <SectHeadingAccent>{item.title}</SectHeadingAccent>
     </SectHeading>
-    <div class={'flex flex-col xl:flex-row gap-10 xl:gap-20'}>
-      <div class={''}>
+    <div class={"flex flex-col xl:flex-row gap-10 xl:gap-20"}>
+      <div class={""}>
         <GallerySlider {gallery} client:load />
       </div>
 
-      <div class={'xl:max-w-3xl w-full prose'} set:html={item.body} />
+      <div class={"xl:max-w-3xl w-full prose"} set:html={item.body} />
     </div>
   </div>
 </section>
