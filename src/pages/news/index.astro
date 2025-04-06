@@ -1,31 +1,80 @@
 ---
-import { RootLayout } from '@/components/layouts/root';
-import { SectNews } from '@/components/sections/news-page';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import { fetchSiteSeo } from '@/lib/data/siteSeo';
+import { RootLayout } from "@/components/layouts/root";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
+import { fetchNews, fetchRelatedDataForNews } from "@/lib/data/news";
+import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
+import { fetchRegionsWithRelations } from "@/lib/data/regions";
+import { fetchWardsWithRelatedData } from "@/lib/data/wards";
+
+import InteractiveNews from "@/components/sections/news-page/news.svelte";
+import Partners from "@/components/sections/news-page/partners.svelte";
+import Selectors from "@/components/sections/news-page/selectors.svelte";
+import Wards from "@/components/sections/news-page/wards.svelte";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
+import { Seo } from "@/components/seo";
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
 
 const siteSeo = await fetchSiteSeo();
-const seo = siteSeo.find(item => item.slug === 'news');
+const seo = siteSeo.find((item) => item.slug === "news");
+
+const newsWORelations = await fetchNews().then((news) => {
+  return news.filter((n) => !n.draft && !!n.body);
+});
+
+// const news = (
+//   await Promise.all(newsWORelations.map(fetchRelatedDataForNews))
+// ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const news = [];
+for (const newsWO of newsWORelations) {
+  const relatedNews = await fetchRelatedDataForNews(newsWO);
+  news.push(relatedNews);
+}
+news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const charityPrograms = [...(await fetchCharityPrograms())].sort(
+  (a, b) => a.order - b.order
+);
+const regions = (await fetchRegionsWithRelations()).filter(
+  (r) => !r.name.includes("остров")
+);
+const partners = await fetchPartnersWithRelatedData();
+const wards = await fetchWardsWithRelatedData();
 
 const breadcrumbs = [
-  { name: 'Главная', url: '/' },
-  { name: 'Новости', url: '/news' },
+  { name: "Главная", url: "/" },
+  { name: "Новости", url: "/news" },
 ];
 ---
 
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={seo?.name || 'Новости'}
-    description={seo?.description || ''}
-    imageUrls={{ fb: seo?.image || '' }}
+    slot={"seo"}
+    title={seo?.name || "Новости"}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
   />
 
-  <main>
-    <div class="container">
-      <Breadcrumbs {breadcrumbs} />
-    </div>
-    <SectNews />
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+    <section class="my-8 xl:my-20" id="news">
+      <div class="container relative z-0">
+        <SectHeading className="text-center hidden xl:block" level={1}
+          >Новости</SectHeading
+        >
+      </div>
+    </section>
+
+    <Selectors
+      class="w-full sticky top-20 md:top-28 xl:hidden mb-8 z-10"
+      client:load
+      {charityPrograms}
+      {regions}
+    />
+
+    <InteractiveNews {charityPrograms} {news} {regions} client:load />
+
+    <Wards {wards} client:load />
+    <Partners {partners} client:load />
   </main>
 </RootLayout>

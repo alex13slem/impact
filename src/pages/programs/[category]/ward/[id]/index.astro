@@ -2,8 +2,8 @@
 import phPhoto from "@/assets/img/ph-photo.webp";
 import { GallerySlider } from "@/components/gallery-slider";
 import { RootLayout } from "@/components/layouts/root";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
-import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
 import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
 import SectHeading from "@/components/ui/sect-heading.svelte";
 import { fetchWardsWithRelatedData } from "@/lib/data/wards";
@@ -76,10 +76,9 @@ const breadcrumbs = [
     imageUrls={{ fb: photo }}
   />
 
-  <main>
-    <div class="container">
-      <Breadcrumbs {breadcrumbs} />
-    </div>
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+
     <section class="pb-8 xl:pb-20 overflow-clip">
       <div class="container flex flex-col xl:flex-row gap-10 xl:gap-20">
         <div class="">

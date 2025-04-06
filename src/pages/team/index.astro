@@ -1,26 +1,26 @@
 ---
-import { RootLayout } from '@/components/layouts/root';
-import { SectContacts } from '@/components/sections/contacts';
-import { SectHeroDetail } from '@/components/sections/hero-detail';
-import { SectOurStuffDetail } from '@/components/sections/our-staff-detail';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
+import { RootLayout } from "@/components/layouts/root";
+import { SectContacts } from "@/components/sections/contacts";
+import { SectHeroDetail } from "@/components/sections/hero-detail";
+import { SectOurStuffDetail } from "@/components/sections/our-staff-detail";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
+import { Seo } from "@/components/seo";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
 
-import { fetchSiteSeo } from '@/lib/data/siteSeo';
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
 
 const siteSeo = await fetchSiteSeo();
 
-const seo = siteSeo.find(item => item.slug === 'staff');
+const seo = siteSeo.find((item) => item.slug === "staff");
 const breadcrumbs = [
   {
-    name: 'Главная',
-    url: '/',
+    name: "Главная",
+    url: "/",
   },
 
   {
-    name: 'Наша команда',
+    name: "Наша команда",
     url: `/team`,
   },
 ];
@@ -28,13 +28,13 @@ const breadcrumbs = [
 
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={seo?.name || 'Наша команда'}
-    description={seo?.description || ''}
-    imageUrls={{ fb: seo?.image || '' }}
+    slot={"seo"}
+    title={seo?.name || "Наша команда"}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
   />
 
-  <main>
+  <main class="py-[1px]">
     <SectHeroDetail>
       <SectHeading
         level={1}
@@ -43,9 +43,9 @@ const breadcrumbs = [
         <SectHeadingAccent>команда</SectHeadingAccent>
       </SectHeading>
     </SectHeroDetail>
-    <div class="container pt-8">
-      <Breadcrumbs {breadcrumbs} />
-    </div>
+
+    <SectBreadcrumbs {breadcrumbs} />
+
     <SectOurStuffDetail />
     <SectContacts />
   </main>

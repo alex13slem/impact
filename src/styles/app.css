@@ -4,9 +4,3 @@ body {
   z-index: 0;
   overflow-x: clip;
 }
-
-.prose {
-  & p:not(:last-of-type) {
-    margin-bottom: 0.7em;
-  }
-}

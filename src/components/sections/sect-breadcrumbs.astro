@@ -1,0 +1,39 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  breadcrumbs: {
+    name: string;
+    url: string;
+  }[];
+}
+
+const { breadcrumbs, class: className, ...props } = Astro.props;
+---
+
+<section class="my-8">
+  <div class="container">
+    <div
+      class="flex gap-2 text-sm md:text-lg font-thin flex-wrap"
+      class:list={[className]}
+      {...props}
+    >
+      {
+        breadcrumbs.map((item) => (
+          <>
+            {item.url !== breadcrumbs[breadcrumbs.length - 1].url ? (
+              <a href={item.url} class="">
+                {item.name}
+              </a>
+            ) : (
+              <span class="text-accent">{item.name}</span>
+            )}
+            {item.url !== breadcrumbs[breadcrumbs.length - 1].url && (
+              <span class=""> / </span>
+            )}
+          </>
+        ))
+      }
+    </div>
+  </div>
+</section>

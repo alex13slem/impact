@@ -1,7 +1,7 @@
 ---
 import { RootLayout } from "@/components/layouts/root";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
-import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
 import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
 import SectHeading from "@/components/ui/sect-heading.svelte";
 import { ViewDocs } from "@/components/view-docs";
@@ -57,10 +57,11 @@ const breadcrumbs = [
     imageUrls={{ fb: program.image }}
   />
 
-  <main>
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+
     <section>
       <div class="container">
-        <Breadcrumbs {breadcrumbs} />
         <SectHeading className="text-center" level={1}>
           Документы программы
           <br />

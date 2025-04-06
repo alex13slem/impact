@@ -3,6 +3,7 @@ import { RootLayout } from "@/components/layouts/root";
 import { SectCharityProgramsDetail } from "@/components/sections/charity-programs-detail";
 import { SectContacts } from "@/components/sections/contacts";
 import { SectHeroDetail } from "@/components/sections/hero-detail";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
 import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
 import SectHeading from "@/components/ui/sect-heading.svelte";
@@ -16,6 +17,17 @@ const seo = siteSeo.find((item) => item.slug === "programs");
 const charityPrograms = [...(await fetchCharityPrograms())].sort(
   (a, b) => a.order - b.order
 );
+
+const breadcrumbs = [
+  {
+    url: "/",
+    name: "Главная",
+  },
+  {
+    url: "/programs",
+    name: "Программы",
+  },
+];
 ---
 
 <RootLayout>
@@ -35,6 +47,9 @@ const charityPrograms = [...(await fetchCharityPrograms())].sort(
         <SectHeadingAccent>программы</SectHeadingAccent>
       </SectHeading>
     </SectHeroDetail>
+
+    <SectBreadcrumbs {breadcrumbs} />
+
     <SectCharityProgramsDetail {charityPrograms} />
     <SectContacts />
   </main>

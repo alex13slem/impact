@@ -2,8 +2,8 @@
 import ogImage from "@/assets/img/og.webp";
 import { RootLayout } from "@/components/layouts/root";
 import { SectPartner } from "@/components/sections/partner-page";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
-import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
 import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
 import type { GetStaticPaths } from "astro";
 
@@ -54,10 +54,8 @@ const breadcrumbs = [
     description={partner.description}
     imageUrls={{ fb: partner.image ? partner.image.toString() : ogImage.src }}
   />
-  <main>
-    <div class="container">
-      <Breadcrumbs {breadcrumbs} />
-    </div>
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
     <SectPartner {partner} />
   </main>
 </RootLayout>

@@ -1,8 +1,8 @@
 ---
-import bg from '@/assets/img/bg.webp';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import type { PartnerWithRelatedData } from '@/lib/data/partners';
-import InteractiveBlock from './interactive-block/index.svelte';
+import bg from "@/assets/img/bg.webp";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import type { PartnerWithRelatedData } from "@/lib/data/partners";
+import InteractiveBlock from "./interactive-block/index.svelte";
 
 interface Props {
   partner: PartnerWithRelatedData;
@@ -19,12 +19,12 @@ const { partner } = Astro.props;
     <div class="mt-4 max-w-3xl prose" set:html={partner.description} />
     <div
       style={`--bg: url(${bg.src});`}
-      class={'xl:hidden [background-image:var(--bg)] bg-cover aspect-[4/3] rounded-3xl overflow-clip my-5 p-5'}
+      class={"xl:hidden [background-image:var(--bg)] bg-cover aspect-[4/3] rounded-3xl overflow-clip my-5 p-5"}
     >
       {
         partner.image && (
           <img
-            src={partner.image ? String(partner.image) : ''}
+            src={partner.image ? String(partner.image) : ""}
             class="w-full h-full object-contain object-center "
             alt={partner.name}
           />

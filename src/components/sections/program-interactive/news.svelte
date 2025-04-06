@@ -2,17 +2,25 @@
   import ListItem from "@/components/interactive-news/list-item.svelte";
   import List from "@/components/interactive-news/list.svelte";
   import Preview from "@/components/interactive-news/preview.svelte";
-  import type { NewsItem } from "@/lib/schemas/data/newsSchema";
+  import { PROGRAMS } from "@/lib/data/hash-tables";
+  import type { NewsItemWithRelated } from "@/lib/data/news";
   import { cn } from "@/lib/utils";
   import { query } from ".";
 
   export let className: string = "";
-  export let news: NewsItem[];
+  export let news: NewsItemWithRelated[];
   export let program: string;
 
-  const sortedNews = [...news].sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
+  const sortedAndFilteredNews = [...news]
+    .sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
+    .filter(
+      (n) =>
+        !!n.body &&
+        program === PROGRAMS["огонь жизни"] &&
+        n.charityProgram.slug === program
+    );
 
   $: viewItem = news.find((item) => item.slug === $query.item);
   let showMore = false;
@@ -25,7 +33,7 @@
     </div>
   </div>
   <List className="xl:max-w-3xl">
-    {#each sortedNews.slice(0, showMore ? sortedNews.length : 4) as item (item.id)}
+    {#each sortedAndFilteredNews.slice(0, showMore ? sortedAndFilteredNews.length : 4) as item (item.id)}
       <ListItem {item} on:mouseenter={() => ($query.item = item.slug)} />
     {/each}
     <a

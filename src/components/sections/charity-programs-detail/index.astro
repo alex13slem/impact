@@ -1,27 +1,15 @@
 ---
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
-import { Slider } from './slider';
+import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
+import { Slider } from "./slider";
 interface Props {
   charityPrograms: CharityProgram[];
 }
 
 const { charityPrograms } = Astro.props;
-const breadcrumbs = [
-  {
-    url: '/',
-    name: 'Главная',
-  },
-  {
-    url: '/programs',
-    name: 'Программы',
-  },
-];
 ---
 
-<section class="programs py-8 md:pt-10 md:pb-20 overflow-clip">
+<section class="programs my-8 md:mt-10 md:mb-20 overflow-clip">
   <div class="container">
-    <Breadcrumbs {breadcrumbs} />
     <Slider {charityPrograms} client:load />
   </div>
 </section>

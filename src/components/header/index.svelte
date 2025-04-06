@@ -1,6 +1,6 @@
 <script lang="ts">
   //@ts-ignore
-  import { navLinks } from "@/lib/data/navLinks";
+  import { navLinks as navLinksRaw, type NavLink } from "@/lib/data/navLinks";
   import { scrollHidden } from "@/lib/hooks/scrollHidden";
   import type { Contacts } from "@/lib/schemas/data/contactsSchema";
   import { mobileMenuMounted } from "@/lib/stores/mobileMenuStore";
@@ -21,9 +21,21 @@
 
   let isHomePage: boolean = true;
   let root: HTMLElement;
+  let navLinks: NavLink[] = [];
 
   onMount(() => {
     isHomePage = window.location.pathname === "/";
+    navLinks = navLinksRaw
+      .map((link) => {
+        if (
+          window.location.pathname === "/programs/ogon-zhizni" &&
+          link.link.includes("contacts")
+        ) {
+          link.link = "#contacts";
+        }
+        return link;
+      })
+      .filter((item) => !item.link.includes("pay"));
   });
 
   let isTop = true;
@@ -60,7 +72,7 @@
     </a>
 
     <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[2px]">
-      {#each navLinks.filter((item) => !item.link.includes("pay")) as item (item.name)}
+      {#each navLinks as item (item.name)}
         <a
           href={item.link}
           class=" hover:text-accent transition-colors text-white/90 uppercase font-road-radio text-xs xl:text-base"

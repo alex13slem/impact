@@ -1,35 +1,35 @@
 ---
-import logo from '@/assets/img/logo.svg';
-import { RootLayout } from '@/components/layouts/root';
-import { Seo } from '@/components/seo';
-import Breadcrumbs from '@/components/ui/breadcrumbs.astro';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { ViewDocs } from '@/components/view-docs';
-import { fetchDocs } from '@/lib/data/docs';
-import { Image } from 'astro:assets';
+import logo from "@/assets/img/logo.svg";
+import { RootLayout } from "@/components/layouts/root";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
+import { Seo } from "@/components/seo";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { ViewDocs } from "@/components/view-docs";
+import { fetchDocs } from "@/lib/data/docs";
+import { Image } from "astro:assets";
 
 const docs = await fetchDocs();
-const viewDocs = docs.filter(doc => doc.showIn === 'reports');
+const viewDocs = docs.filter((doc) => doc.showIn === "reports");
 
 const breadcrumbs = [
-  { name: 'Главная', url: '/' },
-  { name: 'Отчёты', url: '/reports' },
+  { name: "Главная", url: "/" },
+  { name: "Отчёты", url: "/reports" },
 ];
 ---
 
 <RootLayout>
   <Seo
-    slot={'seo'}
-    title={'Отчёты'}
-    description={'Отчёты благотворительного фонда Impact'}
-    imageUrls={{ fb: '' }}
+    slot={"seo"}
+    title={"Отчёты"}
+    description={"Отчёты благотворительного фонда Impact"}
+    imageUrls={{ fb: "" }}
   />
 
-  <main>
-    <section class="pb-8 xl:pb-20">
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+    <section class="mt-8 xl:mb-20">
       <div class="container">
-        <Breadcrumbs {breadcrumbs} />
         <SectHeading className="text-center" level={1}>
           <SectHeadingAccent>Отчёты</SectHeadingAccent>
         </SectHeading>
@@ -40,7 +40,7 @@ const breadcrumbs = [
           ) : (
             <div class="flex flex-col items-center gap-4 mt-20">
               <div class="p-8 rounded-full border border-accent inline-flex justify-center items-center aspect-square">
-                <Image class={'aspect-square h-32'} src={logo} alt={'Impact'} />
+                <Image class={"aspect-square h-32"} src={logo} alt={"Impact"} />
               </div>
               <p class="max-w-60 text-center text-3xl mt-5">
                 Нет актуальных отчетов

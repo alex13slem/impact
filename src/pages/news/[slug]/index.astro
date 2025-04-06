@@ -2,8 +2,8 @@
 import { RootLayout } from "@/components/layouts/root";
 import { SectLastNews } from "@/components/sections/last-news";
 import { SectNewsDetail } from "@/components/sections/news-detail";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
-import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
 import { fetchNewsWithRelatedData } from "@/lib/data/news";
 import type { GetStaticPaths } from "astro";
 
@@ -57,10 +57,9 @@ const breadcrumbs = [
     description={item.description ? item.description : undefined}
     imageUrls={{ fb: item.image || "" }}
   />
-  <main>
-    <div class="container">
-      <Breadcrumbs {breadcrumbs} />
-    </div>
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+
     <SectNewsDetail {item} />
     {news.length > 0 && <SectLastNews {news} />}
   </main>

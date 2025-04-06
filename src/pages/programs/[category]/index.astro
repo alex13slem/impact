@@ -5,8 +5,8 @@ import {
   ProgramInteractiveNews,
   ProgramInteractivePartners,
 } from "@/components/sections/program-interactive";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
-import Breadcrumbs from "@/components/ui/breadcrumbs.astro";
 import Button from "@/components/ui/button.svelte";
 import IconDownload from "@/components/ui/icon-download.svelte";
 import IconDocs from "@/components/ui/icons/icon-docs.svelte";
@@ -15,18 +15,12 @@ import SectHeading from "@/components/ui/sect-heading.svelte";
 import { WardsSlider } from "@/components/wards-slider";
 import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
 import { fetchDocs } from "@/lib/data/docs";
+import { PROGRAMS } from "@/lib/data/hash-tables";
 import { fetchNewsWithRelatedData } from "@/lib/data/news";
 import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
 import { fetchSiteSeo } from "@/lib/data/siteSeo";
 import { fetchWardsWithRelatedData } from "@/lib/data/wards";
 import type { GetStaticPaths } from "astro";
-
-const PROGRAMS = {
-  "помощь детям": "pomozj-detyam",
-  "нежные руки": "nezhnie-ruki",
-  "социальные лифты": "socialnye-lifty",
-  "огонь жизни": "ogon-zhizni",
-} as const;
 
 export const getStaticPaths = (async () => {
   const programs = [...(await fetchCharityPrograms())].sort(
@@ -92,10 +86,11 @@ const breadcrumbs = [
     imageUrls={{ fb: seo?.image || "" }}
   />
 
-  <main>
-    <section class="py-8 xl:pb-20 xl:pt-5">
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+
+    <section class="my-8 xl:mb-20 xl:mt-5">
       <div class="container">
-        <Breadcrumbs {breadcrumbs} />
         <div class="flex justify-between items-start flex-wrap md:gap-4">
           <SectHeading
             className="max-w-xl mb-4 md:mb-4 text-balance flex-grow"
@@ -156,122 +151,156 @@ const breadcrumbs = [
                   class="w-full aspect-[4/3] object-cover object-center rounded-3xl"
                 />
               </div>
-              <div class="flex-1 grid gap-3 lg:gap-5 content-start text-base lg:text-xl">
-                <h3 class="text-xl md:text-2xl font-bold">
+              <div class="flex-1  prose">
+                <h3 class="">
                   Мы стремимся изменить отношение общества к донорству костного
                   мозга
                 </h3>
-                <p class="max-w-[500px] ">
-                  <>
-                    <b>• Привлечь внимание</b>
-                    <br />
-                  </>
-                  Мы хотим, чтобы каждый задумался о важности донорства костного
-                  мозга.
-                </p>
-                <p class="max-w-[500px] ">
-                  <>
-                    <b>• Повышение осведомленности</b>
-                    <br />
-                  </>
-                  Наша задача - развеять мифы и предоставить достоверную
-                  информацию о донорстве костного мозга.
-                </p>
-                <p class="max-w-[500px] ">
-                  <>
-                    <b>• Объединение людей</b>
-                    <br />
-                  </>
-                  Мы создаем сообщество неравнодушных людей, готовых помогать
-                  другим.
-                </p>
+                <ul class="max-w-[500px]">
+                  <li>
+                    <h4 class="">Привлечь внимание</h4>
+                    <p>
+                      Мы хотим, чтобы каждый задумался о важности донорства
+                      костного мозга.
+                    </p>
+                  </li>
+                  <li>
+                    <h4 class="">Повышение осведомленности</h4>
+                    <p>
+                      Наша задача - развеять мифы и предоставить достоверную
+                      информацию о донорстве костного мозга.
+                    </p>
+                  </li>
+                  <li>
+                    <h4 class="">Объединение людей</h4>
+                    <p>
+                      Мы создаем сообщество неравнодушных людей, готовых
+                      помогать другим.
+                    </p>
+                  </li>
+                </ul>
               </div>
             </div>
           )
         }
-
-        {
-          program.slug === PROGRAMS["огонь жизни"] && news.length && (
-            <div class="mt-14 grid lg:grid-cols-2">
-              {news
-                .filter(
-                  (n) =>
-                    !n.draft &&
-                    new Date(n.date).getDate() >= new Date().getDate()
-                )
-                .slice(0, 10)
-                .reverse()
-                .map((item) => {
-                  const time =
-                    item.description &&
-                    item.description
-                      ?.split("Время начала: ")
-                      .at(1)
-                      ?.slice(0, 5);
-                  return (
-                    <article class="relative border-s border-white/90 py-4 px-5 md:px-10 lg:pr-24">
-                      {item.body && (
-                        <a
-                          href={`/news/${item.slug}`}
-                          class="absolute inset-0"
-                        />
-                      )}
-                      <header class="pb-2 flex items-center justify-between border-b border-white/15">
-                        <time
-                          datetime={new Date(item.date).toISOString()}
-                          class="text-4xl font-sov-mod uppercase"
-                        >
-                          <SectHeadingAccent>
-                            {new Date(item.date).toLocaleDateString("ru-RU", {
-                              month: "numeric",
-                              day: "numeric",
-                            })}
-                          </SectHeadingAccent>
-                        </time>
-
-                        {time && <time datetime={time}>{time}</time>}
-                      </header>
-                      <h3 class="mt-2 text-2xl">{item.title}</h3>
-                      {item.description && (
-                        <p class="mt-2 line-clamp-3 text-ellipsis">
-                          {item.description}
-                        </p>
-                      )}
-                    </article>
-                  );
-                })}
-            </div>
-          )
-        }
-
-        {
-          !!wards.length && (
-            <>
-              <SectHeading className="!text-4xl !mt-16 !mb-8 ">
-                Наши <SectHeadingAccent>подопечные</SectHeadingAccent>
-              </SectHeading>
-              <WardsSlider {wards} client:load />
-            </>
-          )
-        }
-
-        {
-          program.slug !== PROGRAMS["огонь жизни"] && (
-            <ProgramInteractivePartners {partners} {program} client:load />
-          )
-        }
-
-        {
-          program.slug !== PROGRAMS["огонь жизни"] && (
-            <ProgramInteractiveNews
-              className="mt-28"
-              {news}
-              program={program.slug}
-              client:load
-            />
-          )
-        }
       </div>
     </section>
+
+    {
+      program.slug === PROGRAMS["огонь жизни"] && news.length && (
+        <section class="mt-14 ">
+          <div class="container grid lg:grid-cols-2">
+            {news
+              .filter(
+                (n) =>
+                  !n.draft && new Date(n.date).getDate() >= new Date().getDate()
+              )
+              .slice(0, 10)
+              .reverse()
+              .map((item) => (
+                <article class="relative border-s border-white/90 py-4 px-5 md:px-10 lg:pr-24">
+                  {item.body && (
+                    <a href={`/news/${item.slug}`} class="absolute inset-0" />
+                  )}
+                  <header class="pb-2 flex items-center justify-between border-b border-white/15">
+                    <time
+                      datetime={new Date(item.date).toISOString()}
+                      class="text-4xl font-sov-mod uppercase"
+                    >
+                      <SectHeadingAccent>
+                        {new Date(item.date).toLocaleDateString("ru-RU", {
+                          month: "numeric",
+                          day: "numeric",
+                        })}
+                      </SectHeadingAccent>
+                    </time>
+                  </header>
+                  <h3 class="mt-2 text-2xl">{item.title}</h3>
+                  {item.description && (
+                    <p class="mt-2 line-clamp-3 text-ellipsis">
+                      {item.description}
+                    </p>
+                  )}
+                </article>
+              ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      !!wards.length && (
+        <section class="my-8 md:my-20">
+          <div class="container">
+            <SectHeading className="!text-4xl !mb-8 ">
+              Наши <SectHeadingAccent>подопечные</SectHeadingAccent>
+            </SectHeading>
+            <WardsSlider {wards} client:load />
+          </div>
+        </section>
+      )
+    }
+
+    {
+      program.slug !== PROGRAMS["огонь жизни"] && (
+        <ProgramInteractivePartners {partners} {program} client:load />
+      )
+    }
+
+    <section class="my-8 md:my-20">
+      <div class="container">
+        <ProgramInteractiveNews {news} program={program.slug} client:load />
+      </div>
+    </section>
+
+    {
+      program.slug === PROGRAMS["огонь жизни"] && (
+        <section
+          id="contacts"
+          class="contacts relative z-0 overflow-clip my-8 md:my-20"
+        >
+          <div class="container ">
+            <SectHeading className="text-center">Контакты</SectHeading>
+            <p class="hidden-block dir-bottom text-sm md:text-base font-thin lg:text-lg text-center max-w-xl mx-auto mb-8 md:mb-10">
+              Если у вас остались вопросы, мы с удовольствием вам ответим в
+              рабочее время.
+            </p>
+
+            <div class="grid lg:grid-cols-[1fr,1fr] gap-x-16 gap-y-4 lg:gap-y-8 text-sm md:text-base font-thin lg:text-lg">
+              <div class="flex flex-col justify-between">
+                <p class="lowercase">
+                  По экстренным вопросам и вопросам документации:
+                </p>
+                <p class="mb-1 text-xs md:text-sm lg:text-base">
+                  (исполнительный директор Лазарева Алина Викторовна)
+                </p>
+                <p class="text-2xl md:text-3xl lg:text-4xl border-b-2 border-b-white">
+                  <a href={`tel:+79775325391`}>+7 (977) 532-53-91</a>
+                </p>
+              </div>
+
+              <div class="flex flex-col justify-between">
+                <p class="lowercase mb-1">По всем общим вопросам:</p>
+                <p class="text-2xl md:text-3xl lg:text-4xl border-b-2 border-b-white">
+                  <a href={`tel:+79777516630`}>+7 (977) 751-66-30</a>
+                </p>
+              </div>
+
+              <div class="flex flex-col justify-between">
+                <p>
+                  по вопросам проведения и организации Эстафеты «Огонь жизни»:
+                </p>
+                <p class="mb-1 text-xs md:text-sm lg:text-base">
+                  (руководитель проекта Морозова Анна)
+                </p>
+                <p class="text-2xl md:text-3xl lg:text-4xl border-b-2 border-b-white">
+                  <a href={`tel:+79775325391`}>+7 (977) 532-53-91</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
   </main>
 </RootLayout>

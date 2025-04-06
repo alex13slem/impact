@@ -1,22 +1,37 @@
 <script lang="ts">
-  import { navLinks } from '@/lib/data/navLinks';
-  import { clickOutside } from '@/lib/hooks/clickOutside';
-  import type { Contacts } from '@/lib/schemas/data/contactsSchema';
-  import { mobileMenuVisible } from '@/lib/stores/mobileMenuStore';
-  import { cn } from '@/lib/utils';
-  import { onMount } from 'svelte';
-  import { handleClose } from '.';
-  import { Portal } from '../portal';
-  import IconTg from '../ui/icons/icon-tg.svelte';
-  import IconVk from '../ui/icons/icon-vk.svelte';
+  import { navLinks as navLinksRaw, type NavLink } from "@/lib/data/navLinks";
+  import { clickOutside } from "@/lib/hooks/clickOutside";
+  import type { Contacts } from "@/lib/schemas/data/contactsSchema";
+  import { mobileMenuVisible } from "@/lib/stores/mobileMenuStore";
+  import { cn } from "@/lib/utils";
+  import { onMount } from "svelte";
+  import { handleClose } from ".";
+  import { Portal } from "../portal";
+  import IconTg from "../ui/icons/icon-tg.svelte";
+  import IconVk from "../ui/icons/icon-vk.svelte";
 
-  export let className: string = '';
+  export let className: string = "";
   export let contacts: Contacts;
 
   export let ignoreClickElements: (HTMLElement | string)[] = [];
+
   let isOpen = false;
+  let navLinks: NavLink[] = [];
+
   onMount(() => {
     isOpen = $mobileMenuVisible;
+
+    navLinks = navLinksRaw
+      .map((link) => {
+        if (
+          window.location.pathname === "/programs/ogon-zhizni" &&
+          link.link.includes("contacts")
+        ) {
+          link.link = "#contacts";
+        }
+        return link;
+      })
+      .filter((item) => !item.link.includes("pay"));
   });
 </script>
 
@@ -24,10 +39,10 @@
   <div class="fixed inset-0 z-30 flex flex-col">
     <div
       class={cn(
-        'absolute inset-0 h-full bg-dark/80 backdrop-blur transition-all duration-500  ease-in scale-0 origin-top-right -z-10',
+        "absolute inset-0 h-full bg-dark/80 backdrop-blur transition-all duration-500  ease-in scale-0 origin-top-right -z-10",
         {
-          'scale-100 ease-out duration-[1.5s]': $mobileMenuVisible && isOpen,
-        },
+          "scale-100 ease-out duration-[1.5s]": $mobileMenuVisible && isOpen,
+        }
       )}
     />
     <div
@@ -40,7 +55,7 @@
           '[data-target="mobile-menu-trigger"]',
         ]}
         on:outclick={handleClose}
-        class={cn(' flex flex-col gap-7', className)}
+        class={cn(" flex flex-col gap-7", className)}
       >
         {#each navLinks as item, idx (item.name)}
           <a
