@@ -128,8 +128,10 @@ const breadcrumbs = [
                     external
                     href={program.presentation.toString()}
                   >
-                    <IconDownload class="text-2xl text-accent" /> Скачать
-                    программу
+                    <IconDownload class="text-2xl text-accent" />
+                    {program.slug === PROGRAMS["огонь жизни"]
+                      ? "Информация для донора"
+                      : "Скачать программу"}
                   </Button>
                 )
               }
