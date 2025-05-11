@@ -1,0 +1,192 @@
+---
+import { RootLayout } from "@/components/layouts/root";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
+import { Seo } from "@/components/seo";
+import { fetchNewsWithRelatedData } from "@/lib/data/news";
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
+import { isProgramWithGallery } from "@/lib/utils";
+import type { GetStaticPaths } from "astro";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+
+export const getStaticPaths = (async () => {
+  const filteredNews = (await fetchNewsWithRelatedData()).filter(
+    (n) =>
+      !n.draft &&
+      n.gallery &&
+      n.gallery.length > 0 &&
+      isProgramWithGallery(n.charityProgram.slug)
+  );
+
+  // Группировка новостей по регионам
+  const galleriesByRegion = new Map<
+    number,
+    {
+      gallery: (typeof filteredNews)[0]["gallery"];
+      program: (typeof filteredNews)[0]["charityProgram"];
+      region: (typeof filteredNews)[0]["region"];
+    }
+  >();
+
+  function isGalleryArray(
+    gallery: unknown
+  ): gallery is { src: string; alt: string }[] {
+    return Array.isArray(gallery);
+  }
+
+  for (const newsItem of filteredNews) {
+    const gallery = Array.isArray(newsItem.gallery) ? newsItem.gallery : [];
+
+    const existing = galleriesByRegion.get(newsItem.regionId);
+
+    if (existing && isGalleryArray(existing.gallery)) {
+      existing.gallery.push(...gallery);
+    } else {
+      galleriesByRegion.set(newsItem.regionId, {
+        gallery: [...gallery],
+        program: newsItem.charityProgram,
+        region: newsItem.region,
+      });
+    }
+  }
+
+  return Array.from(galleriesByRegion.entries()).map(
+    ([regionId, { gallery, program, region }]) => ({
+      params: {
+        category: program.slug,
+        regionId: regionId.toString(),
+      },
+      props: {
+        gallery,
+        program,
+        region,
+      },
+    })
+  );
+}) satisfies GetStaticPaths;
+
+const { regionId } = Astro.params;
+const { gallery, program, region } = Astro.props;
+const siteSeo = await fetchSiteSeo();
+const seo = siteSeo.find((item) => item.slug === program.slug);
+
+const breadcrumbs = [
+  {
+    url: "/",
+    name: "Главная",
+  },
+  {
+    url: `/programs/${program.slug}/gallery`,
+    name: "Галерея",
+  },
+  {
+    url: `/programs/${program.slug}/gallery/${regionId}`,
+    name: region.name,
+  },
+];
+---
+
+<RootLayout>
+  <Seo
+    slot={"seo"}
+    title={`Галлерея программы «${program.name}» - ${region.name}`}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
+  />
+
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+
+    <section class="pb-8 xl:pb-20">
+      <div class="container">
+        <SectHeading className="text-center" level={1}>
+          <SectHeadingAccent>{region.name}</SectHeadingAccent>
+        </SectHeading>
+        <div class="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+          {
+            (gallery || []).map((photo) => (
+              <article class="relative border border-white/90 hover:border-accent transition-colors rounded-3xl overflow-clip">
+                <a
+                  class="absolute inset-0 opacity-0 z-10"
+                  href={photo.src}
+                  data-fancybox="gallery"
+                  data-caption={photo.alt}
+                  data-download-src={photo.src}
+                />
+                <img
+                  class="aspect-[4/3] w-full object-cover object-center"
+                  src={photo.src}
+                  alt={photo.alt}
+                />
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</RootLayout>
+
+<script>
+  import { Fancybox } from "@fancyapps/ui";
+  import "@fancyapps/ui/dist/fancybox/fancybox.css";
+  Fancybox.bind(`[data-fancybox="gallery"]`, {
+    Toolbar: {
+      display: {
+        left: ["infobar"],
+        middle: [],
+        right: ["slideshow", "download", "thumbs", "close"],
+      },
+    },
+    Carousel: {
+      Navigation: true,
+    },
+    Slideshow: true,
+  });
+</script>
+
+<style is:global>
+  /* Расположение стрелок по краям */
+  .f-carousel__nav {
+    --f-button-next-pos: 1rem;
+    --f-button-prev-pos: 1rem;
+  }
+
+  /* Сами кнопки остаются кликабельными */
+  .f-button.is-prev,
+  .f-button.is-next {
+    pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.3s ease-in-out;
+  }
+
+  /* SVG-иконки стрелок */
+  .f-button svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+  }
+
+  /* Наведение */
+  .f-button:hover {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    color: #fbcb6a !important;
+  }
+
+  /* Удаление лишних теней/эффектов, если есть */
+  .f-button:focus,
+  .f-button:active {
+    outline: none;
+    box-shadow: none;
+  }
+</style>

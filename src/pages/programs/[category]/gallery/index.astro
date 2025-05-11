@@ -1,0 +1,105 @@
+---
+import { RootLayout } from "@/components/layouts/root";
+import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
+import { Seo } from "@/components/seo";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import { fetchCharityPrograms } from "@/lib/data/charityPrograms";
+import { fetchNewsWithRelatedData } from "@/lib/data/news";
+import { fetchSiteSeo } from "@/lib/data/siteSeo";
+import { isProgramWithGallery } from "@/lib/utils";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const programs = (await fetchCharityPrograms()).filter((p) =>
+    isProgramWithGallery(p.slug)
+  );
+  const rawNews = await fetchNewsWithRelatedData();
+
+  return programs.map((program) => {
+    const filteredNews = rawNews
+      .filter(
+        (n) =>
+          !n.draft &&
+          n.charityProgram.slug === program.slug &&
+          n.gallery &&
+          n.gallery.length > 0
+      )
+      .toSorted(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+    const newsByRegion = new Map<number, (typeof filteredNews)[0]>();
+    for (const n of filteredNews) {
+      if (!newsByRegion.has(n.regionId)) {
+        newsByRegion.set(n.regionId, n);
+      }
+    }
+
+    const news = Array.from(newsByRegion.values());
+
+    return {
+      params: {
+        category: program.slug,
+      },
+      props: {
+        program,
+        news,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { program, news } = Astro.props;
+const siteSeo = await fetchSiteSeo();
+const seo = siteSeo.find((item) => item.slug === program.slug);
+
+const breadcrumbs = [
+  {
+    url: "/",
+    name: "Главная",
+  },
+  {
+    url: `/programs/${program.slug}`,
+    name: program.name,
+  },
+  {
+    url: `/programs/${program.slug}/gallery`,
+    name: "Галерея",
+  },
+];
+---
+
+<RootLayout>
+  <Seo
+    slot={"seo"}
+    title={`Галлерея программы «${program.name}»`}
+    description={seo?.description || ""}
+    imageUrls={{ fb: seo?.image || "" }}
+  />
+
+  <main class="py-[1px]">
+    <SectBreadcrumbs {breadcrumbs} />
+
+    {
+      !!news.length && (
+        <section class="my-14 ">
+          <div class="container grid lg:grid-cols-2">
+            {news.map((item) => (
+              <article class="relative border-s border-white/90 py-4 px-5 md:px-10 lg:pr-24">
+                <a
+                  href={`/programs/${program.slug}/gallery/${item.regionId}`}
+                  class="absolute inset-0"
+                />
+                <header class="pb-2 flex items-center justify-between border-b border-white/15">
+                  <h3 class="text-xl font-sov-mod uppercase">
+                    <SectHeadingAccent>{item.region.name}</SectHeadingAccent>
+                  </h3>
+                </header>
+              </article>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </main>
+</RootLayout>

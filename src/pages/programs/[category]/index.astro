@@ -121,10 +121,20 @@ const breadcrumbs = [
                 )
               }
               {
+                program.slug === PROGRAMS["огонь жизни"] && (
+                  <Button
+                    variant="accent"
+                    href={`/programs/${program.slug}/gallery`}
+                  >
+                    Галлерея
+                  </Button>
+                )
+              }
+              {
                 program.presentation && (
                   <Button
                     variant="outline"
-                    className=" hover:text-accent transition-colors"
+                    className="hover:text-accent transition-colors"
                     external
                     href={program.presentation.toString()}
                   >

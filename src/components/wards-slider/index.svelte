@@ -83,6 +83,7 @@
 
     {#each ["prev", "next"] as dir}
       <button
+        aria-label={dir === "prev" ? "Предыдущий слайд" : "Следующий слайд"}
         class={cn(
           {
             "prev-btn left-0  rotate-180": dir === "prev",

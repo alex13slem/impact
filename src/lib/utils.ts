@@ -1,5 +1,6 @@
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { PROGRAMS } from "./data/hash-tables";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,12 +16,12 @@ export const regex = {
 
 export function convertDataToFormData<T extends Record<string, any>>(
   data: T,
-  defaultValues?: Record<string, any>,
+  defaultValues?: Record<string, any>
 ): FormData {
   const formData = new FormData();
 
   Object.entries(data).forEach(([key, value]) => {
-    if ((value && value !== defaultValues?.[key]) || key === 'id') {
+    if ((value && value !== defaultValues?.[key]) || key === "id") {
       if (Array.isArray(value)) {
         formData.append(key, JSON.stringify(value));
       } else {
@@ -34,7 +35,7 @@ export function convertDataToFormData<T extends Record<string, any>>(
 
 export function addProtocolToUrl(url: string) {
   if (!/^https?:\/\//i.test(url)) {
-    url = 'https://' + url;
+    url = "https://" + url;
   }
   return url;
 }
@@ -43,17 +44,17 @@ export function getDomainAndPath(url: string) {
   const parsedUrl = new URL(url);
 
   return (
-    parsedUrl.hostname + (parsedUrl.pathname === '/' ? '' : parsedUrl.pathname)
+    parsedUrl.hostname + (parsedUrl.pathname === "/" ? "" : parsedUrl.pathname)
   );
 }
 
 export function json(
   data: Record<string, any>,
-  init: ResponseInit = { status: 200 },
+  init: ResponseInit = { status: 200 }
 ) {
   return new Response(JSON.stringify(data), {
     headers: {
-      'Content-Type': 'application/json; utf-8',
+      "Content-Type": "application/json; utf-8",
     },
     ...init,
   });
@@ -82,6 +83,9 @@ export class ResponseErrorData<TErrors> extends ResponseData<unknown, TErrors> {
     super(false, null, errors);
   }
 }
+
+export const isProgramWithGallery = (slug: string) =>
+  slug === PROGRAMS["огонь жизни"];
 
 // export async function getUser(
 //   supabase: SupabaseClient,
@@ -134,19 +138,19 @@ export class ResponseErrorData<TErrors> extends ResponseData<unknown, TErrors> {
 // }
 
 type MouseEventType =
-  | 'click'
-  | 'dblclick'
-  | 'mousedown'
-  | 'mouseup'
-  | 'mouseenter'
-  | 'mouseleave'
-  | 'mousemove'
-  | 'mouseover'
-  | 'mouseout'
-  | 'contextmenu';
+  | "click"
+  | "dblclick"
+  | "mousedown"
+  | "mouseup"
+  | "mouseenter"
+  | "mouseleave"
+  | "mousemove"
+  | "mouseover"
+  | "mouseout"
+  | "contextmenu";
 export const triggerMouseEvent = (
   element: HTMLElement,
-  eventType: MouseEventType,
+  eventType: MouseEventType
 ): void => {
   const event = new MouseEvent(eventType, {
     bubbles: true,
@@ -164,14 +168,14 @@ export const triggerMouseEvent = (
 // }
 
 export function transformIconifyIdToTW(id: string): string {
-  const [prefix, icon] = id.split(':');
+  const [prefix, icon] = id.split(":");
   return `icon-[${prefix}--${icon}]`;
 }
 
 export function isTouchDevice() {
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 }
 
 export function toAnchorPhoneNumber(phoneNumber: string) {
-  return phoneNumber.replace(/[\s\(\)-]/g, '');
+  return phoneNumber.replace(/[\s\(\)-]/g, "");
 }
