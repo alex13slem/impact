@@ -16,17 +16,15 @@ export const getStaticPaths = (async () => {
   const rawNews = await fetchNewsWithRelatedData();
 
   return programs.map((program) => {
-    const filteredNews = rawNews
-      .filter(
+    const filteredNews = [
+      ...rawNews.filter(
         (n) =>
           !n.draft &&
           n.charityProgram.slug === program.slug &&
           n.gallery &&
           n.gallery.length > 0
-      )
-      .toSorted(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
+      ),
+    ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     const newsByRegion = new Map<number, (typeof filteredNews)[0]>();
     for (const n of filteredNews) {
