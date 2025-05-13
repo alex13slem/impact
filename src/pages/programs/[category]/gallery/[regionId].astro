@@ -102,10 +102,12 @@ const breadcrumbs = [
         <SectHeading className="text-center" level={1}>
           <SectHeadingAccent>{region.name}</SectHeadingAccent>
         </SectHeading>
-        <div class="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+        <div
+          class="grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        >
           {
             (gallery || []).map((photo) => (
-              <article class="relative border border-white/90 hover:border-accent transition-colors rounded-3xl overflow-clip">
+              <article class="relative border border-white/90 hover:border-accent transition-colors rounded-xl overflow-clip">
                 <a
                   class="absolute inset-0 opacity-0 z-10"
                   href={photo.src}
