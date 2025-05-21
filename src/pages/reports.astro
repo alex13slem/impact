@@ -1,5 +1,5 @@
 ---
-import logo from "@/assets/img/logo.svg";
+import logo from "@/assets/img/logo-currentColor.svg";
 import { RootLayout } from "@/components/layouts/root";
 import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
@@ -22,7 +22,7 @@ const breadcrumbs = [
   <Seo
     slot={"seo"}
     title={"Отчёты"}
-    description={"Отчёты благотворительного фонда Impact"}
+    description={`Отчёты благотворительного фонда ${import.meta.env.SITE_NAME_TAB}`}
     imageUrls={{ fb: "" }}
   />
 
@@ -40,7 +40,11 @@ const breadcrumbs = [
           ) : (
             <div class="flex flex-col items-center gap-4 mt-20">
               <div class="p-8 rounded-full border border-accent inline-flex justify-center items-center aspect-square">
-                <Image class={"aspect-square h-32"} src={logo} alt={"Impact"} />
+                <Image
+                  class={"aspect-square h-32"}
+                  src={logo}
+                  alt={import.meta.env.SITE_NAME_TAB}
+                />
               </div>
               <p class="max-w-60 text-center text-3xl mt-5">
                 Нет актуальных отчетов

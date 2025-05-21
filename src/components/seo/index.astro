@@ -1,8 +1,8 @@
 ---
-import type { OpenGraphProps } from '@/lib/types/open-graph';
-import OpenGraph from './open-graph.astro';
+import type { OpenGraphProps } from "@/lib/types/open-graph";
+import OpenGraph from "./open-graph.astro";
 
-interface Props extends Omit<OpenGraphProps, 'siteName'> {
+interface Props extends Omit<OpenGraphProps, "siteName"> {
   keywords?: string;
   noindex?: boolean;
 }
@@ -15,12 +15,11 @@ const {
   ...props
 } = Astro.props;
 
-const siteNameEnv = import.meta.env.SITE_NAME_TAB;
+const siteNameEnv = import.meta.env.SITE_NAME_TAB.toUpperCase();
 // const mainInfoData = await getMainInfo();
 
-const siteName = siteNameEnv ||  '';
-const description =
-  _description ||  '';
+const siteName = siteNameEnv || "";
+const description = _description || "";
 ---
 
 <>

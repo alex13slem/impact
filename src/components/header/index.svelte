@@ -71,7 +71,7 @@
       <SiteLogoSmall class="text-3xl md:text-5xl text-accent lg:hidden" />
     </a>
 
-    <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[2px]">
+    <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[6px]">
       {#each navLinks as item (item.name)}
         <a
           href={item.link}

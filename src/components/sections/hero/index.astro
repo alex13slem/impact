@@ -1,16 +1,14 @@
 ---
-import IMPACT from '@/assets/img/IMPACT.png';
-import { headerOffsets } from '@/components/header';
-import Nav from '@/components/russian-map/nav.svelte';
-import { getMapNews } from '@/lib/data/mapNews';
-import { getLastNews, type NewsItemWithRelated } from '@/lib/data/news';
-import { fetchRegionsWithRelations } from '@/lib/data/regions';
-import type { WardWithRelatedData } from '@/lib/data/wards';
-import type { CharityProgram } from '@/lib/schemas/data/charityProgramsSchema';
-import { cn } from '@/lib/utils';
-import { Image } from 'astro:assets';
-import RussianMap from '../../russian-map';
-import Heading from './heading.svelte';
+import { headerOffsets } from "@/components/header";
+import Nav from "@/components/russian-map/nav.svelte";
+import { getMapNews } from "@/lib/data/mapNews";
+import { getLastNews, type NewsItemWithRelated } from "@/lib/data/news";
+import { fetchRegionsWithRelations } from "@/lib/data/regions";
+import type { WardWithRelatedData } from "@/lib/data/wards";
+import type { CharityProgram } from "@/lib/schemas/data/charityProgramsSchema";
+import { cn } from "@/lib/utils";
+import RussianMap from "../../russian-map";
+import Heading from "./heading.svelte";
 
 interface Props {
   wards: WardWithRelatedData[];
@@ -29,19 +27,19 @@ const mapNews = getMapNews(news, wards, regions);
   class="section-slide bg-dark relative z-0 overflow-x-clip"
   class:list={[headerOffsets.height]}
 >
-  <Image
+  <!-- <Image
     src={IMPACT}
     alt="impact"
     class="absolute inset-0 bottom-auto object-contain w-full -z-10"
     class:list={[headerOffsets.top]}
-  />
+  /> -->
   <RussianMap
     {mapNews}
     {regions}
     client:load
     className={cn(
-      'absolute left-0 w-[max(100%,1200px)] h-svh z-0',
-      headerOffsets.top,
+      "absolute left-0 w-[max(100%,1200px)] h-svh z-0",
+      headerOffsets.top
     )}
   />
   <div
@@ -66,17 +64,17 @@ const mapNews = getMapNews(news, wards, regions);
         <a href="/news">Новости</a>
       </h2>
       {
-        landingNews.map(item => (
+        landingNews.map((item) => (
           <article class="[&:not(:last-child)]:mb-6 relative">
             <a href={`/news/${item.slug}`} class="absolute inset-0" />
             <time
               class="px-3 py-1 bg-dark rounded-full self-start text-xs"
               datetime={new Date(item.date).getDate().toString()}
             >
-              {new Date(item.date).toLocaleDateString('ru-RU', {
-                day: 'numeric',
-                month: 'numeric',
-                year: 'numeric',
+              {new Date(item.date).toLocaleDateString("ru-RU", {
+                day: "numeric",
+                month: "numeric",
+                year: "numeric",
               })}
             </time>
             <p class="text-sm mt-2">{item.title}</p>

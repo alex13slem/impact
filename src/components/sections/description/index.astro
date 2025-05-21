@@ -1,8 +1,8 @@
 ---
-import bgSource from '@/assets/img/sect-2-bg.jpg';
-import SectHeadingAccent from '@/components/ui/sect-heading-accent.svelte';
-import SectHeading from '@/components/ui/sect-heading.svelte';
-import { getImage } from 'astro:assets';
+import bgSource from "@/assets/img/sect-2-bg.jpg";
+import SectHeadingAccent from "@/components/ui/sect-heading-accent.svelte";
+import SectHeading from "@/components/ui/sect-heading.svelte";
+import { getImage } from "astro:assets";
 
 const bg = await getImage({ src: bgSource });
 ---
@@ -17,7 +17,9 @@ const bg = await getImage({ src: bgSource });
     class="container py-32 md:h-svh flex flex-col justify-center items-center"
   >
     <SectHeading className="text-center">
-      БЛАГОТВОРИТЕЛЬНЫЙ <br /> ФОНД <SectHeadingAccent>IMPACT</SectHeadingAccent
+      БЛАГОТВОРИТЕЛЬНЫЙ <br /> ФОНД
+      <SectHeadingAccent
+        >{import.meta.env.SITE_NAME_TAB.toUpperCase()}</SectHeadingAccent
       >
     </SectHeading>
     <p

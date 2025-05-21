@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     // });
 
     const info = await transporter.sendMail({
-      from: `"IMPACT" <${process.env.SMTP_EMAIL_FROM}>`, // От кого
+      from: `"${process.env.SITE_NAME_TAB!.toUpperCase()}" <${process.env.SMTP_EMAIL_FROM}>`, // От кого
       to: process.env.SMTP_EMAIL_TO, // Кому (может быть ваш email для теста)
       subject: 'Заявка на партнерство', // Тема письма
       html: /* html */ `
