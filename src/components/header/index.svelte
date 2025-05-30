@@ -68,7 +68,7 @@
   <div class="container flex justify-between items-end">
     <a href="/" class="outline-none">
       <SiteLogo class={"hidden lg:inline-block h-10 xl:h-14 "} />
-      <SiteLogoSmall class="text-3xl md:text-5xl text-accent lg:hidden" />
+      <SiteLogoSmall class="text-3xl md:text-5xl lg:hidden" />
     </a>
 
     <nav class="hidden lg:flex gap-8 items-center leading-none -mb-[6px]">
