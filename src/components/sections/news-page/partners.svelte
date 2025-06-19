@@ -6,7 +6,10 @@
 </script>
 
 {#if $query.hasPartner}
-  <section class="my-8 md:my-20 flex flex-col gap-5" id="sect-partners">
+  <section
+    class="my-8 md:my-20 scroll-mt-8 md:scroll-mt-20 flex flex-col gap-5"
+    id="sect-partners"
+  >
     <div class="container">
       {#each partners
         .sort((a, b) => +!a.image - +!b.image)

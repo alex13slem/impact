@@ -28,9 +28,10 @@
     (item) => item.value === $query.program
   );
 
-  function handleFilterAction(fn: () => void) {
-    window.scrollTo(0, 0);
+  async function handleFilterAction(fn: () => void) {
     fn();
+    await tick();
+    window.scrollTo(0, 0);
   }
 </script>
 
@@ -41,7 +42,7 @@
         bind:selected={selectedProgram}
         options={categoryOptions}
         onSelectedChange={(item) => {
-          window.location.href = "#news";
+          window.scrollTo(0, 0);
           $query.program = item?.value;
         }}
         placeholder="Все программы"
@@ -51,8 +52,8 @@
         bind:selected={selectedRegion}
         options={regionOptions}
         onSelectedChange={(item) => {
-          window.location.href = "#news";
-          $query.program = item?.value;
+          window.scrollTo(0, 0);
+          $query.region = item?.value;
         }}
         placeholder="Все регионы"
         class="flex-1"
@@ -63,31 +64,29 @@
         class="flex-1"
         on:click={async () => {
           if ($query.hasPartner === "true") {
+            window.scrollTo(0, 0);
             $query.hasPartner = null;
-            window.location.href = "#news";
           } else {
             $query.hasPartner = "true";
             $query.hasWard = null;
             await tick();
-            window.location.href = "#sect-partners";
+            location.hash = "#sect-partners";
           }
         }}
         isActive={$query.hasPartner === "true"}>Партнёры</FilterButton
       >
       <FilterButton
         class="flex-1"
-        on:click={() => {
-          handleFilterAction(async () => {
-            if ($query.hasWard === "true") {
-              $query.hasWard = null;
-              window.location.href = "#news";
-            } else {
-              $query.hasWard = "true";
-              $query.hasPartner = null;
-              await tick();
-              window.location.href = "#sect-wards";
-            }
-          });
+        on:click={async () => {
+          if ($query.hasWard === "true") {
+            window.scrollTo(0, 0);
+            $query.hasWard = null;
+          } else {
+            $query.hasWard = "true";
+            $query.hasPartner = null;
+            await tick();
+            location.hash = "#sect-wards";
+          }
         }}
         isActive={$query.hasWard === "true"}>Подопечные</FilterButton
       >

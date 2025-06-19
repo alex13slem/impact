@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { cn } from '@/lib/utils';
-  import { ScrollArea, Select, type Selected } from 'bits-ui';
-  import type { HTMLAttributes } from 'svelte/elements';
+  import { cn } from "@/lib/utils";
+  import { ScrollArea, Select, type Selected } from "bits-ui";
+  import type { HTMLAttributes } from "svelte/elements";
 
   export let onSelectedChange: (
-    item: Selected<string | number> | undefined,
+    item: Selected<string | number> | undefined
   ) => void = () => {};
   export let options: Selected<string | number>[];
   export let selected: Selected<string | number> | undefined = undefined;
@@ -19,16 +19,16 @@
   items={options}
   bind:selected
   bind:onSelectedChange
-  onOpenChange={open => (isActive = open)}
+  onOpenChange={(open) => (isActive = open)}
 >
   <Select.Trigger
     class={cn(
-      'w-full border border-current text-accent rounded-xl px-3 py-2 md:py-3 md:px-4 leading-none flex gap-2 justify-between items-center backdrop-blur bg-dark/30 xl:hover:bg-accent xl:hover:text-dark transition-colors',
+      "w-full border border-current text-accent rounded-xl px-3 py-2 md:py-3 md:px-4 leading-none flex gap-2 justify-between items-center backdrop-blur bg-dark/30 xl:hover:bg-accent xl:hover:text-dark transition-colors",
       {
-        'bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-dark':
+        "bg-gradient-to-br from-gr-start via-gr-middle to-gr-end text-dark":
           isActive,
       },
-      className,
+      className
     )}
   >
     <Select.Value {placeholder} />
@@ -49,7 +49,7 @@
     sideOffset={8}
     sameWidth={false}
     align="start"
-    class="max-w-64 border border-current text-accent p-3 md:p-4 rounded-xl font-light backdrop-blur flex flex-col gap-1 bg-dark bg-opacity-30"
+    class="z-40 max-w-64 border border-current text-accent p-3 md:p-4 rounded-xl font-light backdrop-blur flex flex-col gap-1 bg-dark bg-opacity-30"
   >
     <ScrollArea.Root class="relative h-52">
       <ScrollArea.Viewport class="h-full w-full">

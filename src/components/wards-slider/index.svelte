@@ -33,7 +33,10 @@
   });
 </script>
 
-<section class={cn("my-8 md:my-20", className)} id="sect-wards">
+<section
+  class={cn("my-8 md:my-20 scroll-mt-8 md:scroll-mt-20", className)}
+  id="sect-wards"
+>
   <div class="container relative">
     <swiper-container
       init="false"

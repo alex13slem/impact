@@ -44,19 +44,21 @@
         {#each viewedNews as item (item.id)}
           <ListItem {item} on:mouseenter={() => ($query.item = item.slug)} />
         {/each}
-        <Button
-          variant="outline"
-          className="mt-14 w-full"
-          on:click={() => (showAll = !showAll)}
-        >
-          <p class="text-center uppercase font-sov-mod text-2xl text-accent">
-            {#if showAll}
-              Показать меньше
-            {:else}
-              Показать больше
-            {/if}
-          </p>
-        </Button>
+        {#if !!viewedNews.length}
+          <Button
+            variant="outline"
+            className="mt-14 w-full"
+            on:click={() => (showAll = !showAll)}
+          >
+            <p class="text-center uppercase font-sov-mod text-2xl text-accent">
+              {#if showAll}
+                Показать меньше
+              {:else}
+                Показать больше
+              {/if}
+            </p>
+          </Button>
+        {/if}
         {#if viewedNews.length === 0}
           <p class="text-center uppercase font-sov-mod text-2xl text-accent">
             {#if $query.hasPartner}

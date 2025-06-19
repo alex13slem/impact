@@ -9,7 +9,7 @@ export async function getWpData(url: string) {
       Accept: 'application/json',
     },
     params: {
-      per_page: 100,
+      per_page: 1000,
     },
   });
   if (response.status !== 200) {
