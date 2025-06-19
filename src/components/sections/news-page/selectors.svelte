@@ -66,6 +66,7 @@
           if ($query.hasPartner === "true") {
             window.scrollTo(0, 0);
             $query.hasPartner = null;
+            location.hash = "#";
           } else {
             $query.hasPartner = "true";
             $query.hasWard = null;
@@ -81,6 +82,7 @@
           if ($query.hasWard === "true") {
             window.scrollTo(0, 0);
             $query.hasWard = null;
+            location.hash = "#";
           } else {
             $query.hasWard = "true";
             $query.hasPartner = null;
