@@ -4,12 +4,13 @@ import { fetchStaffsPositions } from "@/lib/data/staffsPositions";
 import Tabs from "./tabs.svelte";
 
 const staffs = await fetchStaffs();
-const staffsPositions = (await fetchStaffsPositions())
-  .sort((a, b) => a.order - b.order)
-  .filter(
-    (pos) =>
-      pos.name !== "Управляющий совет" && pos.name !== "Попечительский совет"
-  );
+const staffsPositions = (await fetchStaffsPositions()).sort(
+  (a, b) => a.order - b.order
+);
+// .filter(
+//   (pos) =>
+//     pos.name !== "Управляющий совет" && pos.name !== "Попечительский совет"
+// );
 ---
 
 <section class="our-stuff overflow-clip">
