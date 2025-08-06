@@ -2,7 +2,8 @@
 import { getLastNews, type NewsItemWithRelated } from '@/lib/data/news'
 import { cn } from '@/lib/utils'
 import type { HTMLAttributes } from 'astro/types'
-import ph from '@/assets/img/og.webp'
+import ph from '@/assets/img/og.png'
+import { getImage } from 'astro:assets'
 
 interface Props extends HTMLAttributes<'section'> {
   news: NewsItemWithRelated[]
@@ -13,6 +14,7 @@ const {  class: className,news, ...props } = Astro.props
 const lastNews = getLastNews(news,4)
 
 const currentUrl = Astro.url.pathname
+const optimizeOG = await getImage({ src: ph })
 ---
 
 <section class={cn('py-8 md:py-20', className)} {...props}>
@@ -22,7 +24,7 @@ const currentUrl = Astro.url.pathname
         {item.body && (
           <a href={"/news/" + item.slug + "?from=" + encodeURIComponent(currentUrl)} class="absolute inset-0 opacity-0">/news/{item.slug}</a>
         )}
-        <img src={item.image || ph.src} alt={item.title} class="w-full rounded-3xl aspect-video bg-white bg-opacity-60 mb-5 hidden xl:block object-cover object-center">
+        <img src={item.image || optimizeOG.src} alt={item.title} class="w-full rounded-3xl aspect-video bg-white bg-opacity-60 mb-5 hidden xl:block object-cover object-center">
         <time datetime={new Date(item.date).toString()} class="text-sm px-3 py-1 xl:border border-white rounded-full leading-none bg-white xl:bg-transparent text-dark xl:text-inherit">
           {new Date(item.date).toLocaleDateString('ru-RU', {
             month: 'numeric',

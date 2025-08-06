@@ -1,11 +1,12 @@
 ---
-import ogImage from "@/assets/img/og.webp";
+import ogImage from "@/assets/img/og.png";
 import { RootLayout } from "@/components/layouts/root";
 import { SectPartner } from "@/components/sections/partner-page";
 import SectBreadcrumbs from "@/components/sections/sect-breadcrumbs.astro";
 import { Seo } from "@/components/seo";
 import { fetchPartnersWithRelatedData } from "@/lib/data/partners";
 import type { GetStaticPaths } from "astro";
+import { getImage } from "astro:assets";
 
 // const { id: paramsId } = Astro.params;
 // const id = Number(paramsId);
@@ -45,6 +46,10 @@ const breadcrumbs = [
     url: `/partners/${partner.id}`,
   },
 ];
+
+const optimizedImage = await getImage({
+  src: ogImage,
+});
 ---
 
 <RootLayout>
@@ -52,7 +57,9 @@ const breadcrumbs = [
     slot={"seo"}
     title={partner.name}
     description={partner.description}
-    imageUrls={{ fb: partner.image ? partner.image.toString() : ogImage.src }}
+    imageUrls={{
+      fb: partner.image ? partner.image.toString() : optimizedImage.src,
+    }}
   />
   <main class="py-[1px]">
     <SectBreadcrumbs {breadcrumbs} />
