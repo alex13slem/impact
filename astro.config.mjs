@@ -11,7 +11,7 @@ export default defineConfig({
     }),
     svelte(),
   ],
-  site: "https://impactfoundation.ru",
+  site: "https://blagodeystvie.ru",
   // site: 'http://localhost:4000',
   adapter: node({
     mode: "standalone",
